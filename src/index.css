@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+.navlogo::before{
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -5px;
+  width: 55px;
+  height: 55px;
+  background-color: #B9F8CF;
+  border-radius: 50%;
+  z-index: -1;
+}
