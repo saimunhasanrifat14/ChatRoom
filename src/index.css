@@ -3,11 +3,24 @@
 .navlogo::before{
   content: "";
   position: absolute;
-  top: -10px;
-  left: -5px;
-  width: 55px;
-  height: 55px;
+  top: -8px;
+  left: -2px;
+  width: 50px;
+  height: 50px;
   background-color: #B9F8CF;
   border-radius: 50%;
   z-index: -1;
+}
+
+.sliderButton{
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.sliderRightButton{
+  position: absolute;
+  bottom: 168px;
+  right: 18%;
+  transform: rotate(180deg)
 }
