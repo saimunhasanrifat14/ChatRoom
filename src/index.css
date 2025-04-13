@@ -24,3 +24,210 @@
   right: 18%;
   transform: rotate(180deg)
 }
+.aboutLogo{
+  position: absolute;
+  top: 50%;
+  left: -20%;
+  transform: translateY(-50%);
+}
+.aboutFirstIcon{
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  border-radius: 50%;
+  border: 2px solid #80808033;
+  animation-name: instagram;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.aboutSecondIcon{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  border-radius: 50%;
+  border: 2px solid #80808033;
+  animation-name: facebook;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.aboutTherdIcon{
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  border: 2px solid #80808033;
+}
+.facebookIcon{
+  position: absolute;
+  bottom: 57px;
+  left: 57px;
+  border: 10px solid #ebebebc6;
+  border-radius: 50%;
+  animation-name: facebookIcon;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.twitterIcon{
+  position: absolute;
+  bottom: -18px;
+  right: 187px;
+  border: 10px solid #ebebebc6;
+  border-radius: 50%;
+  animation-name: twitterIcon;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.telegramIcon{
+  position: absolute;
+  top: 29px;
+  left: 87px;
+  border: 10px solid #ebebebc6;
+  border-radius: 50%;
+  animation-name: telegramIcon;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.messangerIcon{
+  position: absolute;
+  top: -96px;
+  left: 189px;
+  border: 10px solid #ebebebc6;
+  border-radius: 50%;
+  animation-name: messangerIcon;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.linkdenIcon{
+  position: absolute;
+  top: 57px;
+  right: 57px;
+  border: 10px solid #ebebebc6;
+  border-radius: 50%;
+  animation-name: linkdenIcon;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.instagramIcon{
+  position: absolute;
+  top: 99px;
+  left: 59px;
+  border: 10px solid #ebebebc6;
+  border-radius: 50%;
+  animation-name: instagramIcon;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.snapchatIcon{
+  position: absolute;
+  bottom: 189px;
+  right: 4px;
+  border: 10px solid #ebebebc6;
+  border-radius: 50%;
+  animation-name: snapchatIcon;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.whatsappIcon{
+  position: absolute;
+  bottom: 185px;
+  left: 6px;
+  border: 8px solid #ebebebc6;
+  border-radius: 50%;
+  animation-name: whatsappIcon;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes facebook {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@keyframes facebookIcon {
+  from {
+    transform: rotate(-0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes twitterIcon {
+  from {
+    transform: rotate(-0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes telegramIcon {
+  from {
+    transform: rotate(-0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes messangerIcon {
+  from {
+    transform: rotate(-0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes linkdenIcon {
+  from {
+    transform: rotate(-0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes instagram {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform:  rotate(360deg);
+  }
+}
+@keyframes snapchatIcon {
+  from {
+    transform: rotate(-0deg);
+  }
+  to {
+    transform:  rotate(-360deg);
+  }
+}
+@keyframes instagramIcon {
+  from {
+    transform: rotate(-0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes whatsappIcon {
+  from {
+    transform: rotate(-0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
