@@ -17,6 +17,7 @@ import img3 from "../../assets/HomePageIMG/img3.jpg";
 import img4 from "../../assets/HomePageIMG/img4.jpg";
 import img5 from "../../assets/HomePageIMG/img5.jpg";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -39,12 +40,12 @@ const Hero = () => {
                   <span className="text-[#80cf9c]"> expedita</span>{" "}
                 </p>
                 <div className="flex gap-5">
-                  <button className="bg-black text-white pl-4 p-1 rounded-3xl flex items-center cursor-pointer">
+                  <Link to={"/signup"} className="bg-black text-white pl-4 p-1 rounded-3xl flex items-center cursor-pointer">
                     Try out!{" "}
                     <span className="p-2 text-[22px] ml-2 bg-white rounded-full text-black">
                       <MdOutlineArrowOutward />
                     </span>
-                  </button>
+                  </Link>
                   <button className="bg-gray-100 pl-4 p-1 rounded-3xl flex items-center cursor-pointer">
                     Learn more{" "}
                     <span className="p-2 text-[22px] ml-2 bg-white rounded-full ">

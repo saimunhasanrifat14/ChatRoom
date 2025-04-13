@@ -10,6 +10,7 @@ import TelegramLogo from "../../assets/HomePageIMG/Telegram.png";
 import MessengerLogo from "../../assets/HomePageIMG/Messenger.png";
 import SnapchatLogo from "../../assets/HomePageIMg/Snapchat.png";
 import { MdOutlineArrowOutward } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -61,12 +62,12 @@ const About = () => {
               aut magnam quam.
             </p>
             <div className="flex gap-5">
-              <button className="bg-black text-white pl-4 p-1 rounded-3xl flex items-center cursor-pointer">
+              <Link to={"/signup"} className="bg-black text-white pl-4 p-1 rounded-3xl flex items-center cursor-pointer">
                 Try out!{" "}
                 <span className="p-1 text-[22px] ml-2 bg-white rounded-full text-black">
                   <MdOutlineArrowOutward />
                 </span>
-              </button>
+              </Link>
               <button className="bg-gray-100 pl-4 p-1 rounded-3xl flex items-center cursor-pointer">
                 Learn more{" "}
                 <span className="p-1 text-[22px] ml-2 bg-white rounded-full ">

@@ -1,5 +1,6 @@
 import React from 'react'
 import { MdOutlineArrowOutward } from 'react-icons/md'
+import { Link } from 'react-router-dom'
 
 const Nav = () => {
   return (
@@ -17,7 +18,7 @@ const Nav = () => {
                 </ul>
             </div>
             <div className='flex items-center'>
-                <button className='bg-gray-100 pl-4 p-1 rounded-3xl flex items-center'>Try out! <span className='p-2 text-[22px] ml-2 bg-green-200 rounded-full '><MdOutlineArrowOutward /></span></button>
+                <Link to={"/signup"} className='bg-gray-100 pl-4 p-1 rounded-3xl flex items-center'>Try out! <span className='p-2 text-[22px] ml-2 bg-green-200 rounded-full '><MdOutlineArrowOutward /></span></Link>
             </div>
         </div>
     </>
