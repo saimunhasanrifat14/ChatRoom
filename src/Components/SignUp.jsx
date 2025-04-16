@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import banner from ".././assets/singupPageIMG/benner.jpg";
+import { getAuth } from "firebase/auth";
 
 const SignUp = () => {
   const inputDetails = [
@@ -27,12 +28,14 @@ const SignUp = () => {
     },
   ];
 
+  // const auth = getAuth()
+
   const [logininfo, setlogininfo] = useState({
     FullName: "",
     Email: "",
     Password: "",
   });
-  
+
   const [logininfoError, setlogininfoError] = useState({
     FullNameError: "",
     EmailError: "",
@@ -74,11 +77,16 @@ const SignUp = () => {
         ...logininfoError,
         EmailError: "Email missing",
       });
-    } else {
+    } else if (!Password) {
       setlogininfoError({
         ...logininfoError,
         PasswordError: "Password missing",
       });
+    } else {
+      // createUserWithEmailAndPassword(auth, email, password)
+      // .then((userinfo)=>{
+      //   console.log(userinfo);
+      // })
     }
   };
 
