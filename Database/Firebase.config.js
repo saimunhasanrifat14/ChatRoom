@@ -7,11 +7,10 @@ const firebaseConfig = {
   projectId: "chatroom-c1d94",
   storageBucket: "chatroom-c1d94.firebasestorage.app",
   messagingSenderId: "1068440533192",
-  appId: "1:1068440533192:web:5d4bf8632fc8499f8d4dfd",
-  measurementId: "G-T6NVP9NH9W",
+  appId: "1:1068440533192:web:b5e078549f80c0a88d4dfd",
+  measurementId: "G-D3Z9PKZ6CG"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 export default app;

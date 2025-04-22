@@ -41,8 +41,8 @@ const LogIn = () => {
 
               {/* Sign In Form */}
               <form className="space-y-4">
-                {inputDetails.map((item) => (
-                  <div>
+                {inputDetails.map((item, index) => (
+                  <div key={index}>
                     <label
                       htmlFor="name"
                       className="block text-sm font-medium text-gray-700"

@@ -1,7 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import banner from ".././assets/singupPageIMG/benner.jpg";
-import { getAuth } from "firebase/auth";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+} from "firebase/auth";
+import app from "../../Database/Firebase.config";
 
 const SignUp = () => {
   const inputDetails = [
@@ -28,7 +35,8 @@ const SignUp = () => {
     },
   ];
 
-  // const auth = getAuth()
+  const auth = getAuth(app);
+  const navigate = useNavigate()
 
   const [logininfo, setlogininfo] = useState({
     FullName: "",
@@ -83,10 +91,42 @@ const SignUp = () => {
         PasswordError: "Password missing",
       });
     } else {
-      // createUserWithEmailAndPassword(auth, email, password)
-      // .then((userinfo)=>{
-      //   console.log(userinfo);
-      // })
+      createUserWithEmailAndPassword(auth, Email, Password)
+        .then((userinfo) => {
+          console.log(userinfo);
+          console.log("successfully registered");
+          setlogininfo({
+            ...logininfo,
+            FullName: "",
+            Email: "",
+            Password: "",
+          });
+          navigate("/dashboard")
+        })
+        .catch((err) => {
+          console.log("error is", err.code);
+          if (err.code === "auth/email-already-in-use") {
+            setlogininfo({
+              ...logininfoError,
+              EmailError: "This email is already registered.",
+            });
+          } else if (err.code === "auth/weak-password") {
+            setlogininfoError({
+              ...logininfoError,
+              PasswordError: "Password should be at least 6 characters long.",
+            });
+          } else if (err.code === "auth/invalid-email") {
+            setlogininfo({
+              ...logininfoError,
+              EmailError: "Please enter a valid email.",
+            });
+          } else {
+            setlogininfo({
+              ...logininfoError,
+              EmailError: "Something went wrong. Please try again.",
+            });
+          }
+        });
     }
   };
 
@@ -108,8 +148,8 @@ const SignUp = () => {
 
               {/* Sign Up Form */}
               <form onSubmit={handleSubmit} className="space-y-4">
-                {inputDetails.map((item) => (
-                  <div>
+                {inputDetails.map((item, index) => (
+                  <div key={index}>
                     <label
                       htmlFor="name"
                       className="block text-sm font-medium text-gray-700"
@@ -135,7 +175,7 @@ const SignUp = () => {
                 {/* Sign Up Button */}
                 <button
                   type="submit"
-                  className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md"
+                  className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md cursor-pointer"
                 >
                   Sign up
                 </button>
