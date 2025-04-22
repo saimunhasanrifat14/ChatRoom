@@ -164,7 +164,7 @@ const SignUp = () => {
                       placeholder={item.placeholder}
                       className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-sm"
                     />
-                    {logininfoError[`${item.name}Error`] && (
+                    {[`${item.name}logininfoErrorError`] && (
                       <span className="text-red-500 text-[12px]">
                         {logininfoError[`${item.name}Error`]}
                       </span>

@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import banner from ".././assets/singupPageIMG/benner.jpg";
+import { getAuth } from "firebase/auth";
+import app from "../../Database/Firebase.config";
 
 const LogIn = () => {
+  const [UserLoginInfo, setUserLoginInfo] = useState({
+    Email: "",
+    Password: "",
+  });
+  const [UserLoginInfoError, setUserLoginInfoError] = useState({
+    EmailError: "",
+    PasswordError: "",
+  });
+
+  const auth = getAuth(app);
+
   const inputDetails = [
     {
       id: 1,
@@ -17,6 +30,47 @@ const LogIn = () => {
       label: "Email address",
     },
   ];
+
+  /**
+   * todo : handleInput function implement
+   * @param (null)
+   * return : velue
+   */
+  const handleInput = (event) => {
+    const { name, value } = event.target;
+    setUserLoginInfo({
+      ...UserLoginInfo,
+      [name]: value,
+    });
+
+    setUserLoginInfoError({
+      ...UserLoginInfoError,
+      [`${name}Error`]: "",
+    });
+  };
+
+  /**
+   * todo : handleSubmit function implement
+   * @param (null)
+   * return : null
+   */
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const { Email, Password } = UserLoginInfo;
+    if (!Email) {
+      setUserLoginInfoError({
+        ...UserLoginInfoError,
+        EmailError: "Email Missing",
+      });
+    } else if (!Password) {
+      setUserLoginInfoError({
+        ...UserLoginInfoError,
+        PasswordError: "Password Missing",
+      });
+    } else {
+    }
+  };
+
   return (
     <>
       <div className="w-full h-screen flex">
@@ -40,7 +94,7 @@ const LogIn = () => {
               </div>
 
               {/* Sign In Form */}
-              <form className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 {inputDetails.map((item, index) => (
                   <div key={index}>
                     <label
@@ -50,12 +104,18 @@ const LogIn = () => {
                       {item.label}
                     </label>
                     <input
+                      onChange={handleInput}
+                      name={item.name}
                       type="text"
                       id={item.id}
-                      required
                       placeholder={item.placeholder}
                       className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-sm"
                     />
+                    {UserLoginInfoError[`${item.name}Error`] && (
+                      <span className="text-red-500 text-[12px]">
+                        {UserLoginInfoError[`${item.name}Error`]}
+                      </span>
+                    )}
                   </div>
                 ))}
 
