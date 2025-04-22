@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import banner from ".././assets/singupPageIMG/benner.jpg";
-import { getAuth } from "firebase/auth";
+import {
+  getAuth,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import app from "../../Database/Firebase.config";
 
 const LogIn = () => {
@@ -12,20 +16,25 @@ const LogIn = () => {
   const [UserLoginInfoError, setUserLoginInfoError] = useState({
     EmailError: "",
     PasswordError: "",
+    Error: "",
+    EmailVerification: "",
   });
 
   const auth = getAuth(app);
+  const navigate = useNavigate();
 
   const inputDetails = [
     {
       id: 1,
       name: "Email",
+      type: "email",
       placeholder: "you@example.com",
       label: "Full Name",
     },
     {
       id: 2,
       name: "Password",
+      type: "password",
       placeholder: "••••••••",
       label: "Email address",
     },
@@ -68,6 +77,35 @@ const LogIn = () => {
         PasswordError: "Password Missing",
       });
     } else {
+      signInWithEmailAndPassword(auth, Email, Password)
+        .then((userinfo) => {
+          console.log(userinfo);
+          if (auth.currentUser.emailVerified) {
+            navigate("/dashboard");
+          } else {
+            sendEmailVerification(auth.currentUser).then(() => {});
+            navigate("/EmailVerification");
+          }
+        })
+        .catch((err) => {
+          console.log(err.code);
+          if (err.code === "auth/network-request-failed") {
+            setUserLoginInfoError({
+              ...UserLoginInfoError,
+              Error: "Network error! try again.",
+            });
+          } else if (err.code === "auth/invalid-email") {
+            setUserLoginInfoError({
+              ...UserLoginInfoError,
+              EmailError: "Invalid email format.",
+            });
+          } else {
+            setUserLoginInfoError({
+              ...UserLoginInfoError,
+              Error: "Something went wrong. Please try again.",
+            });
+          }
+        });
     }
   };
 
@@ -82,15 +120,21 @@ const LogIn = () => {
                 <h2 className="text-2xl font-bold text-gray-900">
                   Sign in to your account
                 </h2>
-                <p className="text-sm text-gray-500 mt-1">
-                  Not a member?{" "}
-                  <Link
-                    to="/signup"
-                    className="font-medium text-green-600 hover:text-green-500"
-                  >
-                    Start a 14 day free trial
-                  </Link>
-                </p>
+                {UserLoginInfoError.Error !== "" ? (
+                  <span className="text-red-500 text-[14px]">
+                    {UserLoginInfoError.Error}
+                  </span>
+                ) : (
+                  <p className="text-sm text-gray-500 mt-1">
+                    Not a member?{" "}
+                    <Link
+                      to="/signup"
+                      className="font-medium text-green-600 hover:text-green-500"
+                    >
+                      Start a 14 day free trial
+                    </Link>
+                  </p>
+                )}
               </div>
 
               {/* Sign In Form */}
@@ -106,7 +150,7 @@ const LogIn = () => {
                     <input
                       onChange={handleInput}
                       name={item.name}
-                      type="text"
+                      type={item.type}
                       id={item.id}
                       placeholder={item.placeholder}
                       className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-sm"

@@ -36,7 +36,7 @@ const SignUp = () => {
   ];
 
   const auth = getAuth(app);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [logininfo, setlogininfo] = useState({
     FullName: "",
@@ -101,12 +101,15 @@ const SignUp = () => {
             Email: "",
             Password: "",
           });
-          navigate("/dashboard")
+          navigate("/EmailVerification");
+        })
+        .then(() => {
+          sendEmailVerification(auth.currentUser).then(() => {});
         })
         .catch((err) => {
           console.log("error is", err.code);
           if (err.code === "auth/email-already-in-use") {
-            setlogininfo({
+            setlogininfoError({
               ...logininfoError,
               EmailError: "This email is already registered.",
             });
@@ -164,7 +167,7 @@ const SignUp = () => {
                       placeholder={item.placeholder}
                       className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-sm"
                     />
-                    {[`${item.name}logininfoErrorError`] && (
+                    {logininfoError[`${item.name}Error`] && (
                       <span className="text-red-500 text-[12px]">
                         {logininfoError[`${item.name}Error`]}
                       </span>
