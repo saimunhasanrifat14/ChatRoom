@@ -9,6 +9,7 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import app from "../../Database/Firebase.config";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignUp = () => {
   const inputDetails = [
@@ -30,7 +31,7 @@ const SignUp = () => {
       id: 3,
       name: "Password",
       placeholder: "••••••••",
-      label: "Email address",
+      label: "Password",
       type: "password",
     },
   ];
@@ -49,6 +50,12 @@ const SignUp = () => {
     EmailError: "",
     PasswordError: "",
   });
+
+  const [eye, seteye] = useState(false);
+
+  const handleEye = () => {
+    seteye(!eye);
+  };
 
   /**
    * todo : handleInput function implement
@@ -152,21 +159,46 @@ const SignUp = () => {
               {/* Sign Up Form */}
               <form onSubmit={handleSubmit} className="space-y-4">
                 {inputDetails.map((item, index) => (
-                  <div key={index}>
+                  <div key={index} className="relative">
                     <label
                       htmlFor="name"
                       className="block text-sm font-medium text-gray-700"
                     >
                       {item.label}
                     </label>
-                    <input
-                      onChange={handleInput}
-                      name={item.name}
-                      type={item.type}
-                      id={item.id}
-                      placeholder={item.placeholder}
-                      className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-sm"
-                    />
+                    {item.type == "password" ? (
+                      // for password input
+                      <input
+                        onChange={handleInput}
+                        name={item.name}
+                        type={eye ? "password" : "text"}
+                        id={item.id}
+                        placeholder={item.placeholder}
+                        className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none relative focus:ring-green-500 focus:border-green-500 text-sm"
+                      />
+                    ) : (
+                      // for other inputs
+                      <input
+                        onChange={handleInput}
+                        name={item.name}
+                        type={item.type}
+                        id={item.id}
+                        placeholder={item.placeholder}
+                        className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none relative focus:ring-green-500 focus:border-green-500 text-sm"
+                      />
+                    )}
+                    {/* for password eye */}
+                    {item.name === "Password" && logininfo.Password !== "" ? (
+                      <span
+                        onClick={handleEye}
+                        className="absolute right-[12px] top-[34px] cursor-pointer text-[17px] text-gray-600"
+                      >
+                        {eye ? <FaEye /> : <FaEyeSlash />}
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                    {/* for velidation */}
                     {logininfoError[`${item.name}Error`] && (
                       <span className="text-red-500 text-[12px]">
                         {logininfoError[`${item.name}Error`]}

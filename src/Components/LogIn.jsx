@@ -5,8 +5,11 @@ import {
   getAuth,
   sendEmailVerification,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from "firebase/auth";
 import app from "../../Database/Firebase.config";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const LogIn = () => {
   const [UserLoginInfo, setUserLoginInfo] = useState({
@@ -17,8 +20,11 @@ const LogIn = () => {
     EmailError: "",
     PasswordError: "",
     Error: "",
-    EmailVerification: "",
   });
+  const [eye, seteye] = useState(false);
+  const handleEye = () => {
+    seteye(!eye);
+  };
 
   const auth = getAuth(app);
   const navigate = useNavigate();
@@ -109,6 +115,28 @@ const LogIn = () => {
     }
   };
 
+  /**
+   * todo : handleLoginWithGoodle function implement
+   * @param (null)
+   * return : null
+   */
+  const handleLoginWithGoodle = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        console.log("User Info:", user);
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        console.error("Google Sign-in Error:", error);
+        setUserLoginInfoError({
+          ...UserLoginInfoError,
+          Error: "Google Sign-in Error",
+        });
+      });
+  };
+
   return (
     <>
       <div className="w-full h-screen flex">
@@ -140,21 +168,47 @@ const LogIn = () => {
               {/* Sign In Form */}
               <form onSubmit={handleSubmit} className="space-y-4">
                 {inputDetails.map((item, index) => (
-                  <div key={index}>
+                  <div key={index} className="relative">
                     <label
                       htmlFor="name"
                       className="block text-sm font-medium text-gray-700"
                     >
                       {item.label}
                     </label>
-                    <input
-                      onChange={handleInput}
-                      name={item.name}
-                      type={item.type}
-                      id={item.id}
-                      placeholder={item.placeholder}
-                      className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-sm"
-                    />
+                    {item.type == "password" ? (
+                      // for password input
+                      <input
+                        onChange={handleInput}
+                        name={item.name}
+                        type={eye ? "password" : "text"}
+                        id={item.id}
+                        placeholder={item.placeholder}
+                        className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-sm"
+                      />
+                    ) : (
+                      // for other inputs
+                      <input
+                        onChange={handleInput}
+                        name={item.name}
+                        type={item.type}
+                        id={item.id}
+                        placeholder={item.placeholder}
+                        className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-sm"
+                      />
+                    )}
+                    {/* for password eye */}
+                    {item.name === "Password" &&
+                    UserLoginInfo.Password !== "" ? (
+                      <span
+                        onClick={handleEye}
+                        className="absolute right-[12px] top-[34px] cursor-pointer text-[17px] text-gray-600"
+                      >
+                        {eye ? <FaEye /> : <FaEyeSlash />}
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                    {/* for velidation */}
                     {UserLoginInfoError[`${item.name}Error`] && (
                       <span className="text-red-500 text-[12px]">
                         {UserLoginInfoError[`${item.name}Error`]}
@@ -200,7 +254,10 @@ const LogIn = () => {
                   <hr className="flex-grow border-gray-300" />
                 </div>
                 <div className="flex space-x-4 mt-4">
-                  <button className="flex items-center justify-center w-1/2 border border-gray-300 rounded-md py-2 hover:bg-gray-50 cursor-pointer">
+                  <button
+                    onClick={handleLoginWithGoodle}
+                    className="flex items-center justify-center w-1/2 border border-gray-300 rounded-md py-2 hover:bg-gray-50 cursor-pointer"
+                  >
                     <img
                       src="https://www.svgrepo.com/show/475656/google-color.svg"
                       alt="Google"
@@ -208,13 +265,16 @@ const LogIn = () => {
                     />
                     <span className="text-sm">Google</span>
                   </button>
-                  <button className="flex items-center justify-center w-1/2 border border-gray-300 rounded-md py-2 hover:bg-gray-50 cursor-pointer">
+                  <button
+                    // onClick={handleLoginWithFacebook}
+                    className="flex items-center justify-center w-1/2 border border-gray-300 rounded-md py-2 hover:bg-gray-50 cursor-pointer"
+                  >
                     <img
-                      src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                      src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
                       alt="GitHub"
-                      className="w-6 h-6 mr-2"
+                      className="w-5 h-5 mr-2"
                     />
-                    <span className="text-sm">GitHub</span>
+                    <span className="text-sm">Facebook</span>
                   </button>
                 </div>
               </div>
