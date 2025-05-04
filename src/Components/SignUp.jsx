@@ -8,6 +8,7 @@ import {
   updateProfile,
   sendEmailVerification,
 } from "firebase/auth";
+import { getDatabase, push, ref, set } from "firebase/database";
 import app from "../../Database/Firebase.config";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -36,9 +37,6 @@ const SignUp = () => {
     },
   ];
 
-  const auth = getAuth(app);
-  const navigate = useNavigate();
-
   const [logininfo, setlogininfo] = useState({
     FullName: "",
     Email: "",
@@ -51,8 +49,17 @@ const SignUp = () => {
     PasswordError: "",
   });
 
+  const auth = getAuth(app);
+  const navigate = useNavigate();
+  const db = getDatabase();
   const [eye, seteye] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  /**
+   * todo : password eye function implement
+   * @param ({event})
+   * return : null
+   */
   const handleEye = () => {
     seteye(!eye);
   };
@@ -98,9 +105,9 @@ const SignUp = () => {
         PasswordError: "Password missing",
       });
     } else {
+      setLoading(true);
       createUserWithEmailAndPassword(auth, Email, Password)
         .then((userinfo) => {
-          console.log(userinfo);
           console.log("successfully registered");
           setlogininfo({
             ...logininfo,
@@ -111,7 +118,16 @@ const SignUp = () => {
           navigate("/EmailVerification");
         })
         .then(() => {
-          sendEmailVerification(auth.currentUser).then(() => {});
+          sendEmailVerification(auth.currentUser);
+          set(push(ref(db, "users/")), {
+            username:
+              auth.currentUser.displayName || logininfo.FullName || "User",
+            email: auth.currentUser.email || logininfo.Email || "",
+            profile_picture:
+              auth.currentUser.photoURL ||
+              "https://www.w3schools.com/howto/img_avatar.png",
+            uid: auth.currentUser.uid || "",
+          });
         })
         .catch((err) => {
           console.log("error is", err.code);
@@ -136,6 +152,8 @@ const SignUp = () => {
               EmailError: "Something went wrong. Please try again.",
             });
           }
+        }).finally(() => {
+          setLoading(false);
         });
     }
   };
@@ -171,7 +189,7 @@ const SignUp = () => {
                       <input
                         onChange={handleInput}
                         name={item.name}
-                        type={eye ? "password" : "text"}
+                        type={eye ? "text" : "password"}
                         id={item.id}
                         placeholder={item.placeholder}
                         className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none relative focus:ring-green-500 focus:border-green-500 text-sm"
@@ -212,7 +230,7 @@ const SignUp = () => {
                   type="submit"
                   className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md cursor-pointer"
                 >
-                  Sign up
+                  {loading ? "Loading..." : "Sign Up"}
                 </button>
               </form>
               {/* navigate to login page */}

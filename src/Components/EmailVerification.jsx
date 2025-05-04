@@ -15,7 +15,7 @@ const EmailVerification = () => {
     try {
       await auth.currentUser.reload();
       if (auth.currentUser.emailVerified) {
-        navigate("/dashboard");
+        navigate("/rootlayout");
       } else {
         setErrorMsg("Your email is not verified yet!");
       }
@@ -27,7 +27,13 @@ const EmailVerification = () => {
   };
 
   const handleResend = () => {
-    sendEmailVerification(auth.currentUser).then(() => {});
+    sendEmailVerification(auth.currentUser)
+      .then(() => {})
+      .catch((error) => {
+        if(error.code === "auth/too-many-requests") {
+          setErrorMsg("Failed! Please wait 5 minute and try again.");
+        }
+      });
   };
 
   return (

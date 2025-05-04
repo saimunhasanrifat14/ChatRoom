@@ -6,16 +6,27 @@ import SignUp from './Components/SignUp';
 import LogIn from './Components/LogIn';
 import Dashboard from './Components/Dashboard';
 import EmailVerification from './Components/EmailVerification';
+import RootLayout from './Components/RootLayout/RootLayout';
+import UserList from './Components/DashboardComponents/UserList';
+import Friends from './Components/DashboardComponents/Friends';
+import FriendRequest from './Components/DashboardComponents/FriendRequest';
 
 const App = () => {
   return (
     <Router>
       <Routes>
+        <Route path="*" element={<Home/>}/>
         <Route index element={<Home/>}/>
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/login" element={<LogIn/>}/>
-        <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="/rootlayout" element={<RootLayout/>}>
+          <Route index element={<Dashboard/>}/>
+          <Route path="userlist" element={<UserList/>}/>
+          <Route path='friends' element={<Friends/>}/>
+          <Route path='friendRequest' element={<FriendRequest/>}/>
+        </Route>
         <Route path="/EmailVerification" element={<EmailVerification/>}/>
+
       </Routes>
     </Router>
   )

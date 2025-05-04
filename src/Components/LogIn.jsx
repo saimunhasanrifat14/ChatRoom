@@ -22,12 +22,20 @@ const LogIn = () => {
     Error: "",
   });
   const [eye, seteye] = useState(false);
+  const auth = getAuth(app);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+   /**
+   * todo : password eye function implement
+   * @param ({event})
+   * return : null
+   */
   const handleEye = () => {
     seteye(!eye);
   };
 
-  const auth = getAuth(app);
-  const navigate = useNavigate();
+
 
   const inputDetails = [
     {
@@ -83,11 +91,12 @@ const LogIn = () => {
         PasswordError: "Password Missing",
       });
     } else {
+      setLoading(true);
       signInWithEmailAndPassword(auth, Email, Password)
         .then((userinfo) => {
           console.log(userinfo);
           if (auth.currentUser.emailVerified) {
-            navigate("/dashboard");
+            navigate("/rootlayout");
           } else {
             sendEmailVerification(auth.currentUser).then(() => {});
             navigate("/EmailVerification");
@@ -111,6 +120,8 @@ const LogIn = () => {
               Error: "Something went wrong. Please try again.",
             });
           }
+        }).finally(() => {    
+          setLoading(false);
         });
     }
   };
@@ -126,7 +137,8 @@ const LogIn = () => {
       .then((result) => {
         const user = result.user;
         console.log("User Info:", user);
-        navigate("/dashboard");
+
+        navigate("/rootlayout");
       })
       .catch((error) => {
         console.error("Google Sign-in Error:", error);
@@ -180,7 +192,7 @@ const LogIn = () => {
                       <input
                         onChange={handleInput}
                         name={item.name}
-                        type={eye ? "password" : "text"}
+                        type={eye ? "text" : "password"}
                         id={item.id}
                         placeholder={item.placeholder}
                         className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-sm"
@@ -239,7 +251,7 @@ const LogIn = () => {
                   type="submit"
                   className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md cursor-pointer"
                 >
-                  Sign in
+                  {loading ? "Loading..." : "Sign In"}
                 </button>
               </form>
 
