@@ -1,81 +1,69 @@
-import React from 'react'
-import { FaPlus } from 'react-icons/fa';
-import { HiOutlineDotsVertical } from 'react-icons/hi';
-import { IoSearch } from 'react-icons/io5';
+import React from "react";
+import { FaPlus } from "react-icons/fa";
+import { HiOutlineDotsVertical } from "react-icons/hi";
+import { IoSearch } from "react-icons/io5";
 
 const UserList = () => {
   const UserList = [
     {
       name: "Raghav",
       message: "Dinner?",
-      image:
-        "https://www.w3schools.com/howto/img_avatar.png",
+      image: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
       name: "Swathi",
       message: "Sure!.",
-      image:
-        "https://www.w3schools.com/howto/img_avatar.png",
+      image: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
       name: "Kiran",
       message: "Hi.....",
-      image:
-        "https://www.w3schools.com/howto/img_avatar.png",
+      image: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
       name: "Raghav Rathe",
       message: "Hello.....",
-      image:
-        "https://www.w3schools.com/howto/img_avatar.png",
+      image: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
       name: "Swathi",
       message: "Sure!.",
-      image:
-        "https://www.w3schools.com/howto/img_avatar.png",
+      image: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
       name: "Kiran",
       message: "Hi.....",
-      image:
-        "https://www.w3schools.com/howto/img_avatar.png",
+      image: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
       name: "Raghav Rathe",
       message: "Hello.....",
-      image:
-        "https://www.w3schools.com/howto/img_avatar.png",
+      image: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
       name: "Swathi",
       message: "Sure!.",
-      image:
-        "https://www.w3schools.com/howto/img_avatar.png",
+      image: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
       name: "Kiran",
       message: "Hi.....",
-      image:
-        "https://www.w3schools.com/howto/img_avatar.png",
+      image: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
       name: "Raghav Rathe",
       message: "Hello.....",
-      image:
-        "https://www.w3schools.com/howto/img_avatar.png",
+      image: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
       name: "Swathi",
       message: "Sure!.",
-      image:
-        "https://www.w3schools.com/howto/img_avatar.png",
+      image: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
       name: "Kiran",
       message: "Hi.....",
-      image:
-        "https://www.w3schools.com/howto/img_avatar.png",
+      image: "https://www.w3schools.com/howto/img_avatar.png",
     },
   ];
   return (
@@ -84,7 +72,7 @@ const UserList = () => {
         <div className="px-5 pb-5 pt-3 h-full rounded-2xl">
           <div className="h-[6%] flex justify-between items-center">
             <h2 className="flex items-center gap-3 text-lg font-semibold">
-              User List
+              Users
             </h2>
             <span className="text-blueColor text-[20px] cursor-pointer">
               <HiOutlineDotsVertical />
@@ -106,7 +94,7 @@ const UserList = () => {
                   <p className="text-gray-500 text-sm">{item.message}</p>
                 </div>
                 <button className="bg-[#3cae64] mr-2 text-white px-5 py-1 rounded-lg font-semibold cursor-pointer">
-                  Join
+                  Add
                 </button>
               </div>
             ))}
@@ -114,7 +102,7 @@ const UserList = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default UserList
+export default UserList;
