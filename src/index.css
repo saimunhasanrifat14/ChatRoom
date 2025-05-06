@@ -231,3 +231,10 @@
   }
 }
 
+
+/* for SideberActiveMenu */
+.SideberActiveMenu{
+  border-left: 5px solid #38b363;
+  color: #38b363;
+}
+/* for SideberActiveMenu */
