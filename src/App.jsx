@@ -9,7 +9,7 @@ import EmailVerification from './Components/EmailVerification';
 import RootLayout from './Components/RootLayout/RootLayout';
 import UserList from './Components/DashboardComponents/UserList';
 import Friends from './Components/DashboardComponents/Friends';
-import FriendRequest from './Components/DashboardComponents/FriendRequest';
+import FriendRequest from './Components/DashboardComponents/Groups';
 import Message from './Components/Message';
 import Notification from './Components/Notification';
 import Setting from './Components/Setting';

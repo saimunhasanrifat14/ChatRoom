@@ -1,15 +1,15 @@
 import React from "react";
-import Navber from "./Sideber";
+import Sideber from "./Sideber";
 import { Outlet } from "react-router-dom";
 
 const RootLayout = () => {
   return (
     <>
-      <div className="flex flex-row gap-4 w-full h-screen bg-gray-100 p-4">
-        <div className="w-[17%] h-full bg-white shadow-lg rounded-lg">
-          <Navber />
+      <div className="flex flex-row w-full bg-[#e4e4e4] h-screen">
+        <div className="w-[17%] h-full bg-white border-r-2 border-r-gray-300 ">
+          <Sideber />
         </div>
-        <div className="w-[83%] h-full bg-white shadow-lg rounded-lg ">
+        <div className="w-[83%] h-full  rounded-lg p-6">
           <Outlet />
         </div>
       </div>
