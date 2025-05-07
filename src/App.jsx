@@ -13,6 +13,12 @@ import FriendRequest from './Components/DashboardComponents/Groups';
 import Message from './Components/Message';
 import Notification from './Components/Notification';
 import Setting from './Components/Setting';
+import EditProfileInfo from './Components/SettingComponent/EditProfileInfo';
+import EditProfile from './Components/SettingComponent/EditProfile';
+import ChangePassword from './Components/SettingComponent/ChangePassword';
+import BlockList from './Components/SettingComponent/BlockList';
+import DeleteAccount from './Components/SettingComponent/DeleteAccount';
+import DefaltComponent from './Components/SettingComponent/DefaltComponent';
 
 const App = () => {
   return (
@@ -27,7 +33,14 @@ const App = () => {
           <Route path='Dashboard' element={<Dashboard/>}/>
           <Route path="Message" element={<Message/>}/>
           <Route path='Notification' element={<Notification/>}/>
-          <Route path='Setting' element={<Setting/>}/>
+          <Route path='Setting' element={<Setting/>}>
+            <Route index element={<DefaltComponent/>}/>
+            <Route path='editProfileInfo' element={<EditProfileInfo/>}/>
+            <Route path='editProfile' element={<EditProfile/>}/>
+            <Route path='ChangePassword' element={<ChangePassword/>}/>
+            <Route path='blockList' element={<BlockList/>}/>
+            <Route path='DeleteAccount' element={<DeleteAccount/>}/>
+          </Route>
         </Route>
         <Route path="/EmailVerification" element={<EmailVerification/>}/>
 
