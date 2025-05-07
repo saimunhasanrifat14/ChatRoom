@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import OutletTop from "./CommonComponent/OutletTop";
+import { getDatabase, onValue, ref } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 const Notification = () => {
   const Notificationdata = [
@@ -59,6 +61,36 @@ const Notification = () => {
       time: "14 min ago",
     },
   ];
+  const db = getDatabase();
+  const auth = getAuth();
+  const [NotificationFetchdata, setNotificationFetchdata] = useState([]);
+
+  /**
+   * todo : Data fetch from Notification database
+   * @param (null)
+   * @description : This function fetches the data from the Notification database and sets it to the NotificationFetchdata state.
+   */
+  useEffect(() => {
+    const fetchNotificationData = () => {
+      const DataRef = ref(db, "notification/");
+      onValue(DataRef, (snapshot) => {
+        let data = [];
+        snapshot.forEach((item) => {
+          if (auth.currentUser.uid === item.val().reciverUserId) {
+            data.push({
+              ...item.val(),
+              notificationKey: item.key,
+              acceptButton: "Accept",
+              rejectbutton: "Reject",
+            });
+          }
+        });
+        setNotificationFetchdata(data);
+      });
+    };
+    fetchNotificationData();
+  }, []);
+
   return (
     <>
       <div className="flex flex-col gap-2 w-full h-full">
@@ -67,23 +99,23 @@ const Notification = () => {
         </div>
         <div className="h-[91%] flex gap-6 items-center w-full bg-white rounded-lg">
           <div className="flex flex-col gap-4 w-full h-full p-6 overflow-y-auto [&::-webkit-scrollbar]:hidden">
-            {Notificationdata?.map((item) => (
+            {NotificationFetchdata?.map((item) => (
               <div
-                key={item.id}
+                key={item.notificationKey}
                 className="flex items-center justify-between gap-4 p-4 bg-gray-100 rounded-lg "
               >
                 <div className="flex items-center gap-4">
                   <img
                     className="w-10 h-10 rounded-full"
-                    src={item.senderProfile}
-                    alt={`profile of ${item.senderName}`}
+                    src={item.senderProfilePicture}
+                    alt={`Sender Profile Picture`}
                   />
                   <div className="flex flex-col">
                     <span className="font-normal text-gray-600">
                       {item.message}
                     </span>
                     <span className="font-normal text-sm text-gray-600">
-                      {item.time}
+                      {item.sendAt}
                     </span>
                   </div>
                 </div>

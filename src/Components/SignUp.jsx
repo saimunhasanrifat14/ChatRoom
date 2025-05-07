@@ -36,13 +36,13 @@ const SignUp = () => {
       type: "password",
     },
   ];
-
+  // for user dada store
   const [logininfo, setlogininfo] = useState({
     FullName: "",
     Email: "",
     Password: "",
   });
-
+  // for erorr handling
   const [logininfoError, setlogininfoError] = useState({
     FullNameError: "",
     EmailError: "",
@@ -108,6 +108,10 @@ const SignUp = () => {
       setLoading(true);
       createUserWithEmailAndPassword(auth, Email, Password)
         .then((userinfo) => {
+          updateProfile(auth.currentUser, {
+            displayName: logininfo.FullName || "User",
+            photoURL: "https://www.w3schools.com/howto/img_avatar.png",
+          });
           console.log("successfully registered");
           setlogininfo({
             ...logininfo,
@@ -152,7 +156,8 @@ const SignUp = () => {
               EmailError: "Something went wrong. Please try again.",
             });
           }
-        }).finally(() => {
+        })
+        .finally(() => {
           setLoading(false);
         });
     }

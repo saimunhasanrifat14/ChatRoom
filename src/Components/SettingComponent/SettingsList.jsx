@@ -66,7 +66,6 @@ const SettingsList = () => {
     };
     fetchData();
   }, []);
-  console.log(auth.currentUser);
   
   return (
     <>

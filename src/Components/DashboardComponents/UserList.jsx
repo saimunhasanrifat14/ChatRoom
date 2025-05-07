@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { IoSearch } from "react-icons/io5";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import moment from "moment";
 
 const UserList = () => {
   // const UserList = [
@@ -72,6 +73,7 @@ const UserList = () => {
   const db = getDatabase();
   const auth = getAuth();
   const [userList, setUserList] = useState([]);
+
   /**
    * todo : Data fetch from users database
    * @param (null)
@@ -93,6 +95,47 @@ const UserList = () => {
     fetchData();
   }, []);
 
+  /**
+   * todo : Handle friend request functionality
+   * @param (null)
+   * @description : This function fetches the data from the users database and sets it to the userList state.
+   */
+  const handleFriendRequest = (reciver) => {
+    set(push(ref(db, "friendRequest/")), {
+      sendAt: moment().format("MMMM Do YYYY, h:mm:ss a"),
+      senderUserName: auth.currentUser.displayName,
+      senderEmail: auth.currentUser.email,
+      senderProfilePicture: auth.currentUser.photoURL,
+      senderUserId: auth.currentUser.uid,
+      reciverUserName: reciver.username,
+      reciverEmail: reciver.email,
+      reciverProfilePicture: reciver.profile_picture,
+      reciverUserId: reciver.uid,
+      senderReciverkey: auth.currentUser.uid.concat(reciver.uid),
+    })
+      .then(() => {
+        console.log("Friend request sent successfully");
+      })
+      .catch((error) => {
+        console.error("Error sending friend request: ", error);
+      });
+    set(push(ref(db, "notification/")), {
+      sendAt: moment().format("MMMM Do YYYY, h:mm:ss a"),
+      senderProfilePicture: auth.currentUser.photoURL,
+      senderUserId: auth.currentUser.uid,
+      reciverProfilePicture: reciver.profile_picture,
+      reciverUserId: reciver.uid,
+      senderReciverkey: auth.currentUser.uid.concat(reciver.uid),
+      message: `${auth.currentUser.displayName} has sent you a friend request`,
+    })
+      .then(() => {
+        console.log("Notification sent successfully");
+      })
+      .catch((error) => {
+        console.error("Error sending notification: ", error);
+      });
+  };
+
   return (
     <>
       <div className="h-[100%] flex flex-col justify-between">
@@ -108,7 +151,7 @@ const UserList = () => {
           <div className="h-[94%] overflow-auto [&::-webkit-scrollbar]:hidden">
             {userList?.map((item, index) => (
               <div
-                key={index}
+                key={item.uid}
                 className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0 "
               >
                 <img
@@ -117,10 +160,15 @@ const UserList = () => {
                   className="w-12 h-12 rounded-full object-cover "
                 />
                 <div className="flex-1">
-                  <h3 className="font-semibold text-gray-900">{item.username}</h3>
+                  <h3 className="font-semibold text-gray-900">
+                    {item.username}
+                  </h3>
                   <p className="text-gray-500 text-sm">hello</p>
                 </div>
-                <button className="bg-[#3cae64] mr-2 text-white px-5 py-1 rounded-lg font-semibold cursor-pointer">
+                <button
+                  onClick={() => handleFriendRequest(item)}
+                  className="bg-[#3cae64] mr-2 text-white px-5 py-1 rounded-lg font-semibold cursor-pointer"
+                >
                   Add
                 </button>
               </div>
