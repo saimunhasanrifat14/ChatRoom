@@ -16,15 +16,15 @@ const Dashboard = () => {
   return (
     <>
       <div className="flex flex-col gap-2 w-full h-full">
-        <div className="h-[9%] flex items-center justify-between w-full">
+        <div className="h-[10%] flex items-center justify-between w-full">
           <OutletTop Title={"My Profile"} />
         </div>
-        <div className="h-[91%] flex gap-6 items-center w-full">
-          <div className="w-[67%] h-full flex flex-col gap-6">
+        <div className="h-[90%] flex gap-4 items-center w-full">
+          <div className="w-[67%] h-full flex flex-col gap-4">
             <div className="h-[50%] bg-white rounded-xl ">
               <Profile />
             </div>
-            <div className="h-[50%] w-full flex items-center gap-6 ">
+            <div className="h-[50%] w-full flex items-center gap-4 ">
               <div className="h-full w-[50%] bg-[#ffffff] rounded-xl ">
                 <Groups />
               </div>

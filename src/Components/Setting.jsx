@@ -18,7 +18,7 @@ const Setting = () => {
         <div className="h-[9%] flex items-center justify-between w-full">
           <OutletTop Title={"Settings"} />
         </div>
-        <div className="h-[91%] w-full flex gap-6 items-center">
+        <div className="h-[91%] w-full flex gap-4 items-center">
           <div className="h-full w-[50%] bg-white rounded-lg p-6">
             <SettingsList/>
           </div>

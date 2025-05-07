@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import banner from ".././assets/singupPageIMG/benner.jpg";
 import {
@@ -10,33 +10,45 @@ import {
 } from "firebase/auth";
 import app from "../../Database/Firebase.config";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { getDatabase, onValue, push, ref, set } from "firebase/database";
 
 const LogIn = () => {
+  
+  const [eye, seteye] = useState(false);
+  const auth = getAuth(app);
+  const navigate = useNavigate();
+  const db = getDatabase();
+  const [userList, setUserList] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // for user data 
   const [UserLoginInfo, setUserLoginInfo] = useState({
     Email: "",
     Password: "",
   });
+  // for error handling
   const [UserLoginInfoError, setUserLoginInfoError] = useState({
     EmailError: "",
     PasswordError: "",
     Error: "",
   });
-  const [eye, seteye] = useState(false);
-  const auth = getAuth(app);
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
 
-   /**
+  /**
    * todo : password eye function implement
-   * @param ({event})
+   * @param (null)
    * return : null
+   * @description : This function is used to handle the eye icon click event.
    */
   const handleEye = () => {
     seteye(!eye);
   };
 
-
-
+  /**
+   * todo : input details for login form
+   * @param (null)
+   * @return : velue
+   * @description : This function is used to handle the input change event of the form.
+   */
   const inputDetails = [
     {
       id: 1,
@@ -56,8 +68,9 @@ const LogIn = () => {
 
   /**
    * todo : handleInput function implement
-   * @param (null)
-   * return : velue
+   * @param {event} event - The event object containing the input field's name and value.
+   * @description : This function is used to handle the input change event of the form.
+   * @return : velue
    */
   const handleInput = (event) => {
     const { name, value } = event.target;
@@ -76,6 +89,7 @@ const LogIn = () => {
    * todo : handleSubmit function implement
    * @param (null)
    * return : null
+   * @description : This function is used to handle the submit event of the form.
    */
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -120,24 +134,53 @@ const LogIn = () => {
               Error: "Something went wrong. Please try again.",
             });
           }
-        }).finally(() => {    
+        })
+        .finally(() => {
           setLoading(false);
         });
     }
   };
+  /**
+   * todo : Data fetch from users database
+   * @param (null)
+   * @description : This function fetches the data from the users database and sets it to the userList state.
+   */
+  useEffect(() => {
+    const fetchData = () => {
+      const UserRef = ref(db, "users/");
+      onValue(UserRef, (snapshot) => {
+        console.log("data", snapshot.val());
+        let data = [];
+        snapshot.forEach((item) => {
+          data.push({ ...item.val(), userkey: item.key });
+        });
+        setUserList(data);
+      });
+    };
+    fetchData();
+  }, []);
 
   /**
    * todo : handleLoginWithGoodle function implement
    * @param (null)
    * return : null
+   * @description : This function is used to login with google account.
    */
   const handleLoginWithGoodle = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        console.log("User Info:", user);
-
+        let ismatch = userList.some((item) => item.email === user.email);
+        if (!ismatch) {
+          set(push(ref(db, "users/")), {
+            username: user.displayName || auth.currentUser.displayName,
+            email: user.email || auth.currentUser.email,
+            profile_picture:
+              user.photoURL || "https://www.w3schools.com/howto/img_avatar.png",
+            uid: user.uid || auth.currentUser.uid,
+          });
+        }
         navigate("/rootlayout");
       })
       .catch((error) => {

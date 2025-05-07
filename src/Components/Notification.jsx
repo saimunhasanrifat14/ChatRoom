@@ -66,7 +66,7 @@ const Notification = () => {
           <OutletTop Title="Notifications" />
         </div>
         <div className="h-[91%] flex gap-6 items-center w-full bg-white rounded-lg">
-          <div className="flex flex-col gap-4 w-full h-full p-8 overflow-y-auto [&::-webkit-scrollbar]:hidden">
+          <div className="flex flex-col gap-4 w-full h-full p-6 overflow-y-auto [&::-webkit-scrollbar]:hidden">
             {Notificationdata?.map((item) => (
               <div
                 key={item.id}

@@ -1,18 +1,41 @@
+import { getAuth, signOut } from "firebase/auth";
 import React from "react";
 import { AiFillMessage } from "react-icons/ai";
 import { BiSolidDashboard } from "react-icons/bi";
 import { HiOutlineLogout } from "react-icons/hi";
 import { IoLogOut, IoNotifications, IoSettingsSharp } from "react-icons/io5";
 import { MdOutlineArrowOutward } from "react-icons/md";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 const Navber = () => {
+  const auth = getAuth();
+  const navigate = useNavigate();
+
+  /**
+   * todo : menuItems array implement
+   * @description : this array is used to store the menu items for the sidebar navigation
+   */
   const menuItems = [
     { name: "Dashboard", icon: <BiSolidDashboard />, id: 1 },
     { name: "Message", icon: <AiFillMessage />, id: 2 },
     { name: "Notification", icon: <IoNotifications />, id: 3 },
     { name: "Setting", icon: <IoSettingsSharp />, id: 4 },
   ];
+
+  /**
+   * todo : handleLogout function implement
+   * @param (null)
+   * return : null
+   * @description : this function is used to sign out the user from the app and redirect to login page
+   */
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      navigate("/login");
+    }).catch((error) => {
+      console.error("Error signing out: ", error);
+    });
+  }
+  
   return (
     <>
       <div className="h-full flex flex-col justify-between items-center py-8 px-4">
@@ -39,7 +62,7 @@ const Navber = () => {
             ))}
           </div>
         </div>
-        <div className="flex items-center gap-2 w-full  py-2 px-3 font-semibold text-gray-600 cursor-pointer hover:text-red-400">
+        <div onClick={handleLogout} className="flex items-center gap-2 w-full  py-2 px-3 font-semibold text-gray-600 cursor-pointer hover:text-red-400">
           <span aria-label="Logout Icon" className="text-[26px] ">
             <IoLogOut />
           </span>
