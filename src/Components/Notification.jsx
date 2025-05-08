@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import OutletTop from "./CommonComponent/OutletTop";
 import { getDatabase, onValue, ref } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import moment from "moment";
 
 const Notification = () => {
   const Notificationdata = [
@@ -106,12 +107,13 @@ const Notification = () => {
               >
                 <div className="flex items-center gap-4">
                   <img
-                    className="w-10 h-10 rounded-full"
+                    className="w-14 h-14 rounded-full"
                     src={item.senderProfilePicture}
                     alt={`Sender Profile Picture`}
                   />
                   <div className="flex flex-col">
                     <span className="font-normal text-gray-600">
+                      <span className="font-bold ">{item.senderUserName}</span>{" "}
                       {item.message}
                     </span>
                     <span className="font-normal text-sm text-gray-600">

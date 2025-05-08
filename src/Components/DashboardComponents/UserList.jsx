@@ -73,6 +73,8 @@ const UserList = () => {
   const db = getDatabase();
   const auth = getAuth();
   const [userList, setUserList] = useState([]);
+  const [notifications, setnotifications] = useState([]);
+  const [pendingRequest, setpendingRequest] = useState(false);
 
   /**
    * todo : Data fetch from users database
@@ -90,6 +92,26 @@ const UserList = () => {
           }
         });
         setUserList(data);
+      });
+    };
+    fetchData();
+  }, []);
+  /**
+   * todo : Data fetch from Notification database
+   * @param (null)
+   * @description : This function fetches the data from the Notification database and sets it to the notifications state.
+   */
+  useEffect(() => {
+    const fetchData = () => {
+      const UserRef = ref(db, "notification/");
+      onValue(UserRef, (snapshot) => {
+        let data = [];
+        snapshot.forEach((item) => {
+          if (auth.currentUser.uid === item.val().reciverUserId) {
+            data.push({ ...item.val(), friendRequstKey: item.key });
+          }
+        });
+        setnotifications(data);
       });
     };
     fetchData();
@@ -120,16 +142,19 @@ const UserList = () => {
         console.error("Error sending friend request: ", error);
       });
     set(push(ref(db, "notification/")), {
-      sendAt: moment().format("MMMM Do YYYY, h:mm:ss a"),
+      sendAt: moment().format("MMMM Do YYYY, h:mm a"),
       senderProfilePicture: auth.currentUser.photoURL,
       senderUserId: auth.currentUser.uid,
       reciverProfilePicture: reciver.profile_picture,
       reciverUserId: reciver.uid,
+      senderUserName: auth.currentUser.displayName,
       senderReciverkey: auth.currentUser.uid.concat(reciver.uid),
-      message: `${auth.currentUser.displayName} has sent you a friend request`,
+      type: "FriendRequest",
+      message: `has sent you a friend request`,
     })
       .then(() => {
         console.log("Notification sent successfully");
+        setpendingRequest(true);
       })
       .catch((error) => {
         console.error("Error sending notification: ", error);
@@ -165,12 +190,18 @@ const UserList = () => {
                   </h3>
                   <p className="text-gray-500 text-sm">hello</p>
                 </div>
-                <button
-                  onClick={() => handleFriendRequest(item)}
-                  className="bg-[#3cae64] mr-2 text-white px-5 py-1 rounded-lg font-semibold cursor-pointer"
-                >
-                  Add
-                </button>
+                {pendingRequest ? (
+                  <button className="bg-[#3cae64] mr-2 text-white px-5 py-1 rounded-lg font-semibold">
+                    Pending
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleFriendRequest(item)}
+                    className="bg-[#3cae64] mr-2 text-white px-5 py-1 rounded-lg font-semibold cursor-pointer"
+                  >
+                    Add
+                  </button>
+                )}
               </div>
             ))}
           </div>

@@ -131,6 +131,7 @@ const SignUp = () => {
               auth.currentUser.photoURL ||
               "https://www.w3schools.com/howto/img_avatar.png",
             uid: auth.currentUser.uid || "",
+            bio: "Add your bio...... Hi! My name is [Your Name]. I’m a [your first role, e.g., student] and also a passionate [your second role, e.g., developer]. I enjoy learning [your interests] and improving my skills through practice and real projects.",
           });
         })
         .catch((err) => {

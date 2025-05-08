@@ -1,6 +1,110 @@
-import React from "react";
+import { getAuth } from "firebase/auth";
+import { getDatabase, onValue, ref } from "firebase/database";
+import React, { useEffect, useState } from "react";
+import { data } from "react-router-dom";
 
 const EditProfileInfo = () => {
+  const db = getDatabase();
+  const auth = getAuth();
+  const [logedUser, setlogedUser] = useState({});
+  // for input value store
+  const [userNewData, setuserNewData] = useState({
+    Name: "",
+    Bio: "",
+  });
+  // for velidation error
+  const [userNewDataError, setuserNewDataError] = useState({
+    NameError: "",
+    BioError: "",
+  });
+  /**
+   * todo : Handle input Change functionality
+   * @param (event)
+   */
+  const handleinput = (event) => {
+    const { value, name } = event.target;
+    // set the input value on userNewData state
+    setuserNewData({
+      ...userNewData,
+      [name]: value,
+    });
+    // with onChange error state update
+    setuserNewDataError((prev) => ({
+      ...prev,
+      [`${name}Error`]: "",
+    }));
+  };
+
+  /**
+   * todo : Handle error functionality
+   * @param (null)
+   */
+  const validation = () => {
+    const errors = {};
+    // Checking if the input is empty throw a error
+    for (let each in userNewData) {
+      if (userNewData[each] === "") {
+        errors[`${each}Error`] = `${each} Missing`;
+      }
+    }
+    setuserNewDataError((prev) => ({
+      ...prev,
+      ...errors,
+    }));
+  };
+
+  /**
+   * todo : Handle new profile data save functionality
+   * @param (event)
+   */
+  const handleSaveNewData = (event) => {
+    // stop rerendering
+    event.preventDefault();
+    if (userNewData.Name === "" || userNewData.Bio === "") {
+      validation();
+    } else {
+      console.log("no error");
+    }
+  };
+
+  /**
+   * todo : Data fetch from users database
+   * @param (null)
+   * @description : This function fetches the data from the users database and sets it to the setlogedUser state.
+   */
+  useEffect(() => {
+    const fetchData = () => {
+      const dataRep = ref(db, "users/");
+      onValue(dataRep, (snapshot) => {
+        let data = [];
+        snapshot.forEach((item) => {
+          if (auth.currentUser.uid === item.val().uid) {
+            data.push({ ...item.val(), userKey: item.key });
+          }
+        });
+        setlogedUser(data);
+      });
+    };
+    fetchData();
+  }, []);
+
+  /**
+   * todo : set logeduser data to usernewdata state
+   * @param (null)
+   */
+  useEffect(() => {
+    if (Array.isArray(logedUser) && logedUser.length > 0) {
+      const user = logedUser[0];
+      if (user.username && user.bio) {
+        setuserNewData((prev) => ({
+          ...prev,
+          Name: user.username,
+          Bio: user.bio,
+        }));
+      }
+    }
+  }, [logedUser]);
+
   return (
     <>
       <div className="w-full h-full flex items-center justify-center">
@@ -16,9 +120,15 @@ const EditProfileInfo = () => {
                 Name
               </label>
               <input
+                value={userNewData.Name}
+                onChange={handleinput}
+                name="Name"
                 type="text"
-                className="w-full border-2 border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-1"
-                style={{ outlineColor: "#3CAE64", ringColor: "#3CAE64" }}
+                className={
+                  userNewDataError.NameError !== ""
+                    ? "w-full border-2 border-red-400 placeholder:text-red-400 rounded-xl p-2 focus:outline-none"
+                    : "w-full border-2 border-gray-300 placeholder:text-gray-500 rounded-xl p-2 focus:outline-none"
+                }
                 placeholder="Enter your name"
               />
             </div>
@@ -29,9 +139,15 @@ const EditProfileInfo = () => {
                 Bio
               </label>
               <textarea
-                rows="3"
-                className="w-full border-2 border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-1 resize-none"
-                style={{ outlineColor: "#3CAE64", ringColor: "#3CAE64" }}
+                value={userNewData.Bio}
+                onChange={handleinput}
+                name="Bio"
+                rows="4"
+                className={
+                  userNewDataError.BioError !== ""
+                    ? "w-full border-2 border-red-400 placeholder:text-red-400 rounded-xl p-2 focus:outline-none  resize-none"
+                    : "w-full border-2 border-gray-300 placeholder:text-gray-500 rounded-xl p-2 focus:outline-none  resize-none"
+                }
                 placeholder="Write something about yourself"
               ></textarea>
             </div>
@@ -42,6 +158,7 @@ const EditProfileInfo = () => {
                 type="submit"
                 className="text-white font-medium py-2 px-6 rounded-xl transition duration-200"
                 style={{ backgroundColor: "#3CAE64" }}
+                onClick={handleSaveNewData}
                 onMouseOver={(e) =>
                   (e.currentTarget.style.backgroundColor = "#359a57")
                 }
