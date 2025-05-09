@@ -5,12 +5,12 @@ import Friends from "./DashboardComponents/Friends";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import Chat from "./MessageComponent/Chat";
 
-const Message = () => {
+const Message = ({ userList }) => {
   return (
     <>
       <div className="flex flex-col gap-2 w-full h-full">
         <div className="h-[10%] flex items-center justify-between w-full">
-          <OutletTop Title={"Message"} />
+          <OutletTop userList={userList} Title={"Message"} />
         </div>
         <div className="h-[90%] flex gap-4 items-center w-full">
           <div className="h-full w-[33%] flex flex-col gap-4">

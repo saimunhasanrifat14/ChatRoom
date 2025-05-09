@@ -5,10 +5,8 @@ import { MdDelete, MdEditNote } from "react-icons/md";
 import { RiEditFill } from "react-icons/ri";
 import { TbLockFilled } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
-import { getDatabase, ref, onValue } from "firebase/database";
-import { getAuth } from "firebase/auth";
 
-const SettingsList = () => {
+const SettingsList = ({ userList }) => {
   const Settings = [
     {
       id: 1,
@@ -42,40 +40,20 @@ const SettingsList = () => {
     },
   ];
 
-  const auth = getAuth();
-  const [userList, setUserList] = useState([]);
-
-  /**
-   * todo : Data fetch from users database
-   * @param (null)
-   * @description : This function fetches the data from the users database and sets it to the userList state.
-   */
-  useEffect(() => {
-    const fetchData = () => {
-      const db = getDatabase();
-      const userRep = ref(db, "users/");
-      onValue(userRep, (snapshot) => {
-        let data = {};
-        snapshot.forEach((item) => {
-          if (auth.currentUser.uid === item.val().uid) {
-            data = { ...item.val(), userkey: item.key };
-          }
-        });
-        setUserList(data);
-      });
-    };
-    fetchData();
-  }, []);
-  
   return (
     <>
       <div className="h-[22%] w-full flex items-center gap-6 mb-6 border-b-2 border-gray-200 pb-6">
         <img
           className="h-full rounded-full"
-          src={userList.profile_picture || "https://www.w3schools.com/howto/img_avatar.png"}
+          src={
+            userList[0]?.profile_picture ||
+            "https://www.w3schools.com/howto/img_avatar.png"
+          }
           alt=""
         />
-        <h2 className="text-[40px] font-semibold">{userList.username || "Your Name"}</h2>
+        <h2 className="text-[40px] font-semibold">
+          {userList[0]?.username || "Your Name"}
+        </h2>
       </div>
       <div className="h-[78%] w-full flex flex-col">
         {Settings.map((item) => (

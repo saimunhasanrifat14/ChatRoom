@@ -3,10 +3,8 @@ import { getDatabase, onValue, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { data } from "react-router-dom";
 
-const EditProfileInfo = () => {
-  const db = getDatabase();
-  const auth = getAuth();
-  const [logedUser, setlogedUser] = useState({});
+const EditProfileInfo = ({userList}) => {
+
   // for input value store
   const [userNewData, setuserNewData] = useState({
     Name: "",
@@ -68,33 +66,12 @@ const EditProfileInfo = () => {
   };
 
   /**
-   * todo : Data fetch from users database
-   * @param (null)
-   * @description : This function fetches the data from the users database and sets it to the setlogedUser state.
-   */
-  useEffect(() => {
-    const fetchData = () => {
-      const dataRep = ref(db, "users/");
-      onValue(dataRep, (snapshot) => {
-        let data = [];
-        snapshot.forEach((item) => {
-          if (auth.currentUser.uid === item.val().uid) {
-            data.push({ ...item.val(), userKey: item.key });
-          }
-        });
-        setlogedUser(data);
-      });
-    };
-    fetchData();
-  }, []);
-
-  /**
-   * todo : set logeduser data to usernewdata state
+   * todo : set userList data to usernewdata state
    * @param (null)
    */
   useEffect(() => {
-    if (Array.isArray(logedUser) && logedUser.length > 0) {
-      const user = logedUser[0];
+    if (Array.isArray(userList) && userList.length > 0) {
+      const user = userList[0];
       if (user.username && user.bio) {
         setuserNewData((prev) => ({
           ...prev,
@@ -103,7 +80,7 @@ const EditProfileInfo = () => {
         }));
       }
     }
-  }, [logedUser]);
+  }, [userList]);
 
   return (
     <>

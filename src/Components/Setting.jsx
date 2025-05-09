@@ -11,19 +11,19 @@ import { RiEditFill } from "react-icons/ri";
 import { NavLink, Outlet } from "react-router-dom";
 import SettingsList from "./SettingComponent/SettingsList";
 
-const Setting = () => {
+const Setting = ({ userList }) => {
   return (
     <>
       <div className="flex flex-col gap-2 w-full h-full">
         <div className="h-[9%] flex items-center justify-between w-full">
-          <OutletTop Title={"Settings"} />
+          <OutletTop userList={userList} Title={"Settings"} />
         </div>
         <div className="h-[91%] w-full flex gap-4 items-center">
           <div className="h-full w-[50%] bg-white rounded-lg p-6">
-            <SettingsList/>
+            <SettingsList userList={userList} />
           </div>
           <div className="h-full w-[50%] bg-white rounded-lg">
-            <Outlet/>
+            <Outlet />
           </div>
         </div>
       </div>

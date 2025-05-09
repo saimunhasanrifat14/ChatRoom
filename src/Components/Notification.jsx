@@ -4,7 +4,7 @@ import { getDatabase, onValue, ref } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import moment from "moment";
 
-const Notification = () => {
+const Notification = ({userList}) => {
   const Notificationdata = [
     {
       id: 1,
@@ -96,7 +96,7 @@ const Notification = () => {
     <>
       <div className="flex flex-col gap-2 w-full h-full">
         <div className="h-[9%] flex items-center justify-between w-full">
-          <OutletTop Title="Notifications" />
+          <OutletTop userList={userList} Title="Notifications" />
         </div>
         <div className="h-[91%] flex gap-6 items-center w-full bg-white rounded-lg">
           <div className="flex flex-col gap-4 w-full h-full p-6 overflow-y-auto [&::-webkit-scrollbar]:hidden">
