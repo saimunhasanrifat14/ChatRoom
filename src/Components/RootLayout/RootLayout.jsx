@@ -2,7 +2,7 @@ import React from "react";
 import Sideber from "./Sideber";
 import { Outlet } from "react-router-dom";
 
-const RootLayout = () => {
+const RootLayout = ({ userList }) => {
   return (
     <>
       <div className="flex flex-row w-full bg-[#ececec] h-screen">
@@ -10,7 +10,7 @@ const RootLayout = () => {
           <Sideber />
         </div>
         <div className="w-[83%] h-full  rounded-lg p-4">
-          <Outlet />
+          <Outlet userList={userList} />
         </div>
       </div>
     </>

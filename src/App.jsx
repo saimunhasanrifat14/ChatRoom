@@ -54,7 +54,7 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
-        <Route path="/rootlayout" element={<RootLayout />}>
+        <Route path="/rootlayout" element={<RootLayout  userList={userList}/>}>
           <Route index element={<Dashboard />} />
           <Route path="Dashboard" element={<Dashboard userList={userList} />} />
           <Route path="Message" element={<Message userList={userList} />} />

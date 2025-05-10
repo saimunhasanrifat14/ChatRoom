@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import OutletTop from "./CommonComponent/OutletTop";
-import { getDatabase, onValue, ref } from "firebase/database";
+import {
+  getDatabase,
+  onValue,
+  push,
+  ref,
+  remove,
+  set,
+} from "firebase/database";
 import { getAuth } from "firebase/auth";
 import moment from "moment";
 
-const Notification = ({userList}) => {
+const Notification = ({ userList }) => {
   const Notificationdata = [
     {
       id: 1,
@@ -92,6 +99,24 @@ const Notification = ({userList}) => {
     fetchNotificationData();
   }, []);
 
+  const handleAcceptBtn = (item) => {
+    console.log(item);
+
+    set(push(ref(db, "friends/")), {
+      ...item,
+      acceptAt: moment().format("MMMM Do YYYY, h:mm a"),
+      senderReciveruid: auth.currentUser.uid.concat(item.senderUserId),
+    })
+      .then(() => {
+        console.log("Friend request accepted");
+      })
+      .catch((err) => {
+        console.log("error is ", err);
+      });
+
+    const reference = ref(db, `notification/${item.notificationKey}`);
+    remove(reference);
+  };
   return (
     <>
       <div className="flex flex-col gap-2 w-full h-full">
@@ -123,7 +148,10 @@ const Notification = ({userList}) => {
                 </div>
                 <div className="flex items-center gap-2">
                   {item.acceptButton && (
-                    <button className="ml-auto bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200 cursor-pointer">
+                    <button
+                      onClick={() => handleAcceptBtn(item)}
+                      className="ml-auto bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200 cursor-pointer"
+                    >
                       {item.acceptButton}
                     </button>
                   )}

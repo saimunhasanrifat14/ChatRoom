@@ -143,11 +143,14 @@ const UserList = () => {
       });
     set(push(ref(db, "notification/")), {
       sendAt: moment().format("MMMM Do YYYY, h:mm a"),
+      senderUserName: auth.currentUser.displayName,
+      senderEmail: auth.currentUser.email,
       senderProfilePicture: auth.currentUser.photoURL,
       senderUserId: auth.currentUser.uid,
+      reciverUserName: reciver.username,
+      reciverEmail: reciver.email,
       reciverProfilePicture: reciver.profile_picture,
       reciverUserId: reciver.uid,
-      senderUserName: auth.currentUser.displayName,
       senderReciverkey: auth.currentUser.uid.concat(reciver.uid),
       type: "FriendRequest",
       message: `has sent you a friend request`,
