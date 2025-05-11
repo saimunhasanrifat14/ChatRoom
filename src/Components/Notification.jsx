@@ -106,6 +106,7 @@ const Notification = ({ userList }) => {
       ...item,
       acceptAt: moment().format("MMMM Do YYYY, h:mm a"),
       senderReciveruid: auth.currentUser.uid.concat(item.senderUserId),
+      status: "accepted",
     })
       .then(() => {
         console.log("Friend request accepted");

@@ -1,5 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  set,
+  push,
+  remove,
+} from "firebase/database";
+import { getAuth } from "firebase/auth";
+import moment from "moment";
 
 const BlockList = () => {
   const blockedUsers = [
@@ -28,9 +38,38 @@ const BlockList = () => {
       message: "Blocked due to inactivity",
       image: "https://www.w3schools.com/howto/img_avatar.png",
     },
-   
-    
   ];
+  const db = getDatabase();
+  const auth = getAuth();
+  const [blockList, setblockList] = useState([]);
+
+  /**
+   * todo : Data fetch from friends database
+   * @param (null)
+   * @description : This function fetches the data from the friends database and sets it to the friendsList state.
+   */
+  useEffect(() => {
+    const fetchData = () => {
+      const UserRef = ref(db, "block/");
+      onValue(UserRef, (snapshot) => {
+        let data = [];
+        snapshot.forEach((item) => {
+          const blockUser = item.val();
+          const currentUid = auth.currentUser.uid;
+          if (currentUid !== blockUser.senderUserId)
+            data.push({ ...blockUser, blockKe: item.key });
+        });
+        setblockList(data);
+      });
+    };
+    fetchData();
+  }, []);
+  console.log("datafrom blocklist ", blockList);
+
+  const handleUnblockBtn = (item) => {
+    const reference = ref(db, `block/${item.blockKe}`);
+    remove(reference);
+  };
 
   return (
     <div className="h-full flex flex-col justify-between">
@@ -44,21 +83,26 @@ const BlockList = () => {
           </span>
         </div>
         <div className="h-[92%] overflow-auto [&::-webkit-scrollbar]:hidden">
-          {blockedUsers.map((user, index) => (
+          {blockList.map((user, index) => (
             <div
               key={index}
               className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0"
             >
               <img
-                src={user.image}
-                alt={user.name}
+                src={user.senderProfilePicture}
+                alt={user.senderUserName}
                 className="w-12 h-12 rounded-full object-cover"
               />
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900">{user.name}</h3>
-                <p className="text-gray-500 text-sm">{user.message}</p>
+                <h3 className="font-semibold text-gray-900">
+                  {user.senderUserName}
+                </h3>
+                <p className="text-gray-500 text-sm">{user.sendAt}</p>
               </div>
-              <button className="bg-[#EF4444] hover:bg-[#dc2626] text-white px-5 py-1 rounded-lg font-semibold cursor-pointer">
+              <button
+                onClick={() => handleUnblockBtn(user)}
+                className="bg-[#EF4444] hover:bg-[#dc2626] text-white px-5 py-1 rounded-lg font-semibold cursor-pointer"
+              >
                 Unblock
               </button>
             </div>

@@ -20,8 +20,8 @@ const Profile = ({ userList }) => {
         let data = [];
         snapshot.forEach((item) => {
           if (
-            auth.currentUser.uid !== item.val().uid &&
-            auth.currentUser.uid === item.val().reciverUserId
+            auth.currentUser.uid === item.val().reciverUserId ||
+            auth.currentUser.uid === item.val().senderUserId
           ) {
             data.push({ ...item.val(), friendsKey: item.key });
           }

@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { FaPlus, FaUserFriends } from "react-icons/fa";
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { getDatabase, ref, onValue, set, push } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  set,
+  push,
+  remove,
+} from "firebase/database";
 import { getAuth } from "firebase/auth";
+import moment from "moment";
 const Friends = () => {
   const UserList = [
     {
@@ -66,11 +74,14 @@ const Friends = () => {
       onValue(UserRef, (snapshot) => {
         let data = [];
         snapshot.forEach((item) => {
+          const friend = item.val();
+          const currentUid = auth.currentUser.uid;
           if (
-            auth.currentUser.uid !== item.val().uid &&
-            auth.currentUser.uid === item.val().reciverUserId
+            friend.status === "accepted" &&
+            (friend.senderUserId === currentUid ||
+              friend.reciverUserId === currentUid)
           ) {
-            data.push({ ...item.val(), friendsKey: item.key });
+            data.push({ ...friend, friendsKey: item.key });
           }
         });
         setfriendsList(data);
@@ -78,6 +89,22 @@ const Friends = () => {
     };
     fetchData();
   }, []);
+
+  const handleBlockBtn = (item) => {
+    set(push(ref(db, "block/")), {
+      ...item,
+      sendAt: moment().format("MMMM Do YYYY, h:mm a"),
+      status: "blocked",
+    })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log("error form block", err);
+      });
+    const reference = ref(db, `friends/${item.friendsKey}`);
+    remove(reference);
+  };
 
   return (
     <>
@@ -91,27 +118,40 @@ const Friends = () => {
           </span>
         </div>
         <div className="h-[87%] overflow-auto [&::-webkit-scrollbar]:hidden">
-          {friendsList?.map((item, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0 "
-            >
-              <img
-                src={item.senderProfilePicture}
-                alt={item.senderUserName}
-                className="w-12 h-12 rounded-full object-cover "
-              />
-              <div className="flex-1">
-                <h3 className="font-semibold text-gray-900">
-                  {item.senderUserName}
-                </h3>
-                <p className="text-gray-500 text-sm">{item.acceptAt}</p>
+          {friendsList?.map((item, index) => {
+            const currentUid = auth.currentUser.uid;
+            const isSender = item.senderUserId === currentUid;
+
+            const friendName = isSender
+              ? item.reciverUserName
+              : item.senderUserName;
+            const friendPhoto = isSender
+              ? item.reciverProfilePicture
+              : item.senderProfilePicture;
+
+            return (
+              <div
+                key={item.friendsKey}
+                className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0"
+              >
+                <img
+                  src={friendPhoto}
+                  alt={friendName}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-900">{friendName}</h3>
+                  <p className="text-gray-500 text-sm">{item.acceptAt}</p>
+                </div>
+                <button
+                  onClick={() => handleBlockBtn(item)}
+                  className="bg-red-400 mr-2 text-white px-5 py-1 rounded-lg font-semibold cursor-pointer"
+                >
+                  BLock
+                </button>
               </div>
-              <span className="bg-[#3cae64] mr-2 text-white px-5 py-2 rounded-lg font-semibold cursor-pointer">
-                <FaUserFriends />
-              </span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </>
