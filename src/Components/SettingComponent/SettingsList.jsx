@@ -46,13 +46,13 @@ const SettingsList = ({ userList }) => {
         <img
           className="h-full rounded-full"
           src={
-            userList[0]?.profile_picture ||
+            userList?.profile_picture ||
             "https://www.w3schools.com/howto/img_avatar.png"
           }
           alt=""
         />
         <h2 className="text-[40px] font-semibold">
-          {userList[0]?.username || "Your Name"}
+          {userList?.username || "Your Name"}
         </h2>
       </div>
       <div className="h-[78%] w-full flex flex-col">

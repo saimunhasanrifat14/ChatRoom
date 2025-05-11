@@ -5,11 +5,12 @@ import { BiSolidDashboard } from "react-icons/bi";
 import { HiOutlineLogout } from "react-icons/hi";
 import { IoLogOut, IoNotifications, IoSettingsSharp } from "react-icons/io5";
 import { MdOutlineArrowOutward } from "react-icons/md";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const Navber = () => {
   const auth = getAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   /**
    * todo : menuItems array implement
@@ -29,13 +30,15 @@ const Navber = () => {
    * @description : this function is used to sign out the user from the app and redirect to login page
    */
   const handleLogout = () => {
-    signOut(auth).then(() => {
-      navigate("/login");
-    }).catch((error) => {
-      console.error("Error signing out: ", error);
-    });
-  }
-  
+    signOut(auth)
+      .then(() => {
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error("Error signing out: ", error);
+      });
+  };
+
   return (
     <>
       <div className="h-full flex flex-col justify-between items-center py-8 px-4">
@@ -62,7 +65,10 @@ const Navber = () => {
             ))}
           </div>
         </div>
-        <div onClick={handleLogout} className="flex items-center gap-2 w-full  py-2 px-3 font-semibold text-gray-600 cursor-pointer hover:text-red-400">
+        <div
+          onClick={handleLogout}
+          className="flex items-center gap-2 w-full  py-2 px-3 font-semibold text-gray-600 cursor-pointer hover:text-red-400"
+        >
           <span aria-label="Logout Icon" className="text-[26px] ">
             <IoLogOut />
           </span>

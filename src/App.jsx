@@ -35,10 +35,10 @@ const App = () => {
     const fetchData = () => {
       const UserRef = ref(db, "users/");
       onValue(UserRef, (snapshot) => {
-        let data = [];
+        let data = {};
         snapshot.forEach((item) => {
           if (auth.currentUser.uid === item.val().uid) {
-            data.push({ ...item.val(), userkey: item.key });
+            data = { ...item.val(), userkey: item.key };
           }
         });
         setUserList(data);
@@ -54,14 +54,20 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
-        <Route path="/rootlayout" element={<RootLayout  userList={userList}/>}>
+        <Route path="/rootlayout" element={<RootLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="Dashboard" element={<Dashboard userList={userList} />} />
           <Route path="Message" element={<Message userList={userList} />} />
-          <Route path="Notification"element={<Notification userList={userList} />}/>
+          <Route
+            path="Notification"
+            element={<Notification userList={userList} />}
+          />
           <Route path="Setting" element={<Setting userList={userList} />}>
             <Route index element={<DefaltComponent />} />
-            <Route path="editProfileInfo" element={<EditProfileInfo userList={userList} />} />
+            <Route
+              path="editProfileInfo"
+              element={<EditProfileInfo userList={userList} />}
+            />
             <Route path="editProfile" element={<EditProfile />} />
             <Route path="ChangePassword" element={<ChangePassword />} />
             <Route path="blockList" element={<BlockList />} />

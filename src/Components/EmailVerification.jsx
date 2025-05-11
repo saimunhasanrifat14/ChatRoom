@@ -15,7 +15,7 @@ const EmailVerification = () => {
     try {
       await auth.currentUser.reload();
       if (auth.currentUser.emailVerified) {
-        navigate("/rootlayout");
+        navigate("/rootlayout/Dashboard");
       } else {
         setErrorMsg("Your email is not verified yet!");
       }

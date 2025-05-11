@@ -74,7 +74,9 @@ const UserList = () => {
   const auth = getAuth();
   const [userList, setUserList] = useState([]);
   const [notifications, setnotifications] = useState([]);
+  const [friends, setfriends] = useState([]);
   const [pendingRequest, setpendingRequest] = useState(false);
+  const [LogedUser, setLogedUser] = useState({});
 
   /**
    * todo : Data fetch from users database
@@ -89,6 +91,9 @@ const UserList = () => {
         snapshot.forEach((item) => {
           if (auth.currentUser.uid !== item.val().uid) {
             data.push({ ...item.val(), userkey: item.key });
+          } else {
+            let user = Object.assign({ ...item.val(), userkey: item.key });
+            setLogedUser(user);
           }
         });
         setUserList(data);
@@ -96,6 +101,7 @@ const UserList = () => {
     };
     fetchData();
   }, []);
+
   /**
    * todo : Data fetch from Notification database
    * @param (null)
@@ -107,8 +113,11 @@ const UserList = () => {
       onValue(UserRef, (snapshot) => {
         let data = [];
         snapshot.forEach((item) => {
-          if (auth.currentUser.uid === item.val().reciverUserId) {
-            data.push({ ...item.val(), friendRequstKey: item.key });
+          if (
+            auth.currentUser.uid === item.val().reciverUserId ||
+            LogedUser.userUid === item.val().senderId
+          ) {
+            data.push(auth.currentUser.uid.concat(item.val().reciverUserId));
           }
         });
         setnotifications(data);
@@ -116,6 +125,31 @@ const UserList = () => {
     };
     fetchData();
   }, []);
+
+  /**
+   * todo : Data fetch from friends database
+   * @param (null)
+   * @description : This function fetches the data from the friends database and sets it to the notifications state.
+   */
+  useEffect(() => {
+    const fetchData = () => {
+      const UserRef = ref(db, "friends/");
+      onValue(UserRef, (snapshot) => {
+        let data = [];
+        snapshot.forEach((item) => {
+          if (
+            auth.currentUser.uid === item.val().reciverUserId ||
+            LogedUser.userUid === item.val().senderUserId
+          ) {
+            data.push(item.val().senderUserId.concat(item.val().reciverUserId));
+          }
+        });
+        setfriends(data);
+      });
+    };
+    fetchData();
+  }, []);
+  console.log("data from Friends data", friends);
 
   /**
    * todo : Handle friend request functionality
@@ -193,7 +227,10 @@ const UserList = () => {
                   </h3>
                   <p className="text-gray-500 text-sm">hello</p>
                 </div>
-                {pendingRequest ? (
+
+                {notifications.includes(
+                  auth.currentUser.uid.concat(item.uid)
+                ) ? (
                   <button className="bg-[#3cae64] mr-2 text-white px-5 py-1 rounded-lg font-semibold">
                     Pending
                   </button>

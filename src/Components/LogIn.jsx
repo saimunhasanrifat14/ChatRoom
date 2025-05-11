@@ -109,7 +109,7 @@ const LogIn = () => {
         .then((userinfo) => {
           console.log(userinfo);
           if (auth.currentUser.emailVerified) {
-            navigate("/rootlayout");
+            navigate("/rootlayout/Dashboard");
           } else {
             sendEmailVerification(auth.currentUser).then(() => {});
             navigate("/EmailVerification");
@@ -181,7 +181,7 @@ const LogIn = () => {
             bio: "Add your bio...... Hi! My name is [Your Name]. I’m a [your first role, e.g., student] and also a passionate [your second role, e.g., developer]. I enjoy learning [your interests] and improving my skills through practice and real projects.",
           });
         }
-        navigate("/rootlayout");
+        navigate("/rootlayout/Dashboard");
       })
       .catch((error) => {
         console.error("Google Sign-in Error:", error);

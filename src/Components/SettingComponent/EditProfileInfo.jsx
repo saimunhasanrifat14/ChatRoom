@@ -3,8 +3,7 @@ import { getDatabase, onValue, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { data } from "react-router-dom";
 
-const EditProfileInfo = ({userList}) => {
-
+const EditProfileInfo = ({ userList }) => {
   // for input value store
   const [userNewData, setuserNewData] = useState({
     Name: "",
@@ -70,15 +69,13 @@ const EditProfileInfo = ({userList}) => {
    * @param (null)
    */
   useEffect(() => {
-    if (Array.isArray(userList) && userList.length > 0) {
-      const user = userList[0];
-      if (user.username && user.bio) {
-        setuserNewData((prev) => ({
-          ...prev,
-          Name: user.username,
-          Bio: user.bio,
-        }));
-      }
+    const user = userList;
+    if (user.username && user.bio) {
+      setuserNewData((prev) => ({
+        ...prev,
+        Name: user.username,
+        Bio: user.bio,
+      }));
     }
   }, [userList]);
 

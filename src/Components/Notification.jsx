@@ -117,6 +117,10 @@ const Notification = ({ userList }) => {
     const reference = ref(db, `notification/${item.notificationKey}`);
     remove(reference);
   };
+  const handlerefectBtn = (item) => {
+    const reference = ref(db, `notification/${item.notificationKey}`);
+    remove(reference);
+  };
   return (
     <>
       <div className="flex flex-col gap-2 w-full h-full">
@@ -156,7 +160,10 @@ const Notification = ({ userList }) => {
                     </button>
                   )}
                   {item.rejectbutton && (
-                    <button className="ml-auto bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200 cursor-pointer">
+                    <button
+                      onClick={() => handlerefectBtn(item)}
+                      className="ml-auto bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200 cursor-pointer"
+                    >
                       {item.rejectbutton}
                     </button>
                   )}
