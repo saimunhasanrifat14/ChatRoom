@@ -56,8 +56,8 @@ const BlockList = () => {
         snapshot.forEach((item) => {
           const blockUser = item.val();
           const currentUid = auth.currentUser.uid;
-          if (currentUid !== blockUser.senderUserId)
-            data.push({ ...blockUser, blockKe: item.key });
+          if (blockUser.senderUserId === currentUid)
+            data.push({ ...blockUser, blockKey: item.key });
         });
         setblockList(data);
       });
@@ -89,13 +89,13 @@ const BlockList = () => {
               className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0"
             >
               <img
-                src={user.senderProfilePicture}
-                alt={user.senderUserName}
+                src={user.reciverProfilePicture}
+                alt={user.reciverUserName}
                 className="w-12 h-12 rounded-full object-cover"
               />
               <div className="flex-1">
                 <h3 className="font-semibold text-gray-900">
-                  {user.senderUserName}
+                  {user.reciverUserName}
                 </h3>
                 <p className="text-gray-500 text-sm">{user.sendAt}</p>
               </div>

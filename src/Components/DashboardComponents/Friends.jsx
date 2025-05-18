@@ -89,19 +89,62 @@ const Friends = () => {
     };
     fetchData();
   }, []);
+  console.log("data form auth", auth.currentUser);
 
   const handleBlockBtn = (item) => {
+    const currentUserId = auth.currentUser.uid;
+
+    let senderData, receiverData;
+
+    if (currentUserId === item.senderUserId) {
+      senderData = {
+        userName: item.senderUserName,
+        email: item.senderEmail,
+        profilePicture: item.senderProfilePicture,
+        userId: item.senderUserId,
+      };
+      receiverData = {
+        userName: item.reciverUserName,
+        email: item.reciverEmail,
+        profilePicture: item.reciverProfilePicture,
+        userId: item.reciverUserId,
+      };
+    } else {
+      senderData = {
+        userName: item.reciverUserName,
+        email: item.reciverEmail,
+        profilePicture: item.reciverProfilePicture,
+        userId: item.reciverUserId,
+      };
+      receiverData = {
+        userName: item.senderUserName,
+        email: item.senderEmail,
+        profilePicture: item.senderProfilePicture,
+        userId: item.senderUserId,
+      };
+    }
+
     set(push(ref(db, "block/")), {
-      ...item,
       sendAt: moment().format("MMMM Do YYYY, h:mm a"),
       status: "blocked",
+
+      senderUserName: auth.currentUser.displayName,
+      senderEmail: auth.currentUser.email,
+      senderProfilePicture: auth.currentUser.photoURL,
+      senderUserId: auth.currentUser.uid,
+
+      reciverUserName: receiverData.userName,
+      reciverEmail: receiverData.email,
+      reciverProfilePicture: receiverData.profilePicture,
+      reciverUserId: receiverData.userId,
     })
       .then((result) => {
         console.log(result);
       })
       .catch((err) => {
-        console.log("error form block", err);
+        console.log("error from block", err);
       });
+
     const reference = ref(db, `friends/${item.friendsKey}`);
     remove(reference);
   };
