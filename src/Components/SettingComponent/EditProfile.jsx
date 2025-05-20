@@ -1,56 +1,146 @@
-import React from "react";
+import React, { useRef, useState } from "react";
+import { uploedCloudinary } from "../../Utilities/Cloudinary.utils";
+import { getDatabase, ref, update } from "firebase/database";
 
-const EditProfile = () => {
+const EditProfile = ({ userList }) => {
+  // All hook
+  const [profile, setprofile] = useState();
+  const [profileError, setprofileError] = useState("");
+  const [saveLoading, setsaveLoading] = useState(false);
+  const [Loading, setLoading] = useState(false);
+  const db = getDatabase();
+  const fileInputRef = useRef(null);
+
+  /**
+   * @function handleUpdateProfile
+   * @description Uploads profile image to Cloudinary and updates the user's profile in Firebase.
+   * @returns {void}
+   */
+  const handleUpdateProfile = async () => {
+    if (!profile) {
+      setprofileError("Please select a profile picture first.");
+      return;
+    }
+    try {
+      setLoading(true);
+      const profileUrl = await uploedCloudinary(profile);
+      // If upload failed, throw an error
+      if (!profileUrl) {
+        throw new Error("Upload failed");
+      }
+      // Update the user's profile picture in the database
+      const updateData = { profile_picture: profileUrl };
+      await update(ref(db, `users/${userList.userkey}`), updateData);
+      setsaveLoading(true);
+      setTimeout(() => {
+        setsaveLoading(false);
+      }, 2000);
+
+      setprofile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    } catch (err) {
+      console.error("Profile update error:", err);
+      setprofileError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /**
+   * @description Set the selected file to state and clear previous error.
+   * @param {Event}
+   * @returns {void}
+   */
+  const handleInputChange = (event) => {
+    const { files } = event.target;
+    setprofile(files[0]);
+    setprofileError("");
+  };
+
   return (
     <>
       <div className="flex items-center justify-center h-full w-full py-10 px-4">
-      <div className="flex flex-col justify-center h-full w-full max-w-md p-6">
-        <h2 className="text-xl font-semibold text-center text-gray-800 mb-6">Update Your Profile</h2>
-
-        {/* Upload Box */}
-        <label
-          htmlFor="file-upload"
-          className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 border-[#3CAE64] hover:border-[#359a57] transition duration-200 mb-6"
-        >
-          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-            <svg
-              className="w-8 h-8 mb-4 text-[#3CAE64]"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 16"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-              />
-            </svg>
-            <p className="mb-2 text-sm text-gray-600">
-              <span className="font-semibold text-[#3CAE64]">Click to upload</span> or drag and drop
-            </p>
-            <p className="text-xs text-gray-500">PNG, JPG, JPEG, GIF (max 800×400px)</p>
-          </div>
-          <input
-            id="file-upload"
-            type="file"
-            accept="image/*"
-            className="hidden"
-          />
-        </label>
-
-        {/* Submit Button */}
-        <div className="text-right">
-          <button
-            type="button"
-            className="bg-[#3CAE64] hover:bg-[#359a57] text-white font-medium py-2 px-6 rounded-xl transition duration-200"
+        <div className="flex flex-col justify-center h-full w-full max-w-md p-6">
+          <h2 className="text-xl font-semibold text-center text-gray-800 mb-6">
+            Update Your Profile
+          </h2>
+          {/* Upload Box */}
+          <label
+            htmlFor="file-upload"
+            className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 border-[#3CAE64] hover:border-[#359a57] transition duration-200 mb-6"
           >
-            Update Profile Photo
-          </button>
+            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              <svg
+                className="w-8 h-8 mb-4 text-[#3CAE64]"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 16"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                />
+              </svg>
+
+              <p className="mb-2 text-sm text-gray-600">
+                <span className="font-semibold text-[#3CAE64]">
+                  Click to upload
+                </span>{" "}
+                or drag and drop
+              </p>
+              <p className="text-xs text-gray-500">
+                PNG, JPG, JPEG, GIF (max 800×400px)
+              </p>
+
+              {/* Show selected file name */}
+              {profile && (
+                <p className="mt-2 text-sm text-gray-500">
+                  Selected file:{" "}
+                  <span className="font-semibold text-[#3CAE64]">
+                    {profile.name}
+                  </span>
+                </p>
+              )}
+
+              {/* Error message */}
+              {profileError && (
+                <p className="text-red-400 font-normal text-[14px]">
+                  {profileError}
+                </p>
+              )}
+            </div>
+
+            <input
+              id="file-upload"
+              type="file"
+              name="Profile"
+              accept="image/*"
+              className="hidden"
+              ref={fileInputRef}
+              onChange={handleInputChange}
+            />
+          </label>
+          {/* Submit Button */}
+          <div className="text-right">
+            <button
+              type="button"
+              className="bg-[#3CAE64] hover:bg-[#359a57] text-white font-medium py-2 w-50 rounded-xl transition duration-200"
+              onClick={handleUpdateProfile}
+            >
+              {saveLoading
+                ? "Updated"
+                : Loading
+                ? "Loading"
+                : "Update Profile Photo"}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 };

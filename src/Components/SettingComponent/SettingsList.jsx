@@ -44,7 +44,7 @@ const SettingsList = ({ userList }) => {
     <>
       <div className="h-[22%] w-full flex items-center gap-6 mb-6 border-b-2 border-gray-200 pb-6">
         <img
-          className="h-full rounded-full"
+          className="w-30 h-30 object-cover rounded-full"
           src={
             userList?.profile_picture ||
             "https://www.w3schools.com/howto/img_avatar.png"

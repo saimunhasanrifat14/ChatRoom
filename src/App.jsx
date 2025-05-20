@@ -68,7 +68,10 @@ const App = () => {
               path="editProfileInfo"
               element={<EditProfileInfo userList={userList} />}
             />
-            <Route path="editProfile" element={<EditProfile />} />
+            <Route
+              path="editProfile"
+              element={<EditProfile userList={userList} />}
+            />
             <Route path="ChangePassword" element={<ChangePassword />} />
             <Route path="blockList" element={<BlockList />} />
             <Route path="DeleteAccount" element={<DeleteAccount />} />

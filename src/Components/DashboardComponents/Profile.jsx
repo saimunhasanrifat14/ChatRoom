@@ -5,6 +5,7 @@ import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
 const Profile = ({ userList }) => {
+  // all hook and veriable
   const db = getDatabase();
   const auth = getAuth();
   const [friendsList, setfriendsList] = useState([]);
@@ -37,7 +38,7 @@ const Profile = ({ userList }) => {
       <div className="w-full h-full p-10 flex gap-7">
         <div className="w-[25%]">
           <img
-            className="w-full rounded-full"
+            className="w-full object-cover h-auto aspect-square rounded-full"
             src={
               userList?.profile_picture ||
               "https://www.w3schools.com/howto/img_avatar.png"

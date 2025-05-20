@@ -19,7 +19,7 @@ const OutletTop = ({ Title, userList }) => {
         </Link>
         <img
           onClick={() => navigate("/rootlayout/Dashboard")}
-          className="w-10 h-10 rounded-full cursor-pointer"
+          className="w-10 h-10 object-cover rounded-full cursor-pointer"
           src={
             userList?.profile_picture ||
             "https://www.w3schools.com/howto/img_avatar.png"
