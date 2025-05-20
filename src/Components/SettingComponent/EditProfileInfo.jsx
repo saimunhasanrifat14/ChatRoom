@@ -1,5 +1,5 @@
 import { getAuth } from "firebase/auth";
-import { getDatabase, onValue, ref } from "firebase/database";
+import { getDatabase, ref, update } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { data } from "react-router-dom";
 
@@ -14,6 +14,9 @@ const EditProfileInfo = ({ userList }) => {
     NameError: "",
     BioError: "",
   });
+  const db = getDatabase();
+  const [saveLoading, setsaveLoading] = useState(false);
+
   /**
    * todo : Handle input Change functionality
    * @param (event)
@@ -60,7 +63,21 @@ const EditProfileInfo = ({ userList }) => {
     if (userNewData.Name === "" || userNewData.Bio === "") {
       validation();
     } else {
-      console.log("no error");
+      // update new data on firebase
+      let updateData = {
+        username: userNewData.Name,
+        bio: userNewData.Bio,
+      };
+      update(ref(db, `users/${userList.userkey}`), updateData)
+        .then(() => {
+          setsaveLoading(true);
+          setTimeout(() => {
+            setsaveLoading(false);
+          }, 1000);
+        })
+        .catch((err) => {
+          console.log("error from updata data", err);
+        });
     }
   };
 
@@ -130,17 +147,10 @@ const EditProfileInfo = ({ userList }) => {
             <div className="text-right">
               <button
                 type="submit"
-                className="text-white font-medium py-2 px-6 rounded-xl transition duration-200"
-                style={{ backgroundColor: "#3CAE64" }}
+                className="text-white bg-[#3CAE64] text-center font-medium py-2 w-40 rounded-xl transition duration-200 cursor-pointer hover:bg-[#4e8c64]"
                 onClick={handleSaveNewData}
-                onMouseOver={(e) =>
-                  (e.currentTarget.style.backgroundColor = "#359a57")
-                }
-                onMouseOut={(e) =>
-                  (e.currentTarget.style.backgroundColor = "#3CAE64")
-                }
               >
-                Save Changes
+                {saveLoading ? "Saved" : "Save Changes"}
               </button>
             </div>
           </form>
