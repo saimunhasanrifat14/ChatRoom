@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { HiKey } from "react-icons/hi";
 import { IoMdPhotos } from "react-icons/io";
 import { MdDelete, MdEditNote } from "react-icons/md";
 import { RiEditFill } from "react-icons/ri";
 import { TbLockFilled } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
+import { UserContext } from "../../Context/UserContext";
 
-const SettingsList = ({ userList }) => {
+const SettingsList = () => {
+  // List of user settings with icons and navigation paths.
   const Settings = [
     {
       id: 1,
@@ -39,6 +41,8 @@ const SettingsList = ({ userList }) => {
       path: "/rootlayout/Setting/DeleteAccount",
     },
   ];
+  // Gets the logged-in user's data and loading state from UserContext.
+  const { userList, loading } = useContext(UserContext);
 
   return (
     <>

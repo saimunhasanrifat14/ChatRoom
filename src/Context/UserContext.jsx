@@ -14,6 +14,11 @@ export const UserProvider = ({ children }) => {
   const db = getDatabase();
   const auth = getAuth();
 
+  /**
+   * todo : Data fetch from users database
+   * @param (null)
+   * @description : This function fetches the data from the users database and sets it to the userList state.
+   */
   useEffect(() => {
     const fetchData = () => {
       const userRef = ref(db, "users/");

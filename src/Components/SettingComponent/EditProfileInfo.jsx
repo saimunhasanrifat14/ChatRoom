@@ -1,9 +1,15 @@
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, update } from "firebase/database";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { data } from "react-router-dom";
+import { UserContext } from "../../Context/UserContext";
 
-const EditProfileInfo = ({ userList }) => {
+const EditProfileInfo = () => {
+  // Gets the logged-in user's data and loading state from UserContext.
+  const { userList, loading } = useContext(UserContext);
+  const db = getDatabase();
+  const [saveLoading, setsaveLoading] = useState(false);
+
   // for input value store
   const [userNewData, setuserNewData] = useState({
     Name: "",
@@ -14,8 +20,6 @@ const EditProfileInfo = ({ userList }) => {
     NameError: "",
     BioError: "",
   });
-  const db = getDatabase();
-  const [saveLoading, setsaveLoading] = useState(false);
 
   /**
    * todo : Handle input Change functionality
@@ -87,7 +91,7 @@ const EditProfileInfo = ({ userList }) => {
    */
   useEffect(() => {
     const user = userList;
-    if (user.username && user.bio) {
+    if (user?.username && user?.bio) {
       setuserNewData((prev) => ({
         ...prev,
         Name: user.username,

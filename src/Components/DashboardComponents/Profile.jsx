@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaUserFriends } from "react-icons/fa";
 import { MdGroups } from "react-icons/md";
 import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import { UserContext } from "../../Context/UserContext";
 
-const Profile = ({ userList }) => {
+const Profile = () => {
   // all hook and veriable
   const db = getDatabase();
   const auth = getAuth();
   const [friendsList, setfriendsList] = useState([]);
+  
+  // Gets the logged-in user's data and loading state from UserContext.
+  const { userList, loading } = useContext(UserContext);
+
   /**
    * todo : Data fetch from friends database
    * @param (null)

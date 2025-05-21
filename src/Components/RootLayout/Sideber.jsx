@@ -7,7 +7,7 @@ import { IoLogOut, IoNotifications, IoSettingsSharp } from "react-icons/io5";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
-const Navber = () => {
+const Sideber = () => {
   const auth = getAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -79,4 +79,4 @@ const Navber = () => {
   );
 };
 
-export default Navber;
+export default Sideber;

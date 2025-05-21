@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { IoIosNotifications } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../Context/UserContext";
 
-const OutletTop = ({ Title, userList }) => {
+const OutletTop = ({ Title }) => {
   const navigate = useNavigate();
+  
+  // Gets the logged-in user's data and loading state from UserContext.
+  const { userList, loading } = useContext(UserContext);
 
   return (
     <>
