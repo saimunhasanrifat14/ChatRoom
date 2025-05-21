@@ -9,7 +9,7 @@ export const UserContext = createContext();
 // Provider component
 export const UserProvider = ({ children }) => {
   const [userList, setUserList] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const db = getDatabase();
   const auth = getAuth();
@@ -21,6 +21,7 @@ export const UserProvider = ({ children }) => {
    */
   useEffect(() => {
     const fetchData = () => {
+      setLoading(true);
       const userRef = ref(db, "users/");
       onValue(userRef, (snapshot) => {
         let data = {};

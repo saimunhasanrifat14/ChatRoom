@@ -157,37 +157,23 @@ const UserList = () => {
    * @description : This function fetches the data from the users database and sets it to the userList state.
    */
   const handleFriendRequest = (reciver) => {
-    set(push(ref(db, "friendRequest/")), {
-      sendAt: moment().format("MMMM Do YYYY, h:mm:ss a"),
-      senderUserName: auth.currentUser.displayName,
-      senderEmail: auth.currentUser.email,
-      senderProfilePicture: auth.currentUser.photoURL,
-      senderUserId: auth.currentUser.uid,
-      reciverUserName: reciver.username,
-      reciverEmail: reciver.email,
-      reciverProfilePicture: reciver.profile_picture,
-      reciverUserId: reciver.uid,
-      senderReciverkey: auth.currentUser.uid.concat(reciver.uid),
-    })
-      .then(() => {
-        console.log("Friend request sent successfully");
-      })
-      .catch((error) => {
-        console.error("Error sending friend request: ", error);
-      });
     set(push(ref(db, "notification/")), {
-      sendAt: moment().format("MMMM Do YYYY, h:mm a"),
       senderUserName: auth.currentUser.displayName,
       senderEmail: auth.currentUser.email,
       senderProfilePicture: auth.currentUser.photoURL,
       senderUserId: auth.currentUser.uid,
+
       reciverUserName: reciver.username,
       reciverEmail: reciver.email,
       reciverProfilePicture: reciver.profile_picture,
       reciverUserId: reciver.uid,
-      senderReciverkey: auth.currentUser.uid.concat(reciver.uid),
-      type: "FriendRequest",
+
+      senderReciveruid: auth.currentUser.uid.concat(reciver.uid),
       message: `has sent you a friend request`,
+      sendAt: moment().format("MMMM Do YYYY, h:mm a"),
+      status: "Friend Request",
+      acceptButton: "Accept",
+      rejectButton: "Reject",
     })
       .then(() => {
         console.log("Notification sent successfully");
@@ -231,7 +217,10 @@ const UserList = () => {
                 {notifications.includes(
                   auth.currentUser.uid.concat(item.uid)
                 ) ? (
-                  <button className="bg-[#3cae64] mr-2 text-white px-5 py-1 rounded-lg font-semibold">
+                  <button
+                    onClick={() => handleFriendRequest(item)}
+                    className="bg-[#3cae64] mr-2 text-white px-5 py-1 rounded-lg font-semibold"
+                  >
                     Pending
                   </button>
                 ) : (

@@ -64,10 +64,10 @@ const BlockList = () => {
     };
     fetchData();
   }, []);
-  console.log("datafrom blocklist ", blockList);
 
+  // Unblocks a user by removing their entry from the Firebase block list
   const handleUnblockBtn = (item) => {
-    const reference = ref(db, `block/${item.blockKe}`);
+    const reference = ref(db, `block/${item.blockKey}`);
     remove(reference);
   };
 

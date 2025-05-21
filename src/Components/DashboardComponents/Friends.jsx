@@ -89,8 +89,12 @@ const Friends = () => {
     };
     fetchData();
   }, []);
-  console.log("data form auth", auth.currentUser);
 
+  /**
+   * todo : Block Friend
+   * @param {Object} item - Friend data object.
+   * @description : Blocks a user by saving block data to "block/" database, then removes the friend from "friends/".
+   */
   const handleBlockBtn = (item) => {
     const currentUserId = auth.currentUser.uid;
 

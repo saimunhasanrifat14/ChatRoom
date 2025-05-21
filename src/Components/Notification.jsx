@@ -85,12 +85,7 @@ const Notification = ({ userList }) => {
         let data = [];
         snapshot.forEach((item) => {
           if (auth.currentUser.uid === item.val().reciverUserId) {
-            data.push({
-              ...item.val(),
-              notificationKey: item.key,
-              acceptButton: "Accept",
-              rejectbutton: "Reject",
-            });
+            data.push({ ...item.val(), notificationKey: item.key });
           }
         });
         setNotificationFetchdata(data);
@@ -99,12 +94,17 @@ const Notification = ({ userList }) => {
     fetchNotificationData();
   }, []);
 
+  /**
+   * todo : Accept Friend Request
+   * @param {Object} item - Friend request data.
+   * @description : Accepts a friend request, updates "friends/", sends a notification, and removes the original one.
+   */
   const handleAcceptBtn = (item) => {
-    console.log(item);
-
+    // Accept a friend request and save the friend info to the database (excluding UI-specific data)
+    const { acceptButton, rejectButton, ...filteredItem } = item;
     set(push(ref(db, "friends/")), {
-      ...item,
-      acceptAt: moment().format("MMMM Do YYYY, h:mm a"),
+      ...filteredItem,
+      sendAt: moment().format("MMMM Do YYYY, h:mm a"),
       senderReciveruid: auth.currentUser.uid.concat(item.senderUserId),
       status: "accepted",
     })
@@ -115,13 +115,35 @@ const Notification = ({ userList }) => {
         console.log("error is ", err);
       });
 
+    // Notify the original sender that their friend request has been accepted
+    set(push(ref(db, "notification/")), {
+      reciverUserId: item.senderUserId,
+      senderProfilePicture: item.reciverProfilePicture,
+      senderUserName: item.reciverUserName,
+      message: `has accepted your friend request`,
+      sendAt: moment().format("MMMM Do YYYY, h:mm a"),
+    })
+      .then(() => {
+        console.log("Message successfully send");
+      })
+      .catch((err) => {
+        console.log("error is ", err);
+      });
+
     const reference = ref(db, `notification/${item.notificationKey}`);
     remove(reference);
   };
+
+  /**
+   * todo : Accept Friend Request
+   *  @param {Object} item - Friend request data.
+   * @description : Remove a specific notification from the database using its unique key.
+   */
   const handlerefectBtn = (item) => {
     const reference = ref(db, `notification/${item.notificationKey}`);
     remove(reference);
   };
+
   return (
     <>
       <div className="flex flex-col gap-2 w-full h-full">
@@ -152,21 +174,25 @@ const Notification = ({ userList }) => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  {item.acceptButton && (
+                  {item.acceptButton ? (
                     <button
                       onClick={() => handleAcceptBtn(item)}
                       className="ml-auto bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200 cursor-pointer"
                     >
                       {item.acceptButton}
                     </button>
+                  ) : (
+                    ""
                   )}
-                  {item.rejectbutton && (
+                  {item.rejectButton ? (
                     <button
                       onClick={() => handlerefectBtn(item)}
                       className="ml-auto bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200 cursor-pointer"
                     >
-                      {item.rejectbutton}
+                      {item.rejectButton}
                     </button>
+                  ) : (
+                    ""
                   )}
                 </div>
               </div>
