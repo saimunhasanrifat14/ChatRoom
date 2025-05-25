@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaUserClock } from "react-icons/fa";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { IoSearch } from "react-icons/io5";
 import { getDatabase, ref, onValue, set, push } from "firebase/database";
@@ -74,9 +74,11 @@ const UserList = () => {
   const auth = getAuth();
   const [userList, setUserList] = useState([]);
   const [notifications, setnotifications] = useState([]);
+  const [allFriends, setallFriends] = useState([]);
   const [friends, setfriends] = useState([]);
   const [pendingRequest, setpendingRequest] = useState(false);
   const [LogedUser, setLogedUser] = useState({});
+  const [blockList, setblockList] = useState([]);
 
   /**
    * todo : Data fetch from users database
@@ -88,19 +90,42 @@ const UserList = () => {
       const UserRef = ref(db, "users/");
       onValue(UserRef, (snapshot) => {
         let data = [];
+        const currentUid = auth.currentUser.uid;
+
         snapshot.forEach((item) => {
-          if (auth.currentUser.uid !== item.val().uid) {
-            data.push({ ...item.val(), userkey: item.key });
-          } else {
-            let user = Object.assign({ ...item.val(), userkey: item.key });
-            setLogedUser(user);
+          const user = item.val();
+
+          if (user.uid === currentUid) {
+            setLogedUser({ ...user, userkey: item.key });
+            return;
+          }
+          // Check if already friend
+          const isFriend = allFriends.some(
+            (friend) =>
+              (friend.senderUserId === currentUid &&
+                friend.reciverUserId === user.uid) ||
+              (friend.reciverUserId === currentUid &&
+                friend.senderUserId === user.uid)
+          );
+          // Check if blocked (either sender or receiver)
+          const isBlocked = blockList.some(
+            (block) =>
+              (block.senderUserId === currentUid &&
+                block.reciverUserId === user.uid) ||
+              (block.reciverUserId === currentUid &&
+                block.senderUserId === user.uid)
+          );
+
+          if (!isFriend && !isBlocked) {
+            data.push({ ...user, userkey: item.key });
           }
         });
         setUserList(data);
       });
     };
+
     fetchData();
-  }, []);
+  }, [allFriends, blockList]);
 
   /**
    * todo : Data fetch from Notification database
@@ -114,8 +139,9 @@ const UserList = () => {
         let data = [];
         snapshot.forEach((item) => {
           if (
-            auth.currentUser.uid === item.val().reciverUserId ||
-            LogedUser.userUid === item.val().senderId
+            (auth.currentUser.uid === item.val().reciverUserId ||
+              LogedUser.uid === item.val().senderId) &&
+            item.val().status === "Friend Request"
           ) {
             data.push(auth.currentUser.uid.concat(item.val().reciverUserId));
           }
@@ -136,6 +162,7 @@ const UserList = () => {
       const UserRef = ref(db, "friends/");
       onValue(UserRef, (snapshot) => {
         let data = [];
+        let alldata = [];
         snapshot.forEach((item) => {
           if (
             auth.currentUser.uid === item.val().reciverUserId ||
@@ -143,13 +170,46 @@ const UserList = () => {
           ) {
             data.push(item.val().senderUserId.concat(item.val().reciverUserId));
           }
+          if (
+            auth.currentUser.uid === item.val().reciverUserId ||
+            auth.currentUser.uid === item.val().senderUserId
+          ) {
+            alldata.push({ ...item.val(), friendsKey: item.key });
+          }
         });
         setfriends(data);
+        setallFriends(alldata);
       });
     };
     fetchData();
   }, []);
-  console.log("data from Friends data", friends);
+
+  /**
+   * todo : Data fetch from friends database
+   * @param (null)
+   * @description : This function fetches the data from the friends database and sets it to the friendsList state.
+   */
+  useEffect(() => {
+    const fetchData = () => {
+      const UserRef = ref(db, "block/");
+      onValue(UserRef, (snapshot) => {
+        let data = [];
+        snapshot.forEach((item) => {
+          const blockUser = item.val();
+          const currentUid = auth.currentUser.uid;
+          if (
+            blockUser.senderUserId === currentUid ||
+            blockUser.reciverUserId === currentUid
+          ) {
+            data.push({ ...blockUser, blockKey: item.key });
+          }
+        });
+        setblockList(data);
+      });
+    };
+    fetchData();
+  }, []);
+  console.log("data from block data", blockList);
 
   /**
    * todo : Handle friend request functionality
@@ -217,16 +277,13 @@ const UserList = () => {
                 {notifications.includes(
                   auth.currentUser.uid.concat(item.uid)
                 ) ? (
-                  <button
-                    onClick={() => handleFriendRequest(item)}
-                    className="bg-[#3cae64] mr-2 text-white px-5 py-1 rounded-lg font-semibold"
-                  >
-                    Pending
+                  <button className="bg-[#3cae64] w-18 flex items-center justify-center mr-2 text-white py-2 rounded-lg font-semibold">
+                    <FaUserClock />
                   </button>
                 ) : (
                   <button
                     onClick={() => handleFriendRequest(item)}
-                    className="bg-[#3cae64] mr-2 text-white px-5 py-1 rounded-lg font-semibold cursor-pointer"
+                    className="bg-[#3cae64] mr-2 text-white w-18 py-1 rounded-lg font-semibold cursor-pointer"
                   >
                     Add
                   </button>

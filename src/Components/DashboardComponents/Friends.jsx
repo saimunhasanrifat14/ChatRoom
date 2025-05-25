@@ -188,7 +188,7 @@ const Friends = () => {
                 />
                 <div className="flex-1">
                   <h3 className="font-semibold text-gray-900">{friendName}</h3>
-                  <p className="text-gray-500 text-sm">{item.acceptAt}</p>
+                  <p className="text-gray-500 text-sm">{item.sendAt}</p>
                 </div>
                 <button
                   onClick={() => handleBlockBtn(item)}

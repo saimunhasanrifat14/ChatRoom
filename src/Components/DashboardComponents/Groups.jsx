@@ -212,6 +212,14 @@ const Groups = () => {
             </div>
           </form>
         </Modal>
+        {UserList.map((item)=>{
+          <div className="flex flex-col justify-center items-center gap-3 bg-gray-200">
+            <img className="w-50 h-50 rounded-full" src={item.profile} alt={item.username} />
+            <h1 className="text-2xl text-black font-bold">{item.username}</h1>
+            <p className="text-sm text-gray-500 font-normal">{item.summary}</p>
+            <button className="py-5 p-4 bg-blue-700 hover:bg-blue-900 rounded-xl">{item.readmore}</button>
+          </div>
+        })}
       </div>
     </>
   );

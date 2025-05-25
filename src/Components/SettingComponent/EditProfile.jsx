@@ -1,15 +1,44 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { uploedCloudinary } from "../../Utilities/Cloudinary.utils";
-import { getDatabase, ref, update } from "firebase/database";
+import { getDatabase, onValue, ref, update } from "firebase/database";
+import { UserContext } from "../../Context/UserContext";
+import { getAuth } from "firebase/auth";
 
-const EditProfile = ({ userList }) => {
+const EditProfile = () => {
   // All hook
   const [profile, setprofile] = useState();
   const [profileError, setprofileError] = useState("");
   const [saveLoading, setsaveLoading] = useState(false);
   const [Loading, setLoading] = useState(false);
   const db = getDatabase();
+  const auth = getAuth();
   const fileInputRef = useRef(null);
+  const [notifications, setnotifications] = useState([]);
+
+  // Gets the logged-in user's data and loading state from UserContext.
+  const { userList, loading } = useContext(UserContext);
+
+  /**
+   * todo : Data fetch from Notification database
+   * @param (null)
+   * @description : This function fetches the data from the Notification database and sets it to the notifications state.
+   */
+  useEffect(() => {
+    const fetchData = () => {
+      const UserRef = ref(db, "notification/");
+      onValue(UserRef, (snapshot) => {
+        let data = [];
+        snapshot.forEach((item) => {
+          if (auth.currentUser.uid === item.val().reciverUserId) {
+            data.push({ ...item.val(), notificationKey: item.key });
+          }
+        });
+        setnotifications(data);
+      });
+    };
+    fetchData();
+  }, []);
+  // console.log("from noticaton", notifications);
 
   /**
    * @function handleUpdateProfile
@@ -30,7 +59,13 @@ const EditProfile = ({ userList }) => {
       }
       // Update the user's profile picture in the database
       const updateData = { profile_picture: profileUrl };
+      const notificationupdateData = { profile_picture: profileUrl };
+
       await update(ref(db, `users/${userList.userkey}`), updateData);
+      await update(
+        ref(db, `notification/${userList.userkey}`),
+        notificationupdateData
+      );
       setsaveLoading(true);
       setTimeout(() => {
         setsaveLoading(false);
@@ -47,7 +82,7 @@ const EditProfile = ({ userList }) => {
       setLoading(false);
     }
   };
-
+  
   /**
    * @description Set the selected file to state and clear previous error.
    * @param {Event}
