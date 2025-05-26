@@ -18,7 +18,7 @@ const Message = ({ userList }) => {
               <Groups />
             </div>
             <div className="flex-1 min-h-0  bg-white rounded-lg">
-              <Friends />
+              <Friends showButton={false} />
             </div>
           </div>
           <div className="h-full w-[67%] bg-white rounded-lg flex flex-col justify-between">

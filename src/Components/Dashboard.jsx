@@ -22,7 +22,7 @@ const Dashboard = ({ userList }) => {
                 <Groups />
               </div>
               <div className="h-full w-[50%] bg-[#ffffff] rounded-xl ">
-                <Friends />
+                <Friends showButton={true} />
               </div>
             </div>
           </div>

@@ -11,7 +11,10 @@ import {
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import moment from "moment";
-const Friends = () => {
+import FriendAction from "../../features/slices/friendslice";
+import { useDispatch } from "react-redux";
+
+const Friends = ({ showButton }) => {
   const UserList = [
     {
       name: "Raghav",
@@ -62,6 +65,8 @@ const Friends = () => {
   const db = getDatabase();
   const auth = getAuth();
   const [friendsList, setfriendsList] = useState([]);
+  const dispatch = useDispatch();
+
 
   /**
    * todo : Data fetch from friends database
@@ -153,6 +158,28 @@ const Friends = () => {
     remove(reference);
   };
 
+  const handlefriendinfo = (friendInfo) => {
+    console.log("Friend Info:", friendInfo);
+    let userobject = {};
+    if (auth.currentUser.uid === friendInfo.senderUserId) {
+      userobject = {
+        userName: friendInfo.reciverUserName,
+        email: friendInfo.reciverEmail,
+        profilePicture: friendInfo.reciverProfilePicture,
+        userId: friendInfo.reciverUserId,
+      };
+    }
+    if(auth.currentUser.uid === friendInfo.reciverUserId){
+      userobject = {
+        userName: friendInfo.senderUserName,
+        email: friendInfo.senderEmail,  
+        profilePicture: friendInfo.senderProfilePicture,
+        userId: friendInfo.senderUserId,
+      }
+    }
+    console.log("userobject", userobject);
+    dispatch(FriendAction(userobject));
+  };
   return (
     <>
       <div className="px-5 pb-5 pt-3 h-[100%] rounded-2xl">
@@ -178,8 +205,9 @@ const Friends = () => {
 
             return (
               <div
+                onClick={() => handlefriendinfo(item)}
                 key={item.friendsKey}
-                className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0"
+                className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0 cursor-pointer"
               >
                 <img
                   src={friendPhoto}
@@ -190,12 +218,16 @@ const Friends = () => {
                   <h3 className="font-semibold text-gray-900">{friendName}</h3>
                   <p className="text-gray-500 text-sm">{item.sendAt}</p>
                 </div>
-                <button
-                  onClick={() => handleBlockBtn(item)}
-                  className="bg-red-400 mr-2 text-white px-5 py-1 rounded-lg font-semibold cursor-pointer"
-                >
-                  BLock
-                </button>
+                {showButton ? (
+                  <button
+                    onClick={() => handleBlockBtn(item)}
+                    className="bg-red-400 mr-2 text-white px-5 py-1 rounded-lg font-semibold cursor-pointer"
+                  >
+                    BLock
+                  </button>
+                ) : (
+                  ""
+                )}
               </div>
             );
           })}
