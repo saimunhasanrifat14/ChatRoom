@@ -1,5 +1,5 @@
 import React from "react";
-import OutletTop from "./CommonComponent/OutletTop";
+import OutletTop from "../Components/CommonComponent/OutletTop";
 import { AiTwotoneEdit } from "react-icons/ai";
 import { MdDelete, MdEditNote } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
@@ -9,7 +9,7 @@ import { TbLockFilled } from "react-icons/tb";
 import { HiKey } from "react-icons/hi";
 import { RiEditFill } from "react-icons/ri";
 import { NavLink, Outlet } from "react-router-dom";
-import SettingsList from "./SettingComponent/SettingsList";
+import SettingsList from "../Components/SettingComponent/SettingsList";
 
 const Setting = ({ userList }) => {
   return (

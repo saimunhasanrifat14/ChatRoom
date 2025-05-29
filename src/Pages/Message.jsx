@@ -1,9 +1,9 @@
 import React from "react";
-import OutletTop from "./CommonComponent/OutletTop";
-import Groups from "./DashboardComponents/Groups";
-import Friends from "./DashboardComponents/Friends";
+import OutletTop from "../Components/CommonComponent/OutletTop";
+import Groups from "../Components/DashboardComponents/Groups";
+import Friends from "../Components/DashboardComponents/Friends";
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import Chat from "./MessageComponent/Chat";
+import Chat from "../Components/MessageComponent/Chat";
 
 const Message = ({ userList }) => {
   return (

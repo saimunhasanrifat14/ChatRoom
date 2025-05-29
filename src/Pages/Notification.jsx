@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import OutletTop from "./CommonComponent/OutletTop";
+import OutletTop from "../Components/CommonComponent/OutletTop";
 import {
   getDatabase,
   onValue,

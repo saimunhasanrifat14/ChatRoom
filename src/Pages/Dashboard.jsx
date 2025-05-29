@@ -1,9 +1,9 @@
 import React from "react";
-import Profile from "./DashboardComponents/Profile";
-import UserList from "./DashboardComponents/UserList";
-import Friends from "./DashboardComponents/Friends";
-import Groups from "./DashboardComponents/Groups";
-import OutletTop from "./CommonComponent/OutletTop";
+import Profile from "../Components/DashboardComponents/Profile";
+import UserList from "../Components/DashboardComponents/UserList";
+import Friends from "../Components/DashboardComponents/Friends";
+import Groups from "../Components/DashboardComponents/Groups";
+import OutletTop from "../Components/CommonComponent/OutletTop";
 
 const Dashboard = ({ userList }) => {
   return (
