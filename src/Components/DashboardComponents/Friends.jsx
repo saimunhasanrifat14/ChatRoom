@@ -11,7 +11,7 @@ import {
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import moment from "moment";
-import FriendAction from "../../features/slices/friendslice";
+import { FriendAction } from "../../features/slices/friendSlice";
 import { useDispatch } from "react-redux";
 
 const Friends = ({ showButton }) => {
@@ -66,7 +66,6 @@ const Friends = ({ showButton }) => {
   const auth = getAuth();
   const [friendsList, setfriendsList] = useState([]);
   const dispatch = useDispatch();
-
 
   /**
    * todo : Data fetch from friends database
@@ -159,7 +158,6 @@ const Friends = ({ showButton }) => {
   };
 
   const handlefriendinfo = (friendInfo) => {
-    console.log("Friend Info:", friendInfo);
     let userobject = {};
     if (auth.currentUser.uid === friendInfo.senderUserId) {
       userobject = {
@@ -168,16 +166,14 @@ const Friends = ({ showButton }) => {
         profilePicture: friendInfo.reciverProfilePicture,
         userId: friendInfo.reciverUserId,
       };
-    }
-    if(auth.currentUser.uid === friendInfo.reciverUserId){
+    } else if (auth.currentUser.uid === friendInfo.reciverUserId) {
       userobject = {
         userName: friendInfo.senderUserName,
-        email: friendInfo.senderEmail,  
+        email: friendInfo.senderEmail,
         profilePicture: friendInfo.senderProfilePicture,
         userId: friendInfo.senderUserId,
-      }
+      };
     }
-    console.log("userobject", userobject);
     dispatch(FriendAction(userobject));
   };
   return (
