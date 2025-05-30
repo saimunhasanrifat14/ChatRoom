@@ -17,6 +17,8 @@ import { getAuth } from "firebase/auth";
 import NoChatSelected from "./NoChatSelected";
 import moment from "moment";
 import { useEffect } from "react";
+import { uploedCloudinary } from "../../Utilities/Cloudinary.utils";
+import { getGridClass } from "../../Lib/sendImage";
 
 const Chat = () => {
   const [msg, setMsg] = useState("");
@@ -25,62 +27,67 @@ const Chat = () => {
   const auth = getAuth();
   const [messages, setMessages] = useState([]);
   const bottomRef = useRef(null);
+  const fileInputRef = useRef(null);
+  const [allUrl, setallUrl] = useState([]);
+  const [selectedfiles, setSelectedFiles] = useState([]);
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [showFullImages, setShowFullImages] = useState({});
 
-  console.log("msg form filter", messages);
-
+  // Get the user from the Redux store
   const { value: user } = useSelector((store) => store.friends);
 
+  /**
+   * todo : handle emoji click
+   * Discription: This function handles the emoji click event and appends the selected emoji to the message input
+   * @param {Object} emoji - The emoji object containing the selected emoji
+   */
   const handleEmoji = ({ emoji }) => {
     setMsg((prev) => prev + emoji);
   };
 
-  const rightsidemsg = [
-    {
-      time: "2:30",
-      message:
-        "Hi my name is xxxx. How are you? Hi my name is xxxx. How are youHi my name is xxxx. How are you?Hi my name is xxxx.",
-    },
-    {
-      time: "2:30",
-      message:
-        "Hi my name is xxxx. How are you? Hi my How are youHi my name is xxxx. How are you?Hi my name is xxxx. How are",
-    },
-    {
-      time: "2:30",
-      message: "Hi my name is xxxx. How are you? Hi my",
-    },
-    {
-      time: "2:30",
-      message: "Hi my name is xxxx. How are you?Hi my name is xxxx. How are",
-    },
-  ];
-  const leftsidemsg = [
-    {
-      time: "2:30",
-      message:
-        "Hi my name is xxxx. How are you? Hi my name is xxxx. How are youHi my name is xxxx. How are you?Hi my name is xxxx.",
-    },
-    {
-      time: "2:30",
-      message:
-        "Hi my name is xxxx. How are you? Hi my How are youHi my name is xxxx. How are you?Hi my name is xxxx. How are",
-    },
-  ];
-
+  /**
+   * todo : send message to firebase
+   * Discription: This function sends a message to the Firebase Realtime Database
+   */
   const handleSendMsg = async () => {
     try {
-      set(push(ref(db, `AllMessage/`)), {
-        whoSendMsgUid: auth.currentUser.uid,
-        whoSwndMsgUserName: auth.currentUser.displayName,
-        whoSwndMsgEmail: auth.currentUser.email,
-        whoSendMsgProfile: auth.currentUser.photoURL,
-        whoReciveMsgUid: user.userId,
-        whoReciveMsgUserName: user.userName,
-        whoReciveMsgEmail: user.email,
-        whoReciveMsgProfile: user.profilePicture,
-        text: msg,
-        sendAt: Date.now(),
-      });
+      let urls = [];
+
+      if (selectedfiles.length > 0) {
+        setUploadLoading(true);
+
+        for (let file of selectedfiles) {
+          const url = await uploedCloudinary(file);
+          urls.push(url);
+        }
+        setUploadLoading(false);
+
+        await set(push(ref(db, `AllMessage/`)), {
+          whoSendMsgUid: auth.currentUser.uid,
+          whoSwndMsgUserName: auth.currentUser.displayName,
+          whoSwndMsgEmail: auth.currentUser.email,
+          whoSendMsgProfile: auth.currentUser.photoURL,
+          whoReciveMsgUid: user.userId,
+          whoReciveMsgUserName: user.userName,
+          whoReciveMsgEmail: user.email,
+          whoReciveMsgProfile: user.profilePicture,
+          text: urls.length > 0 ? urls : ["image upload failed"],
+          sendAt: Date.now(),
+        });
+      } else {
+        await set(push(ref(db, `AllMessage/`)), {
+          whoSendMsgUid: auth.currentUser.uid,
+          whoSwndMsgUserName: auth.currentUser.displayName,
+          whoSwndMsgEmail: auth.currentUser.email,
+          whoSendMsgProfile: auth.currentUser.photoURL,
+          whoReciveMsgUid: user.userId,
+          whoReciveMsgUserName: user.userName,
+          whoReciveMsgEmail: user.email,
+          whoReciveMsgProfile: user.profilePicture,
+          text: msg,
+          sendAt: Date.now(),
+        });
+      }
     } catch (error) {
       console.log("error is", error);
     } finally {
@@ -88,6 +95,10 @@ const Chat = () => {
     }
   };
 
+  /**
+   * todo : fetching all messages from firebase
+   * Discription: This useEffect hook fetches all messages from the Firebase Realtime Database
+   */
   useEffect(() => {
     const fetchData = () => {
       const chatRef = ref(db, `AllMessage/`);
@@ -112,10 +123,38 @@ const Chat = () => {
     fetchData();
   }, [user]);
 
+  /**
+   * todo : scroll to bottom when new message comes
+   * Discription: This useEffect hook scrolls to the bottom of the chat when new messages are added
+   */
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  /**
+   * todo : handle file change
+   * Discription: This function handles the file change event when a user selects a file
+   */
+  const handleFileChange = async (e) => {
+    const files = Array.from(e.target.files);
+    setSelectedFiles(files);
+  };
+
+  const hendleSendImage = async () => {
+    fileInputRef.current.click();
+  };
+
+  const toggleImageDisplay = (msgId) => {
+    setShowFullImages((prev) => ({
+      ...prev,
+      [msgId]: !prev[msgId],
+    }));
+  };
+
+  /**
+   * todo : if user is not selected then show no chat selected component
+   * Discription: This function checks if a user is selected, if not, it returns the NoChatSelected component
+   */
   if (Object.keys(user).length === 0) {
     return <NoChatSelected />;
   }
@@ -156,11 +195,8 @@ const Chat = () => {
               minute: "2-digit",
             });
 
-            const isMyMessage = item.whoSendMsgUid === auth.currentUser.uid;
-
             const prev = messages[index - 1];
             const next = messages[index + 1];
-
             const isSameSenderAsPrev =
               prev && prev.whoSendMsgUid === item.whoSendMsgUid;
             const isSameSenderAsNext =
@@ -197,23 +233,128 @@ const Chat = () => {
               rightClass =
                 "message max-w-[70%] text-wrap py-2 px-3 mb-3  bg-green-500 text-white rounded-tl-[20px] rounded-bl-[20px] rounded-br-[20px] rounded-tr-sm relative z-10";
             }
+            const isMyMessage = item.whoSendMsgUid === auth.currentUser.uid;
 
             return isMyMessage ? (
               <div
                 key={index}
-                className="flex items-center gap-2 justify-end relative group "
+                className="flex items-center gap-2 justify-end relative group"
               >
                 <p className="text-sm opacity-0 group-hover:opacity-100">
                   {time}
                 </p>
-                <h2 className={rightClass}>{item.text}</h2>
+
+                {Array.isArray(item.text) ? (
+                  <div className="max-w-[70%] ml-auto">
+                    <div className="flex flex-wrap gap-2 justify-end">
+                      {(showFullImages[item.sendAt]
+                        ? item.text
+                        : item.text.slice(0, 4)
+                      ).map((url, idx, arr) => {
+                        const isLast =
+                          showFullImages[item.sendAt] && idx === arr.length - 1;
+                        const isMore =
+                          !showFullImages[item.sendAt] &&
+                          idx === 3 &&
+                          item.text.length > 4;
+
+                        return (
+                          <div
+                            key={idx}
+                            className="relative w-28 h-28 cursor-pointer"
+                            onClick={() => {
+                              if (isMore || isLast)
+                                toggleImageDisplay(item.sendAt);
+                            }}
+                          >
+                            <img
+                              src={url}
+                              alt={`img-${idx}`}
+                              className="w-full h-full object-cover rounded-md"
+                            />
+
+                            {/* +More overlay */}
+                            {isMore && (
+                              <div className="absolute inset-0 bg-[#00000080] bg-opacity-50 text-white text-lg font-bold flex items-center justify-center rounded-md">
+                                +{item.text.length - 4}
+                              </div>
+                            )}
+
+                            {/* Hover Hide on last image */}
+                            {isLast && (
+                              <div className="absolute inset-0 bg-[#00000080] bg-opacity-50 hover:bg-opacity-60 text-white text-sm font-semibold flex items-center justify-center rounded-md transition-opacity duration-300 opacity-0 hover:opacity-100">
+                                Hide
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  <h2 className={rightClass}>{item.text}</h2>
+                )}
               </div>
             ) : (
               <div
                 key={index}
                 className="flex items-center gap-2 justify-start relative group"
               >
-                <h2 className={leftClass}>{item.text}</h2>
+                {Array.isArray(item.text) ? (
+                  <div className="flex flex-wrap gap-2 max-w-[70%]">
+                    {(showFullImages[item.sendAt]
+                      ? item.text
+                      : item.text.slice(0, 4)
+                    ).map((url, i, arr) => {
+                      const isLast =
+                        showFullImages[item.sendAt] &&
+                        i === arr.length - 1 &&
+                        item.text.length > 4;
+
+                      return (
+                        <div
+                          key={i}
+                          className="relative w-28 h-28"
+                          onClick={() => {
+                            if (
+                              !showFullImages[item.sendAt] &&
+                              i === 3 &&
+                              item.text.length > 4
+                            ) {
+                              toggleImageDisplay(item.sendAt);
+                            }
+                          }}
+                        >
+                          <img
+                            src={url}
+                            alt={`img-${i}`}
+                            className="w-full h-full object-cover rounded-lg cursor-pointer border border-gray-300 shadow-sm"
+                          />
+                          {!showFullImages[item.sendAt] &&
+                            i === 3 &&
+                            item.text.length > 4 && (
+                              <div className="absolute inset-0 bg-[#00000080] bg-opacity-50 text-white font-bold text-lg flex items-center justify-center rounded-lg">
+                                +{item.text.length - 4}
+                              </div>
+                            )}
+
+                          {/* Hover Hide button on last image */}
+                          {isLast && (
+                            <div
+                              className="absolute inset-0 bg-[#00000080] bg-opacity-50 text-white font-bold text-lg flex items-center justify-center rounded-lg opacity-0 hover:opacity-100 cursor-pointer transition"
+                              onClick={() => toggleImageDisplay(item.sendAt)}
+                            >
+                              Hide
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <h2 className={leftClass}>{item.text}</h2>
+                )}
+
                 <p className="text-sm opacity-0 group-hover:opacity-100">
                   {time}
                 </p>
@@ -236,16 +377,24 @@ const Chat = () => {
             onChange={(e) => setMsg(e.target.value)}
             value={msg}
           />
-          <div className="flex items-center gap-3 absolute right-[85px] top-[40px] text-[18px] text-gray-600">
+          <div className="flex items-center gap-3 absolute right-[85px] top-[32px] text-[18px] text-gray-600">
             <span
               onClick={() => setemojiOpen(!emojiOpen)}
               className="text-xl cursor-pointer"
             >
               <MdOutlineEmojiEmotions />
             </span>
-            <span className="text-xl cursor-pointer">
+            <span onClick={hendleSendImage} className="text-xl cursor-pointer">
               <IoCameraOutline />
             </span>
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+            />
           </div>
           <button
             type="submit"
@@ -256,11 +405,32 @@ const Chat = () => {
           </button>
         </form>
         {/* input part */}
+
         {/* emoji part */}
         <div className="absolute z-12 bottom-[11%] right-[12%]">
           <EmojiPicker open={emojiOpen} onEmojiClick={handleEmoji} />
         </div>
         {/* emoji part */}
+
+        {/* selected images */}
+        {selectedfiles.length > 0 && (
+          <div className="absolute w-full bottom-[12%] left-0 flex flex-wrap gap-2 py-4 px-8 bg-[#e5e5e5e6] z-100">
+            {selectedfiles.map((file, index) => (
+              <img
+                key={index}
+                src={URL.createObjectURL(file)}
+                alt={`Uploaded ${index}`}
+                className="w-16 h-16 object-cover rounded-lg cursor-pointer"
+                onClick={() => {
+                  setSelectedFiles((prev) =>
+                    prev.filter((item) => item !== file)
+                  );
+                }}
+              />
+            ))}
+          </div>
+        )}
+        {/* selected images */}
       </div>
     </>
   );
