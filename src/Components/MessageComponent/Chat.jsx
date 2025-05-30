@@ -1,22 +1,34 @@
 import EmojiPicker from "emoji-picker-react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { IoCameraOutline } from "react-icons/io5";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { getDatabase, ref, set } from "firebase/database";
+import {
+  getDatabase,
+  onValue,
+  push,
+  ref,
+  set,
+  update,
+} from "firebase/database";
 import { getAuth } from "firebase/auth";
 import NoChatSelected from "./NoChatSelected";
+import moment from "moment";
+import { useEffect } from "react";
 
 const Chat = () => {
   const [msg, setMsg] = useState("");
   const [emojiOpen, setemojiOpen] = useState(false);
   const db = getDatabase();
   const auth = getAuth();
+  const [messages, setMessages] = useState([]);
+  const bottomRef = useRef(null);
+
+  console.log("msg form filter", messages);
 
   const { value: user } = useSelector((store) => store.friends);
-  console.log("user", user);
 
   const handleEmoji = ({ emoji }) => {
     setMsg((prev) => prev + emoji);
@@ -55,13 +67,63 @@ const Chat = () => {
     },
   ];
 
+  const handleSendMsg = async () => {
+    try {
+      set(push(ref(db, `AllMessage/`)), {
+        whoSendMsgUid: auth.currentUser.uid,
+        whoSwndMsgUserName: auth.currentUser.displayName,
+        whoSwndMsgEmail: auth.currentUser.email,
+        whoSendMsgProfile: auth.currentUser.photoURL,
+        whoReciveMsgUid: user.userId,
+        whoReciveMsgUserName: user.userName,
+        whoReciveMsgEmail: user.email,
+        whoReciveMsgProfile: user.profilePicture,
+        text: msg,
+        sendAt: Date.now(),
+      });
+    } catch (error) {
+      console.log("error is", error);
+    } finally {
+      setMsg("");
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = () => {
+      const chatRef = ref(db, `AllMessage/`);
+      onValue(chatRef, (snapshot) => {
+        let data = [];
+        snapshot.forEach((item) => {
+          if (
+            (item.val().whoSendMsgUid === auth.currentUser.uid &&
+              item.val().whoReciveMsgUid === user.userId) ||
+            (item.val().whoSendMsgUid === user.userId &&
+              item.val().whoReciveMsgUid === auth.currentUser.uid)
+          ) {
+            data.push({ ...item.val(), msgKey: item.key });
+          }
+        });
+
+        // Sort messages by time (oldest first)
+        const sortedData = data.sort((a, b) => a.sendAt - b.sendAt);
+        setMessages(sortedData);
+      });
+    };
+    fetchData();
+  }, [user]);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   if (Object.keys(user).length === 0) {
     return <NoChatSelected />;
   }
+
   return (
     <>
       <div className="w-full h-full px-8 flex flex-col  justify-between relative">
-        <div className="chatTop h-[14%] border-b-2 border-b-gray-300 flex justify-between items-center">
+        <div className="chatTop h-[12%] border-b-2 border-b-gray-300 flex justify-between items-center">
           <div className="flex items-center gap-6 ">
             <img
               src={
@@ -87,63 +149,86 @@ const Chat = () => {
         </div>
 
         {/* Chat part */}
-        <div className="chatMain flex flex-col gap-4 h-[72%] pr-2 py-4 overflow-y-scroll custom-scrollbar">
-          {/* left side msg */}
-          <div className="flex flex-col gap-[3px]">
-            {leftsidemsg.map((item, index) => (
+        <div className="chatMain flex flex-col gap-1 h-[76%] pr-2 py-4 overflow-y-scroll custom-scrollbar">
+          {messages.map((item, index) => {
+            const time = new Date(item.sendAt).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+
+            const isMyMessage = item.whoSendMsgUid === auth.currentUser.uid;
+
+            const prev = messages[index - 1];
+            const next = messages[index + 1];
+
+            const isSameSenderAsPrev =
+              prev && prev.whoSendMsgUid === item.whoSendMsgUid;
+            const isSameSenderAsNext =
+              next && next.whoSendMsgUid === item.whoSendMsgUid;
+
+            // Left Side (Others)
+            let leftClass = "";
+            if (!isSameSenderAsPrev && !isSameSenderAsNext) {
+              leftClass =
+                "message max-w-[70%] text-wrap py-2 px-3 bg-gray-200 rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] rounded-tl-[20px] relative z-10";
+            } else if (!isSameSenderAsPrev && isSameSenderAsNext) {
+              leftClass =
+                "message max-w-[70%] text-wrap py-2 px-3 bg-gray-200 rounded-tr-[20px] rounded-br-[20px] rounded-bl-sm rounded-tl-[20px] relative z-10";
+            } else if (isSameSenderAsPrev && isSameSenderAsNext) {
+              leftClass =
+                "message max-w-[70%] text-wrap py-2 px-3 bg-gray-200 rounded-tr-[20px] rounded-br-[20px] rounded-tl-sm rounded-bl-sm relative z-10";
+            } else if (isSameSenderAsPrev && !isSameSenderAsNext) {
+              leftClass =
+                "message max-w-[70%] text-wrap py-2 px-3 mb-3 bg-gray-200 rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] rounded-tl-sm relative z-10";
+            }
+
+            // Right Side (My Message)
+            let rightClass = "";
+            if (!isSameSenderAsPrev && !isSameSenderAsNext) {
+              rightClass =
+                "message max-w-[70%] text-wrap py-2 px-3 bg-green-500 text-white rounded-tl-[20px] rounded-bl-[20px] rounded-br-[20px] rounded-tr-[20px] relative z-10";
+            } else if (!isSameSenderAsPrev && isSameSenderAsNext) {
+              rightClass =
+                "message max-w-[70%] text-wrap py-2 px-3 bg-green-500 text-white rounded-tl-[20px] rounded-bl-[20px] rounded-br-sm rounded-tr-[20px] relative z-10";
+            } else if (isSameSenderAsPrev && isSameSenderAsNext) {
+              rightClass =
+                "message max-w-[70%] text-wrap py-2 px-3 bg-green-500 text-white rounded-tl-[20px] rounded-bl-[20px] rounded-tr-sm rounded-br-sm relative z-10";
+            } else if (isSameSenderAsPrev && !isSameSenderAsNext) {
+              rightClass =
+                "message max-w-[70%] text-wrap py-2 px-3 mb-3  bg-green-500 text-white rounded-tl-[20px] rounded-bl-[20px] rounded-br-[20px] rounded-tr-sm relative z-10";
+            }
+
+            return isMyMessage ? (
+              <div
+                key={index}
+                className="flex items-center gap-2 justify-end relative group "
+              >
+                <p className="text-sm opacity-0 group-hover:opacity-100">
+                  {time}
+                </p>
+                <h2 className={rightClass}>{item.text}</h2>
+              </div>
+            ) : (
               <div
                 key={index}
                 className="flex items-center gap-2 justify-start relative group"
               >
-                <h2
-                  className={
-                    index === rightsidemsg.length - 1
-                      ? "message max-w-[70%] text-wrap p-2 bg-gray-200 rounded-tr-3xl rounded-br-3xl rounded-bl-sm rounded-tl-md relative z-10"
-                      : index === 0
-                      ? "message max-w-[70%] text-wrap p-2 bg-gray-200 rounded-tr-3xl rounded-br-3xl rounded-bl-sm rounded-tl-3xl relative z-10"
-                      : "message max-w-[70%] text-wrap p-2 bg-gray-200 rounded-tr-3xl rounded-br-3xl rounded-tl-md rounded-bl-md relative z-10"
-                  }
-                >
-                  {item.message}
-                </h2>
-                <p className="text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {item.time}
+                <h2 className={leftClass}>{item.text}</h2>
+                <p className="text-sm opacity-0 group-hover:opacity-100">
+                  {time}
                 </p>
               </div>
-            ))}
-          </div>
-          {/* left side msg */}
-
-          {/* right side msg */}
-          <div className="flex flex-col gap-[3px]">
-            {rightsidemsg?.map((item, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-2 justify-end relative group"
-              >
-                <p className="text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {item.time}
-                </p>
-                <h2
-                  className={
-                    index === rightsidemsg.length - 1
-                      ? "message max-w-[70%] text-wrap py-2 px-3 bg-green-500 text-white rounded-tl-3xl rounded-bl-3xl rounded-br-sm rounded-tr-md relative z-10"
-                      : index === 0
-                      ? "message max-w-[70%] text-wrap py-2 px-3 bg-green-500 text-white rounded-tl-3xl rounded-bl-3xl rounded-br-sm rounded-tr-3xl relative z-10"
-                      : "message max-w-[70%] text-wrap py-2 px-3 bg-green-500 text-white rounded-tl-3xl rounded-bl-3xl rounded-tr-md rounded-br-md relative z-10"
-                  }
-                >
-                  {item.message}
-                </h2>
-              </div>
-            ))}
-          </div>
-          {/* right side msg */}
+            );
+          })}
+          <div ref={bottomRef}></div>
         </div>
         {/* Chat part */}
 
         {/* input part */}
-        <div className="chatBottom w-full h-[14%] flex items-center justify-between gap-5 border-t-2 border-t-gray-300 relative">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="chatBottom w-full h-[12%] flex items-center justify-between gap-5 border-t-2 border-t-gray-300 relative"
+        >
           <input
             className="bg-gray-100 py-3 px-4 w-[92%] rounded-lg outline-none"
             placeholder="Type Here"
@@ -162,10 +247,14 @@ const Chat = () => {
               <IoCameraOutline />
             </span>
           </div>
-          <button className="p-4 bg-[#3cae64] text-white rounded-full cursor-pointer">
+          <button
+            type="submit"
+            onClick={handleSendMsg}
+            className="p-4 bg-[#3cae64] text-white rounded-full cursor-pointer"
+          >
             <FaPaperPlane />
           </button>
-        </div>
+        </form>
         {/* input part */}
         {/* emoji part */}
         <div className="absolute z-12 bottom-[11%] right-[12%]">
