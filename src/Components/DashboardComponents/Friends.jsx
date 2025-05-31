@@ -13,59 +13,14 @@ import { getAuth } from "firebase/auth";
 import moment from "moment";
 import { FriendAction } from "../../features/slices/friendSlice";
 import { useDispatch } from "react-redux";
+import FriendListSkeleton from "../../Skeleton/FriendListSkeleton";
 
 const Friends = ({ showButton }) => {
-  const UserList = [
-    {
-      name: "Raghav",
-      message: "Dinner?",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-    {
-      name: "Swathi",
-      message: "Sure!.",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-    {
-      name: "Kiran",
-      message: "Hi.....",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-    {
-      name: "Raghav Rathe",
-      message: "Hello.....",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-    {
-      name: "Swathi",
-      message: "Sure!.",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-    {
-      name: "Kiran",
-      message: "Hi.....",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-    {
-      name: "Raghav Rathe",
-      message: "Hello.....",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-    {
-      name: "Swathi",
-      message: "Sure!.",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-    {
-      name: "Kiran",
-      message: "Hi.....",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-  ];
   const db = getDatabase();
   const auth = getAuth();
   const [friendsList, setfriendsList] = useState([]);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
   /**
    * todo : Data fetch from friends database
@@ -74,6 +29,7 @@ const Friends = ({ showButton }) => {
    */
   useEffect(() => {
     const fetchData = () => {
+      setLoading(true);
       const UserRef = ref(db, "friends/");
       onValue(UserRef, (snapshot) => {
         let data = [];
@@ -89,6 +45,7 @@ const Friends = ({ showButton }) => {
           }
         });
         setfriendsList(data);
+        setLoading(false);
       });
     };
     fetchData();
@@ -176,6 +133,14 @@ const Friends = ({ showButton }) => {
     }
     dispatch(FriendAction(userobject));
   };
+
+  if (loading) {
+    return (
+      <div className="overflow-hidden">
+        <FriendListSkeleton />
+      </div>
+    );
+  }
   return (
     <>
       <div className="px-5 pb-5 pt-3 h-[100%] rounded-2xl">

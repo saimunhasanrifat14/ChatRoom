@@ -4,13 +4,14 @@ import { MdGroups } from "react-icons/md";
 import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { UserContext } from "../../Context/UserContext";
+import ProfileSkeleton from "../../Skeleton/ProfileSkeleton";
 
 const Profile = () => {
   // all hook and veriable
   const db = getDatabase();
   const auth = getAuth();
   const [friendsList, setfriendsList] = useState([]);
-  
+
   // Gets the logged-in user's data and loading state from UserContext.
   const { userList, loading } = useContext(UserContext);
 
@@ -37,6 +38,14 @@ const Profile = () => {
     };
     fetchData();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="overflow-hidden">
+        <ProfileSkeleton />
+      </div>
+    );
+  }
 
   return (
     <>

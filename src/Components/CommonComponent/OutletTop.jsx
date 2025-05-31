@@ -2,13 +2,21 @@ import React, { useContext } from "react";
 import { IoIosNotifications } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
+import OutletTopSkeleton from "../../Skeleton/OutletTopSkeleton";
 
 const OutletTop = ({ Title }) => {
   const navigate = useNavigate();
-  
+
   // Gets the logged-in user's data and loading state from UserContext.
   const { userList, loading } = useContext(UserContext);
 
+  if (loading) {
+    return (
+      <div className="w-[100%] overflow-hidden">
+        <OutletTopSkeleton />
+      </div>
+    );
+  }
   return (
     <>
       <h2 className="text-[30px]  font-semibold flex items-center gap-2">

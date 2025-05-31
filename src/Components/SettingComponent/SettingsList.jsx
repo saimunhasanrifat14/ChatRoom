@@ -6,6 +6,7 @@ import { RiEditFill } from "react-icons/ri";
 import { TbLockFilled } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
+import SettingListSkeleton from "../../Skeleton/SettingListSkeleton";
 
 const SettingsList = () => {
   // List of user settings with icons and navigation paths.
@@ -46,19 +47,23 @@ const SettingsList = () => {
 
   return (
     <>
-      <div className="h-[22%] w-full flex items-center gap-6 mb-6 border-b-2 border-gray-200 pb-6">
-        <img
-          className="w-30 h-30 object-cover rounded-full"
-          src={
-            userList?.profile_picture ||
-            "https://www.w3schools.com/howto/img_avatar.png"
-          }
-          alt=""
-        />
-        <h2 className="text-[40px] font-semibold">
-          {userList?.username || "Your Name"}
-        </h2>
-      </div>
+      {loading ? (
+        <SettingListSkeleton />
+      ) : (
+        <div className="h-[22%] w-full flex items-center gap-6 mb-6 border-b-2 border-gray-200 pb-6">
+          <img
+            className="w-30 h-30 object-cover rounded-full"
+            src={
+              userList?.profile_picture ||
+              "https://www.w3schools.com/howto/img_avatar.png"
+            }
+            alt=""
+          />
+          <h2 className="text-[40px] font-semibold">
+            {userList?.username || "Your Name"}
+          </h2>
+        </div>
+      )}
       <div className="h-[78%] w-full flex flex-col">
         {Settings.map((item) => (
           <NavLink

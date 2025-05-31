@@ -10,6 +10,7 @@ import {
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import moment from "moment";
+import NotifacationSkeleton from "../Skeleton/NotifacationSkeleton";
 
 const Notification = ({ userList }) => {
   const Notificationdata = [
@@ -72,6 +73,7 @@ const Notification = ({ userList }) => {
   const db = getDatabase();
   const auth = getAuth();
   const [NotificationFetchdata, setNotificationFetchdata] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   /**
    * todo : Data fetch from Notification database
@@ -80,6 +82,7 @@ const Notification = ({ userList }) => {
    */
   useEffect(() => {
     const fetchNotificationData = () => {
+      setLoading(true);
       const DataRef = ref(db, "notification/");
       onValue(DataRef, (snapshot) => {
         let data = [];
@@ -89,6 +92,7 @@ const Notification = ({ userList }) => {
           }
         });
         setNotificationFetchdata(data);
+        setLoading(false);
       });
     };
     fetchNotificationData();
@@ -143,6 +147,14 @@ const Notification = ({ userList }) => {
     const reference = ref(db, `notification/${item.notificationKey}`);
     remove(reference);
   };
+
+  if (loading) {
+    return (
+      <div className="overflow-hidden">
+        <NotifacationSkeleton />
+      </div>
+    );
+  }
 
   return (
     <>

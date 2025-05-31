@@ -5,6 +5,7 @@ import { IoSearch } from "react-icons/io5";
 import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import moment from "moment";
+import UserlistSkeleton from "../../Skeleton/userlistSkeleton";
 
 const UserList = () => {
   // const UserList = [
@@ -79,6 +80,7 @@ const UserList = () => {
   const [pendingRequest, setpendingRequest] = useState(false);
   const [LogedUser, setLogedUser] = useState({});
   const [blockList, setblockList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   /**
    * todo : Data fetch from users database
@@ -87,11 +89,11 @@ const UserList = () => {
    */
   useEffect(() => {
     const fetchData = () => {
+      setLoading(true);
       const UserRef = ref(db, "users/");
       onValue(UserRef, (snapshot) => {
         let data = [];
         const currentUid = auth.currentUser.uid;
-
         snapshot.forEach((item) => {
           const user = item.val();
 
@@ -121,6 +123,7 @@ const UserList = () => {
           }
         });
         setUserList(data);
+        setLoading(false);
       });
     };
 
@@ -243,6 +246,14 @@ const UserList = () => {
         console.error("Error sending notification: ", error);
       });
   };
+
+  if (loading) {
+    return (
+      <div className="overflow-hidden">
+        <UserlistSkeleton />
+      </div>
+    );
+  }
 
   return (
     <>
