@@ -19,6 +19,7 @@ import moment from "moment";
 import { useEffect } from "react";
 import { uploedCloudinary } from "../../Utilities/Cloudinary.utils";
 import { getGridClass } from "../../Lib/sendImage";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Chat = () => {
   const [msg, setMsg] = useState("");
@@ -60,7 +61,6 @@ const Chat = () => {
           const url = await uploedCloudinary(file);
           urls.push(url);
         }
-        setUploadLoading(false);
 
         await set(push(ref(db, `AllMessage/`)), {
           whoSendMsgUid: auth.currentUser.uid,
@@ -74,6 +74,7 @@ const Chat = () => {
           text: urls.length > 0 ? urls : ["image upload failed"],
           sendAt: Date.now(),
         });
+        setUploadLoading(false);
       } else {
         await set(push(ref(db, `AllMessage/`)), {
           whoSendMsgUid: auth.currentUser.uid,
@@ -92,6 +93,7 @@ const Chat = () => {
       console.log("error is", error);
     } finally {
       setMsg("");
+      setSelectedFiles([]);
     }
   };
 
@@ -135,15 +137,19 @@ const Chat = () => {
    * todo : handle file change
    * Discription: This function handles the file change event when a user selects a file
    */
-  const handleFileChange = async (e) => {
+  const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
     setSelectedFiles(files);
   };
 
-  const hendleSendImage = async () => {
+  const hendleSendImage = () => {
     fileInputRef.current.click();
   };
 
+  /**
+   * todo : toggle image display
+   * Discription: This function toggles the display of full images in the chat
+   */
   const toggleImageDisplay = (msgId) => {
     setShowFullImages((prev) => ({
       ...prev,
@@ -245,7 +251,7 @@ const Chat = () => {
                 </p>
 
                 {Array.isArray(item.text) ? (
-                  <div className="max-w-[70%] ml-auto">
+                  <div className="max-w-[70%]">
                     <div className="flex flex-wrap gap-2 justify-end">
                       {(showFullImages[item.sendAt]
                         ? item.text
@@ -261,7 +267,7 @@ const Chat = () => {
                         return (
                           <div
                             key={idx}
-                            className="relative w-28 h-28 cursor-pointer"
+                            className="relative w-30 h-30 cursor-pointer"
                             onClick={() => {
                               if (isMore || isLast)
                                 toggleImageDisplay(item.sendAt);
@@ -270,12 +276,12 @@ const Chat = () => {
                             <img
                               src={url}
                               alt={`img-${idx}`}
-                              className="w-full h-full object-cover rounded-md"
+                              className="w-full h-full cursor-pointer border border-gray-300 shadow-sm object-cover rounded-md"
                             />
 
                             {/* +More overlay */}
                             {isMore && (
-                              <div className="absolute inset-0 bg-[#00000080] bg-opacity-50 text-white text-lg font-bold flex items-center justify-center rounded-md">
+                              <div className="absolute inset-0 cursor-pointer bg-[#00000080] bg-opacity-50 text-white text-lg font-bold flex items-center justify-center rounded-md">
                                 +{item.text.length - 4}
                               </div>
                             )}
@@ -314,7 +320,7 @@ const Chat = () => {
                       return (
                         <div
                           key={i}
-                          className="relative w-28 h-28"
+                          className="relative w-30 h-30"
                           onClick={() => {
                             if (
                               !showFullImages[item.sendAt] &&
@@ -396,12 +402,25 @@ const Chat = () => {
               style={{ display: "none" }}
             />
           </div>
+
           <button
             type="submit"
-            onClick={handleSendMsg}
-            className="p-4 bg-[#3cae64] text-white rounded-full cursor-pointer"
+            onClick={
+              !msg && selectedfiles.length === 0
+                ? (e) => e.preventDefault() // prevent click if no msg and no file
+                : handleSendMsg
+            }
+            className={`p-4 bg-[#3cae64] text-white rounded-full cursor-pointer ${
+              !msg && selectedfiles.length === 0
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+            }`}
           >
-            <FaPaperPlane />
+            {uploadLoading ? (
+              <AiOutlineLoading3Quarters className="animate-spin text-white" />
+            ) : (
+              <FaPaperPlane />
+            )}
           </button>
         </form>
         {/* input part */}
