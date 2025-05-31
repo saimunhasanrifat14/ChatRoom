@@ -33,6 +33,8 @@ const Chat = () => {
   const [selectedfiles, setSelectedFiles] = useState([]);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [showFullImages, setShowFullImages] = useState({});
+  const [viewImage, setViewImage] = useState(null); // store clicked image URL
+  const [showMenu, setShowMenu] = useState(null); // null or msg id
 
   // Get the user from the Redux store
   const { value: user } = useSelector((store) => store.friends);
@@ -157,6 +159,10 @@ const Chat = () => {
     }));
   };
 
+  const hendleseeImage = (url) => {
+    console.log("url is", url);
+  };
+
   /**
    * todo : if user is not selected then show no chat selected component
    * Discription: This function checks if a user is selected, if not, it returns the NoChatSelected component
@@ -276,6 +282,7 @@ const Chat = () => {
                             <img
                               src={url}
                               alt={`img-${idx}`}
+                              onClick={() => setViewImage(url)}
                               className="w-full h-full cursor-pointer border border-gray-300 shadow-sm object-cover rounded-md"
                             />
 
@@ -334,6 +341,7 @@ const Chat = () => {
                           <img
                             src={url}
                             alt={`img-${i}`}
+                            onClick={() => setViewImage(url)}
                             className="w-full h-full object-cover rounded-lg cursor-pointer border border-gray-300 shadow-sm"
                           />
                           {!showFullImages[item.sendAt] &&
@@ -370,6 +378,24 @@ const Chat = () => {
           <div ref={bottomRef}></div>
         </div>
         {/* Chat part */}
+
+        {/* for view full image */}
+        {viewImage && (
+          <div className="w-screen h-[100%] fixed inset-0 bg-[#000000b8] flex items-center justify-center z-50">
+            <button
+              onClick={() => setViewImage(null)}
+              className="absolute top-4 right-4 text-white text-3xl font-bold z-50"
+            >
+              &times;
+            </button>
+            <img
+              src={viewImage}
+              alt="fullscreen"
+              className="max-w-[90%] max-h-[90%] rounded-lg shadow-lg"
+            />
+          </div>
+        )}
+        {/* for view full image */}
 
         {/* input part */}
         <form
