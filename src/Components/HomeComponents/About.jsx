@@ -8,7 +8,7 @@ import TwitterLogo from "../../assets/HomePageIMG/Twitter.png";
 import LinkdenLogo from "../../assets/HomePageIMG/Linkden.png";
 import TelegramLogo from "../../assets/HomePageIMG/Telegram.png";
 import MessengerLogo from "../../assets/HomePageIMG/Messenger.png";
-import SnapchatLogo from "../../assets/HomePageIMg/Snapchat.png";
+import SnapchatLogo from "../../assets/HomePageIMG/Snapchat.png";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { Link } from "react-router-dom";
 
