@@ -5,7 +5,7 @@ import { IoSearch } from "react-icons/io5";
 import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import moment from "moment";
-import UserlistSkeleton from "../../Skeleton/userlistSkeleton";
+import UserlistSkeleton from "../../Skeleton/UserListSkeleton";
 
 const UserList = () => {
   // const UserList = [
