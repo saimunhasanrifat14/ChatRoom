@@ -10,14 +10,21 @@ import {
 } from "firebase/auth";
 import app from "../../Database/Firebase.config";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { getDatabase, onValue, push, ref, set } from "firebase/database";
+import {
+  child,
+  get,
+  getDatabase,
+  onValue,
+  push,
+  ref,
+  set,
+} from "firebase/database";
 
 const LogIn = () => {
   const [eye, seteye] = useState(false);
   const auth = getAuth(app);
   const navigate = useNavigate();
   const db = getDatabase();
-  const [userList, setUserList] = useState([]);
   const [loading, setLoading] = useState(false);
 
   // for user data
@@ -139,25 +146,6 @@ const LogIn = () => {
         });
     }
   };
-  /**
-   * todo : Data fetch from users database
-   * @param (null)
-   * @description : This function fetches the data from the users database and sets it to the userList state.
-   */
-  useEffect(() => {
-    const fetchData = () => {
-      const UserRef = ref(db, "users/");
-      onValue(UserRef, (snapshot) => {
-        console.log("data", snapshot.val());
-        let data = [];
-        snapshot.forEach((item) => {
-          data.push({ ...item.val(), userkey: item.key });
-        });
-        setUserList(data);
-      });
-    };
-    fetchData();
-  }, []);
 
   /**
    * todo : handleLoginWithGoodle function implement
@@ -165,31 +153,37 @@ const LogIn = () => {
    * return : null
    * @description : This function is used to login with google account.
    */
-  const handleLoginWithGoodle = () => {
+  const handleLoginWithGoodle = async () => {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const user = result.user;
-        let ismatch = userList.some((item) => item.email === user.email);
-        if (!ismatch) {
-          set(push(ref(db, "users/")), {
-            username: user.displayName || auth.currentUser.displayName,
-            email: user.email || auth.currentUser.email,
-            profile_picture:
-              user.photoURL || "https://www.w3schools.com/howto/img_avatar.png",
-            uid: user.uid || auth.currentUser.uid,
-            bio: "Add your bio...... Hi! My name is [Your Name]. I’m a [your first role, e.g., student] and also a passionate [your second role, e.g., developer]. I enjoy learning [your interests] and improving my skills through practice and real projects.",
-          });
-        }
-        navigate("/rootlayout/Dashboard");
-      })
-      .catch((error) => {
-        console.error("Google Sign-in Error:", error);
-        setUserLoginInfoError({
-          ...UserLoginInfoError,
-          Error: "Google Sign-in Error",
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const snapshot = await get(child(ref(db), "users"));
+      let isMatch = false;
+
+      if (snapshot.exists()) {
+        const usersData = Object.values(snapshot.val());
+        isMatch = usersData.some((item) => item.email === user.email);
+      }
+
+      if (!isMatch) {
+        await set(push(ref(db, "users/")), {
+          username: user.displayName,
+          email: user.email,
+          profile_picture:
+            user.photoURL || "https://www.w3schools.com/howto/img_avatar.png",
+          uid: user.uid,
+          bio: "Add your bio...... Hi! My name is [Your Name]. I’m a [your first role, e.g., student] and also a passionate [your second role, e.g., developer]. I enjoy learning [your interests] and improving my skills through practice and real projects.",
         });
+      }
+      navigate("/rootlayout/Dashboard");
+    } catch (error) {
+      console.error("Google Sign-in Error:", error);
+      setUserLoginInfoError({
+        ...UserLoginInfoError,
+        Error: "Google Sign-in Error",
       });
+    }
   };
 
   return (
