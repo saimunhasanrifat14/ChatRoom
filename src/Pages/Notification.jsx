@@ -164,51 +164,63 @@ const Notification = ({ userList }) => {
         </div>
         <div className="h-[91%] flex gap-6 items-center w-full bg-white rounded-lg">
           <div className="flex flex-col gap-4 w-full h-full p-6 overflow-y-auto [&::-webkit-scrollbar]:hidden">
-            {NotificationFetchdata?.map((item) => (
-              <div
-                key={item.notificationKey}
-                className="flex items-center justify-between gap-4 p-4 bg-gray-100 rounded-lg "
-              >
-                <div className="flex items-center gap-4">
-                  <img
-                    className="w-14 h-14 rounded-full"
-                    src={item.senderProfilePicture}
-                    alt={`Sender Profile Picture`}
-                  />
-                  <div className="flex flex-col">
-                    <span className="font-normal text-gray-600">
-                      <span className="font-bold ">{item.senderUserName}</span>{" "}
-                      {item.message}
-                    </span>
-                    <span className="font-normal text-sm text-gray-600">
-                      {item.sendAt}
-                    </span>
+            {NotificationFetchdata?.length == 0 ? (
+              <div className="flex flex-col items-center justify-center h-full text-gray-500">
+                <p className="text-lg font-semibold">No notifications yet</p>
+                <p className="text-sm text-center max-w-xs mt-1">
+                  You don’t have any notifications right now. Stay active and
+                  we’ll let you know when something happens!
+                </p>
+              </div>
+            ) : (
+              NotificationFetchdata?.map((item) => (
+                <div
+                  key={item.notificationKey}
+                  className="flex items-center justify-between gap-4 p-4 bg-gray-100 rounded-lg "
+                >
+                  <div className="flex items-center gap-4">
+                    <img
+                      className="w-14 h-14 rounded-full"
+                      src={item.senderProfilePicture}
+                      alt={`Sender Profile Picture`}
+                    />
+                    <div className="flex flex-col">
+                      <span className="font-normal text-gray-600">
+                        <span className="font-bold ">
+                          {item.senderUserName}
+                        </span>{" "}
+                        {item.message}
+                      </span>
+                      <span className="font-normal text-sm text-gray-600">
+                        {item.sendAt}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {item.acceptButton ? (
+                      <button
+                        onClick={() => handleAcceptBtn(item)}
+                        className="ml-auto bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200 cursor-pointer"
+                      >
+                        {item.acceptButton}
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                    {item.rejectButton ? (
+                      <button
+                        onClick={() => handlerefectBtn(item)}
+                        className="ml-auto bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200 cursor-pointer"
+                      >
+                        {item.rejectButton}
+                      </button>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  {item.acceptButton ? (
-                    <button
-                      onClick={() => handleAcceptBtn(item)}
-                      className="ml-auto bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200 cursor-pointer"
-                    >
-                      {item.acceptButton}
-                    </button>
-                  ) : (
-                    ""
-                  )}
-                  {item.rejectButton ? (
-                    <button
-                      onClick={() => handlerefectBtn(item)}
-                      className="ml-auto bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200 cursor-pointer"
-                    >
-                      {item.rejectButton}
-                    </button>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </div>

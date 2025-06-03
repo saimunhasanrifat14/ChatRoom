@@ -436,10 +436,10 @@ const Chat = () => {
                 ? (e) => e.preventDefault() // prevent click if no msg and no file
                 : handleSendMsg
             }
-            className={`p-4 bg-[#3cae64] text-white rounded-full cursor-pointer ${
+            className={`p-4 bg-[#3cae64] text-white rounded-full ${
               !msg && selectedfiles.length === 0
-                ? "opacity-50 cursor-not-allowed"
-                : ""
+                ? "opacity-50 "
+                : "cursor-pointer"
             }`}
           >
             {uploadLoading ? (

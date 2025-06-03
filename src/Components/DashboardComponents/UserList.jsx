@@ -268,39 +268,49 @@ const UserList = () => {
             </span>
           </div>
           <div className="h-[94%] overflow-auto [&::-webkit-scrollbar]:hidden">
-            {userList?.map((item, index) => (
-              <div
-                key={item.uid}
-                className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0 "
-              >
-                <img
-                  src={item.profile_picture}
-                  alt={item.username}
-                  className="w-12 h-12 rounded-full object-cover "
-                />
-                <div className="flex-1">
-                  <h3 className="font-semibold text-gray-900">
-                    {item.username}
-                  </h3>
-                  <p className="text-gray-500 text-sm">hello</p>
-                </div>
-
-                {notifications.includes(
-                  auth.currentUser.uid.concat(item.uid)
-                ) ? (
-                  <button className="bg-[#3cae64] w-18 flex items-center justify-center mr-2 text-white py-2 rounded-lg font-semibold">
-                    <FaUserClock />
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => handleFriendRequest(item)}
-                    className="bg-[#3cae64] mr-2 text-white w-18 py-1 rounded-lg font-semibold cursor-pointer"
-                  >
-                    Add
-                  </button>
-                )}
+            {userList.length == 0 ? (
+              <div className="flex flex-col items-center justify-center h-full text-gray-500">
+                <p className="text-lg font-semibold">No users available</p>
+                <p className="text-sm text-center max-w-xs mt-1">
+                  No users found. Please check back later or try searching for
+                  someone.
+                </p>
               </div>
-            ))}
+            ) : (
+              userList?.map((item, index) => (
+                <div
+                  key={item.uid}
+                  className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0 "
+                >
+                  <img
+                    src={item.profile_picture}
+                    alt={item.username}
+                    className="w-12 h-12 rounded-full object-cover "
+                  />
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900">
+                      {item.username}
+                    </h3>
+                    <p className="text-gray-500 text-sm">hello</p>
+                  </div>
+
+                  {notifications.includes(
+                    auth.currentUser.uid.concat(item.uid)
+                  ) ? (
+                    <button className="bg-[#3cae64] w-18 flex items-center justify-center mr-2 text-white py-2 rounded-lg font-semibold">
+                      <FaUserClock />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleFriendRequest(item)}
+                      className="bg-[#3cae64] mr-2 text-white w-18 py-1 rounded-lg font-semibold cursor-pointer"
+                    >
+                      Add
+                    </button>
+                  )}
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>

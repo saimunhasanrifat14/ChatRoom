@@ -83,30 +83,39 @@ const BlockList = () => {
           </span>
         </div>
         <div className="h-[92%] overflow-auto [&::-webkit-scrollbar]:hidden">
-          {blockList.map((user, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0"
-            >
-              <img
-                src={user.reciverProfilePicture}
-                alt={user.reciverUserName}
-                className="w-12 h-12 rounded-full object-cover"
-              />
-              <div className="flex-1">
-                <h3 className="font-semibold text-gray-900">
-                  {user.reciverUserName}
-                </h3>
-                <p className="text-gray-500 text-sm">{user.sendAt}</p>
-              </div>
-              <button
-                onClick={() => handleUnblockBtn(user)}
-                className="bg-[#EF4444] hover:bg-[#dc2626] text-white px-5 py-1 rounded-lg font-semibold cursor-pointer"
-              >
-                Unblock
-              </button>
+          {blockList.length == 0 ? (
+            <div className="flex flex-col items-center justify-center h-full text-gray-500">
+              <p className="text-lg font-semibold">No blocked users</p>
+              <p className="text-sm text-center max-w-xs mt-1">
+                You haven’t blocked anyone yet. Blocked users will appear here.
+              </p>
             </div>
-          ))}
+          ) : (
+            blockList.map((user, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0"
+              >
+                <img
+                  src={user.reciverProfilePicture}
+                  alt={user.reciverUserName}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-900">
+                    {user.reciverUserName}
+                  </h3>
+                  <p className="text-gray-500 text-sm">{user.sendAt}</p>
+                </div>
+                <button
+                  onClick={() => handleUnblockBtn(user)}
+                  className="bg-[#EF4444] hover:bg-[#dc2626] text-white px-5 py-1 rounded-lg font-semibold cursor-pointer"
+                >
+                  Unblock
+                </button>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

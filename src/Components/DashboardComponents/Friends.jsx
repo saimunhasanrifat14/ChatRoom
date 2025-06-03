@@ -153,45 +153,57 @@ const Friends = ({ showButton }) => {
           </span>
         </div>
         <div className="h-[87%] overflow-auto [&::-webkit-scrollbar]:hidden">
-          {friendsList?.map((item, index) => {
-            const currentUid = auth.currentUser.uid;
-            const isSender = item.senderUserId === currentUid;
+          {friendsList?.length == 0 ? (
+            <div className="flex flex-col items-center justify-center h-full text-gray-500">
+              <p className="text-lg font-semibold">No friends yet</p>
+              <p className="text-sm text-center max-w-xs mt-1">
+                You don't have any friends here. Try connecting with people or
+                wait for friend requests!
+              </p>
+            </div>
+          ) : (
+            friendsList?.map((item, index) => {
+              const currentUid = auth.currentUser.uid;
+              const isSender = item.senderUserId === currentUid;
 
-            const friendName = isSender
-              ? item.reciverUserName
-              : item.senderUserName;
-            const friendPhoto = isSender
-              ? item.reciverProfilePicture
-              : item.senderProfilePicture;
+              const friendName = isSender
+                ? item.reciverUserName
+                : item.senderUserName;
+              const friendPhoto = isSender
+                ? item.reciverProfilePicture
+                : item.senderProfilePicture;
 
-            return (
-              <div
-                onClick={() => handlefriendinfo(item)}
-                key={item.friendsKey}
-                className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0 cursor-pointer"
-              >
-                <img
-                  src={friendPhoto}
-                  alt={friendName}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div className="flex-1">
-                  <h3 className="font-semibold text-gray-900">{friendName}</h3>
-                  <p className="text-gray-500 text-sm">{item.sendAt}</p>
+              return (
+                <div
+                  onClick={() => handlefriendinfo(item)}
+                  key={item.friendsKey}
+                  className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0 cursor-pointer"
+                >
+                  <img
+                    src={friendPhoto}
+                    alt={friendName}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900">
+                      {friendName}
+                    </h3>
+                    <p className="text-gray-500 text-sm">{item.sendAt}</p>
+                  </div>
+                  {showButton ? (
+                    <button
+                      onClick={() => handleBlockBtn(item)}
+                      className="bg-red-400 mr-2 text-white px-5 py-1 rounded-lg font-semibold cursor-pointer"
+                    >
+                      BLock
+                    </button>
+                  ) : (
+                    ""
+                  )}
                 </div>
-                {showButton ? (
-                  <button
-                    onClick={() => handleBlockBtn(item)}
-                    className="bg-red-400 mr-2 text-white px-5 py-1 rounded-lg font-semibold cursor-pointer"
-                  >
-                    BLock
-                  </button>
-                ) : (
-                  ""
-                )}
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </div>
     </>
