@@ -19,10 +19,10 @@ const Setting = ({ userList }) => {
           <OutletTop userList={userList} Title={"Settings"} />
         </div>
         <div className="h-[91%] w-full flex gap-4 items-center">
-          <div className="h-full w-[50%] bg-white rounded-lg p-6">
+          <div className="h-full w-[50%] bg-BGWhite rounded-lg p-6">
             <SettingsList userList={userList} />
           </div>
-          <div className="h-full w-[50%] bg-white rounded-lg">
+          <div className="h-full w-[50%] bg-BGWhite rounded-lg">
             <Outlet />
           </div>
         </div>

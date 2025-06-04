@@ -50,7 +50,7 @@ const SettingsList = () => {
       {loading ? (
         <SettingListSkeleton />
       ) : (
-        <div className="h-[22%] w-full flex items-center gap-6 mb-6 border-b-2 border-gray-200 pb-6">
+        <div className="h-[22%] w-full flex items-center gap-6 mb-6 border-b-2 border-gray-400 pb-6">
           <img
             className="w-30 h-30 object-cover rounded-full"
             src={
@@ -59,7 +59,7 @@ const SettingsList = () => {
             }
             alt=""
           />
-          <h2 className="text-[40px] font-semibold">
+          <h2 className="text-TextBlack text-[40px] font-semibold">
             {userList?.username || "Your Name"}
           </h2>
         </div>
@@ -71,14 +71,14 @@ const SettingsList = () => {
             key={item.id}
             className={({ isActive }) =>
               isActive
-                ? "h-[10%] w-full flex items-center gap-4 px-3 font-bold border-b-2 border-[#9d9d9d] text-[#38B363] bg-[#f4f4f4] cursor-pointer rounded-lg"
-                : "h-[10%] w-full flex items-center gap-4 px-3 border-b-2 border-[#ffffff] cursor-pointer rounded-lg"
+                ? "py-4 w-full flex items-center gap-4 px-3 font-bold border-b-2 border-SidebarRightBorder text-[#38B363] bg-BGGray cursor-pointer rounded-lg"
+                : "py-4 w-full flex items-center gap-4 px-3 border-b-2 border-BGWhite cursor-pointer rounded-lg"
             }
           >
-            <span className="text-[20px] text-normal text-gray-600">
+            <span className="text-[20px] text-normal text-TextDarkGray">
               {item.icon}
             </span>
-            <h2 className="text-[14px] font-semibold text-gray-600">
+            <h2 className="text-[14px] font-semibold text-TextGray">
               {item.name}
             </h2>
           </NavLink>

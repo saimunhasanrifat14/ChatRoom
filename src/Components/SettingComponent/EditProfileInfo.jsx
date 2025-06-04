@@ -103,15 +103,15 @@ const EditProfileInfo = () => {
   return (
     <>
       <div className="w-full h-full flex items-center justify-center">
-        <div className="bg-white p-6 max-w-2xl w-full">
-          <h2 className="text-xl font-semibold text-gray-800 mb-6 border-b-2 border-gray-200 pb-3">
+        <div className="bg-BGWhite p-6 max-w-2xl w-full">
+          <h2 className="text-xl font-semibold text-TextDarkGray mb-6 border-b-2 border-gray-400 pb-3">
             Edit Your Profile Information
           </h2>
 
           <form className="space-y-4">
             {/* Name Field */}
             <div>
-              <label className="block text-gray-700 font-medium mb-1">
+              <label className="block text-TextDarkGray font-medium mb-1">
                 Name
               </label>
               <input
@@ -121,8 +121,8 @@ const EditProfileInfo = () => {
                 type="text"
                 className={
                   userNewDataError.NameError !== ""
-                    ? "w-full border-2 border-red-400 placeholder:text-red-400 rounded-xl p-2 focus:outline-none"
-                    : "w-full border-2 border-gray-300 placeholder:text-gray-500 rounded-xl p-2 focus:outline-none"
+                    ? "w-full border-2 text-TextBlack border-red-400 placeholder:text-red-400 rounded-xl p-2 focus:outline-none"
+                    : "w-full border-2 text-TextBlack border-SidebarRightBorder placeholder:text-gray-500 rounded-xl p-2 focus:outline-none"
                 }
                 placeholder="Enter your name"
               />
@@ -130,7 +130,7 @@ const EditProfileInfo = () => {
 
             {/* Bio Field */}
             <div>
-              <label className="block text-gray-700 font-medium mb-1">
+              <label className="block text-TextDarkGray font-medium mb-1">
                 Bio
               </label>
               <textarea
@@ -140,8 +140,8 @@ const EditProfileInfo = () => {
                 rows="4"
                 className={
                   userNewDataError.BioError !== ""
-                    ? "w-full border-2 border-red-400 placeholder:text-red-400 rounded-xl p-2 focus:outline-none  resize-none"
-                    : "w-full border-2 border-gray-300 placeholder:text-gray-500 rounded-xl p-2 focus:outline-none  resize-none"
+                    ? "w-full border-2 text-TextBlack border-red-400 placeholder:text-red-400 rounded-xl p-2 focus:outline-none  resize-none"
+                    : "w-full border-2 text-TextBlack border-SidebarRightBorder placeholder:text-gray-500 rounded-xl p-2 focus:outline-none  resize-none"
                 }
                 placeholder="Write something about yourself"
               ></textarea>
@@ -151,7 +151,7 @@ const EditProfileInfo = () => {
             <div className="text-right">
               <button
                 type="submit"
-                className="text-white bg-[#3CAE64] text-center font-medium py-2 w-40 rounded-xl transition duration-200 cursor-pointer hover:bg-[#4e8c64]"
+                className="text-white bg-buttonsBG text-center font-medium py-2 w-40 rounded-xl transition duration-200 cursor-pointer hover:bg-[#4e8c64]"
                 onClick={handleSaveNewData}
               >
                 {saveLoading ? "Saved" : "Save Changes"}

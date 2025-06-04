@@ -82,7 +82,7 @@ const EditProfile = () => {
       setLoading(false);
     }
   };
-  
+
   /**
    * @description Set the selected file to state and clear previous error.
    * @param {Event}
@@ -98,17 +98,17 @@ const EditProfile = () => {
     <>
       <div className="flex items-center justify-center h-full w-full py-10 px-4">
         <div className="flex flex-col justify-center h-full w-full max-w-md p-6">
-          <h2 className="text-xl font-semibold text-center text-gray-800 mb-6">
+          <h2 className="text-xl font-semibold text-center text-TextDarkGray mb-6">
             Update Your Profile
           </h2>
           {/* Upload Box */}
           <label
             htmlFor="file-upload"
-            className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 border-[#3CAE64] hover:border-[#359a57] transition duration-200 mb-6"
+            className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-BGGray border-buttonsBG hover:border-[#359a57] transition duration-200 mb-6"
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <svg
-                className="w-8 h-8 mb-4 text-[#3CAE64]"
+                className="w-8 h-8 mb-4 text-buttonsBG"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 20 16"
@@ -136,7 +136,7 @@ const EditProfile = () => {
               {profile && (
                 <p className="mt-2 text-sm text-gray-500">
                   Selected file:{" "}
-                  <span className="font-semibold text-[#3CAE64]">
+                  <span className="font-semibold text-buttonsBG">
                     {profile.name}
                   </span>
                 </p>
@@ -164,7 +164,7 @@ const EditProfile = () => {
           <div className="text-right">
             <button
               type="button"
-              className="bg-[#3CAE64] hover:bg-[#359a57] text-white font-medium py-2 w-50 rounded-xl transition duration-200"
+              className="bg-buttonsBG hover:bg-[#359a57] text-white font-medium py-2 w-50 rounded-xl transition duration-200 cursor-pointer"
               onClick={handleUpdateProfile}
             >
               {saveLoading
