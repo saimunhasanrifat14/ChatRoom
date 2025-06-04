@@ -15,10 +15,10 @@ import { Link } from "react-router-dom";
 const About = () => {
   return (
     <>
-      <div className="w-full h-screen flex justify-between">
+      <div className="w-full h-screen flex justify-between bg-BGWhite">
         <div className="w-[50%] flex items-center justify-center relative overflow-hidden">
           <div className="aboutLogo w-[750px] h-[750px] flex items-center justify-center rounded-full z-1 relative">
-            <h3 className="aboutLogoText text-[28px] font-semibold w-[270px] h-[270px] rounded-full bg-white flex items-center justify-center border-solid border-gray-100 border-[35px] shadow-[0_0px_50px_rgba(0,0,0,0.20)]">
+            <h3 className="aboutLogoText text-TextBlack text-[28px] font-semibold w-[270px] h-[270px] rounded-full bg-BGWhite flex items-center justify-center border-solid border-BGGray border-[35px] shadow-[0_0px_50px_rgba(0,0,0,0.20)]">
               ChatRoom
             </h3>
             <div className="aboutFirstIcon w-full h-full">
@@ -54,23 +54,26 @@ const About = () => {
         </div>
         <div className="w-[50%] flex items-center">
           <div className="flex flex-col gap-7 items-start">
-            <h1 className=" text-[50px]">All in one App</h1>
-            <p className="w-[450px]">
+            <h1 className=" text-TextBlack text-[50px]">All in one App</h1>
+            <p className="w-[450px] text-TextBlack">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim
               dolore sed voluptatum eveniet nemo sapiente deleniti voluptate
               voluptas maxime at totam dolor dolorum minima, nobis quaerat in
               aut magnam quam.
             </p>
             <div className="flex gap-5">
-              <Link to={"/signup"} className="bg-black text-white pl-4 p-1 rounded-3xl flex items-center cursor-pointer">
+              <Link
+                to={"/signup"}
+                className="bg-BGBlack text-TextWhite pl-4 p-1 rounded-3xl flex items-center cursor-pointer"
+              >
                 Try out!{" "}
-                <span className="p-1 text-[22px] ml-2 bg-white rounded-full text-black">
+                <span className="p-1 text-[22px] ml-2 bg-BGWhite rounded-full text-TextBlack">
                   <MdOutlineArrowOutward />
                 </span>
               </Link>
-              <button className="bg-gray-100 pl-4 p-1 rounded-3xl flex items-center cursor-pointer">
+              <button className="bg-BGGray text-TextBlack pl-4 p-1 rounded-3xl flex items-center cursor-pointer">
                 Learn more{" "}
-                <span className="p-1 text-[22px] ml-2 bg-white rounded-full ">
+                <span className="p-1 text-[22px] ml-2 bg-BGWhite rounded-full ">
                   <MdOutlineArrowOutward />
                 </span>
               </button>

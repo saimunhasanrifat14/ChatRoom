@@ -1,148 +1,194 @@
 @import "tailwindcss";
 
-.navlogo::before{
+.light {
+  /* for text */
+  --text-white: #ffffff;
+  --text-black: #000000;
+  --text-gray: #505050;
+
+  /* for background */
+  --bg-white: #ffffff;
+  --bg-black: #000000;
+  --bg-gray: #f3f4f6;
+  --bg-light-green: #b9f8cf;
+
+  /* for about curcle border color */
+  --border-gray: #80808033;
+}
+.dark {
+  /* for text */
+  --text-white: #000000;
+  --text-black: #ffffff;
+  --text-gray: #d1d5db;
+
+  /* for background */
+  --bg-white: #1f2937;
+  --bg-black: #ffffff;
+  --bg-gray: #111827;
+  --bg-light-green: #267c45;
+
+  /* for about curcle border color */
+  --border-gray: #c4c4c433;
+}
+@theme {
+  --color-TextWhite: var(--text-white);
+  --color-TextBlack: var(--text-black);
+  --color-TextGray: var(--text-gray);
+
+  --color-BGWhite: var(--bg-white);
+  --color-BGBlack: var(--bg-black);
+  --color-BGGray: var(--bg-gray);
+  --color-BGLightGreen: var(--bg-light-green);
+
+  --color-GrayBorder: var(--border-gray);
+}
+/* for navber before shape */
+.navlogo::before {
   content: "";
   position: absolute;
   top: -8px;
   left: -2px;
   width: 50px;
   height: 50px;
-  background-color: #B9F8CF;
+  background-color: var(--bg-light-green);
   border-radius: 50%;
   z-index: -1;
 }
-
-.sliderButton{
+/* for navber before shape */
+/* for hero section slider animation */
+.sliderButton {
   position: absolute;
   bottom: -30px;
   left: 50%;
   transform: translateX(-50%);
 }
-.sliderRightButton{
+.sliderRightButton {
   position: absolute;
   bottom: 168px;
   right: 18%;
-  transform: rotate(180deg)
+  transform: rotate(180deg);
 }
-.aboutLogo{
+/* for hero section slider animation */
+/* for about secton animation */
+.aboutLogo {
   position: absolute;
   top: 50%;
   left: -20%;
   transform: translateY(-50%);
 }
-.aboutFirstIcon{
+.aboutFirstIcon {
   position: absolute;
   left: 0;
   top: 0;
   z-index: -1;
   border-radius: 50%;
-  border: 2px solid #80808033;
+  border: 2px solid var(--border-gray);
   animation-name: instagram;
   animation-duration: 10s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-.aboutSecondIcon{
+.aboutSecondIcon {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: -1;
   border-radius: 50%;
-  border: 2px solid #80808033;
+  border: 2px solid var(--border-gray);
   animation-name: facebook;
   animation-duration: 10s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-.aboutTherdIcon{
+.aboutTherdIcon {
   position: absolute;
   z-index: -1;
   border-radius: 50%;
-  border: 2px solid #80808033;
+  border: 2px solid var(--border-gray);
 }
-.facebookIcon{
+.facebookIcon {
   position: absolute;
   bottom: 57px;
   left: 57px;
-  border: 10px solid #ebebebc6;
+  border: 10px solid var(--bg-gray);
   border-radius: 50%;
   animation-name: facebookIcon;
   animation-duration: 10s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-.twitterIcon{
+.twitterIcon {
   position: absolute;
   bottom: -18px;
   right: 187px;
-  border: 10px solid #ebebebc6;
+  border: 10px solid var(--bg-gray);
   border-radius: 50%;
   animation-name: twitterIcon;
   animation-duration: 10s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-.telegramIcon{
+.telegramIcon {
   position: absolute;
   top: 29px;
   left: 87px;
-  border: 10px solid #ebebebc6;
+  border: 10px solid var(--bg-gray);
   border-radius: 50%;
   animation-name: telegramIcon;
   animation-duration: 10s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-.messangerIcon{
+.messangerIcon {
   position: absolute;
   top: -96px;
   left: 189px;
-  border: 10px solid #ebebebc6;
+  border: 10px solid var(--bg-gray);
   border-radius: 50%;
   animation-name: messangerIcon;
   animation-duration: 10s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-.linkdenIcon{
+.linkdenIcon {
   position: absolute;
   top: 57px;
   right: 57px;
-  border: 10px solid #ebebebc6;
+  border: 10px solid var(--bg-gray);
   border-radius: 50%;
   animation-name: linkdenIcon;
   animation-duration: 10s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-.instagramIcon{
+.instagramIcon {
   position: absolute;
   top: 99px;
   left: 59px;
-  border: 10px solid #ebebebc6;
+  border: 10px solid var(--bg-gray);
   border-radius: 50%;
   animation-name: instagramIcon;
   animation-duration: 10s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-.snapchatIcon{
+.snapchatIcon {
   position: absolute;
   bottom: 189px;
   right: 4px;
-  border: 10px solid #ebebebc6;
+  border: 10px solid var(--bg-gray);
   border-radius: 50%;
   animation-name: snapchatIcon;
   animation-duration: 10s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-.whatsappIcon{
+.whatsappIcon {
   position: absolute;
   bottom: 185px;
   left: 6px;
-  border: 8px solid #ebebebc6;
+  border: 8px solid var(--bg-gray);
   border-radius: 50%;
   animation-name: whatsappIcon;
   animation-duration: 10s;
@@ -203,7 +249,7 @@
     transform: rotate(0deg);
   }
   to {
-    transform:  rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 @keyframes snapchatIcon {
@@ -211,7 +257,7 @@
     transform: rotate(-0deg);
   }
   to {
-    transform:  rotate(-360deg);
+    transform: rotate(-360deg);
   }
 }
 @keyframes instagramIcon {
@@ -230,18 +276,18 @@
     transform: rotate(-360deg);
   }
 }
-
+/* for about secton animation */
 
 /* for SideberActiveMenu */
-.SideberActiveMenu{
+.SideberActiveMenu {
   border-left: 5px solid #38b363;
   color: #38b363;
 }
 /* for SideberActiveMenu */
 
-
+/* for message section scroll bar  */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px; /* Slightly wider for a normal slim look */
+  width: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -256,3 +302,4 @@
 .custom-scrollbar::-webkit-scrollbar-button {
   display: none;
 }
+/* for message section scroll bar  */

@@ -26,29 +26,33 @@ const Hero = () => {
         <div className="absolute top-0 left-0 z-10 w-full">
           <Nav />
         </div>
+
         <div>
-          <div className="h-[100vh] w-full flex items-center justify-between px-20 relative">
+          <div className="h-[100vh] w-full bg-BGWhite flex items-center justify-between px-20 relative">
             <div className="w-[60%] flex items-center justify-between">
               <div className="flex flex-col gap-7">
-                <h1 className="text-[70px] leading-[75px]">
+                <h1 className="text-TextBlack text-[70px] leading-[75px]">
                   Empower <br /> Connections <br /> with ChatRoom
                 </h1>
-                <p className="w-[50%]">
+                <p className="w-[50%] text-TextBlack">
                   Lorem ipsum dolor,{" "}
                   <span className="text-gray-500">sit amet consectetur</span>{" "}
                   adipisicing elit. Ipsa ipsam dolor cumque{" "}
                   <span className="text-[#80cf9c]"> expedita</span>{" "}
                 </p>
                 <div className="flex gap-5">
-                  <Link to={"/signup"} className="bg-black text-white pl-4 p-1 rounded-3xl flex items-center cursor-pointer">
+                  <Link
+                    to={"/signup"}
+                    className="bg-black text-white pl-4 p-1 rounded-3xl flex items-center cursor-pointer"
+                  >
                     Try out!{" "}
-                    <span className="p-2 text-[22px] ml-2 bg-white rounded-full text-black">
+                    <span className="p-2 text-[22px] ml-2 bg-BGWhite rounded-full text-TextBlack">
                       <MdOutlineArrowOutward />
                     </span>
                   </Link>
-                  <button className="bg-gray-100 pl-4 p-1 rounded-3xl flex items-center cursor-pointer">
+                  <button className="bg-BGGray text-TextBlack pl-4 p-1 rounded-3xl flex items-center cursor-pointer">
                     Learn more{" "}
-                    <span className="p-2 text-[22px] ml-2 bg-white rounded-full ">
+                    <span className="p-2 text-[22px] ml-2 bg-BGWhite text-TextBlack rounded-full ">
                       <MdOutlineArrowOutward />
                     </span>
                   </button>
@@ -269,14 +273,14 @@ const Hero = () => {
                 </div>
               </div>
               <div>
-                <div className="flex flex-col gap-3 bg-gray-100 p-2 rounded-3xl">
-                  <span className="p-3 rounded-full bg-white text-black flex items-center justify-center cursor-pointer">
+                <div className="flex flex-col gap-3 bg-BGGray p-2 rounded-3xl">
+                  <span className="p-3 rounded-full bg-BGWhite text-TextBlack flex items-center justify-center cursor-pointer">
                     <FaFacebookF />
                   </span>
-                  <span className="p-3 rounded-full bg-white text-black flex items-center justify-center cursor-pointer">
+                  <span className="p-3 rounded-full bg-BGWhite text-TextBlack flex items-center justify-center cursor-pointer">
                     <FaInstagram />
                   </span>
-                  <span className="p-3 h-10 rounded-full bg-white text-black flex items-center justify-center cursor-pointer">
+                  <span className="p-3 h-10 rounded-full bg-BGWhite text-TextBlack flex items-center justify-center cursor-pointer">
                     <FaLinkedinIn />
                   </span>
                 </div>
