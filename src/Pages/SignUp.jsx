@@ -166,13 +166,13 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="w-full h-screen flex">
+      <div className="w-full h-screen flex bg-BGWhite">
         <div className="w-[60%] h-full flex items-center justify-center">
-          <div className="min-h-screen w-[380px] flex items-center justify-center bg-white">
+          <div className="min-h-screen w-[380px] flex items-center justify-center bg-BGWhite">
             <div className="w-full flex flex-col gap-8">
               {/* Heading */}
               <div className="text-center">
-                <h2 className="text-2xl font-bold text-gray-900">
+                <h2 className="text-2xl font-bold text-TextDarkGray">
                   Get started with easily registert
                 </h2>
                 <p className="text-gray-400 text-[16px] mt-1">
@@ -186,7 +186,7 @@ const SignUp = () => {
                   <div key={index} className="relative">
                     <label
                       htmlFor="name"
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-TextGray"
                     >
                       {item.label}
                     </label>
@@ -198,7 +198,7 @@ const SignUp = () => {
                         type={eye ? "text" : "password"}
                         id={item.id}
                         placeholder={item.placeholder}
-                        className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none relative focus:ring-green-500 focus:border-green-500 text-sm"
+                        className="mt-1 w-full px-3 py-2 text-TextGray border border-gray-300 rounded-md shadow-sm focus:outline-none relative focus:ring-green-500 focus:border-green-500 text-sm placeholder:text-TextGray"
                       />
                     ) : (
                       // for other inputs
@@ -208,7 +208,7 @@ const SignUp = () => {
                         type={item.type}
                         id={item.id}
                         placeholder={item.placeholder}
-                        className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none relative focus:ring-green-500 focus:border-green-500 text-sm"
+                        className="mt-1 w-full px-3 py-2 text-TextGray border border-gray-300 rounded-md shadow-sm focus:outline-none relative focus:ring-green-500 focus:border-green-500 text-sm placeholder:text-TextGray"
                       />
                     )}
                     {/* for password eye */}
@@ -240,7 +240,7 @@ const SignUp = () => {
                 </button>
               </form>
               {/* navigate to login page */}
-              <p className="text-sm text-gray-500 mt-1 text-center">
+              <p className="text-sm text-TextGray mt-1 text-center">
                 Already have an account?{" "}
                 <Link
                   to="/login"

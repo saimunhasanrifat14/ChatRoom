@@ -41,10 +41,10 @@ const Sideber = () => {
 
   return (
     <>
-      <div className="h-full flex flex-col justify-between items-center py-8 px-4">
+      <div className="h-full bg-BGWhite flex flex-col justify-between items-center py-8 px-4">
         <div className="w-full">
           <div className="pl-2">
-            <h3 className="navlogo relative font-semibold text-[22px] z-1">
+            <h3 className="navlogo text-TextBlack relative font-semibold text-[22px] z-1">
               ChatRoom
             </h3>
           </div>
@@ -55,8 +55,8 @@ const Sideber = () => {
                 key={item.id}
                 className={({ isActive }) =>
                   isActive
-                    ? "SideberActiveMenu flex items-center gap-2 w-full text-gray-600 font-semibold cursor-pointer py-2 px-3  rounded-sm transition duration-200 ease-in-out"
-                    : "flex items-center gap-2 w-full text-gray-600 hover:text-gray-700 cursor-pointer py-2 px-3  rounded-sm transition duration-200 ease-in-out"
+                    ? "SideberActiveMenu flex items-center gap-2 w-full text-TextGray font-semibold cursor-pointer py-2 px-3  rounded-sm transition duration-200 ease-in-out"
+                    : "flex items-center gap-2 w-full text-TextGray hover:text-gray-700 cursor-pointer py-2 px-3  rounded-sm transition duration-200 ease-in-out"
                 }
               >
                 <span className="text-[20px]">{item.icon}</span>
@@ -67,7 +67,7 @@ const Sideber = () => {
         </div>
         <div
           onClick={handleLogout}
-          className="flex items-center gap-2 w-full  py-2 px-3 font-semibold text-gray-600 cursor-pointer hover:text-red-400"
+          className="flex items-center gap-2 w-full  py-2 px-3 font-semibold text-TextGray cursor-pointer hover:text-red-400"
         >
           <span aria-label="Logout Icon" className="text-[26px] ">
             <IoLogOut />

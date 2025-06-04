@@ -14,19 +14,19 @@ const Dashboard = ({ userList }) => {
         </div>
         <div className="h-[90%] flex gap-4 items-center w-full">
           <div className="w-[67%] h-full flex flex-col gap-4">
-            <div className="h-[50%] bg-white rounded-xl ">
+            <div className="h-[50%] bg-BGWhite rounded-xl ">
               <Profile userList={userList} />
             </div>
             <div className="h-[50%] w-full flex items-center gap-4 ">
-              <div className="h-full w-[50%] bg-[#ffffff] rounded-xl ">
+              <div className="h-full w-[50%] bg-BGWhite rounded-xl ">
                 <Groups />
               </div>
-              <div className="h-full w-[50%] bg-[#ffffff] rounded-xl ">
+              <div className="h-full w-[50%] bg-BGWhite rounded-xl ">
                 <Friends showButton={true} />
               </div>
             </div>
           </div>
-          <div className="w-[33%] h-full rounded-xl bg-[#ffffff]">
+          <div className="w-[33%] h-full rounded-xl bg-BGWhite">
             <UserList />
           </div>
         </div>

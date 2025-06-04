@@ -91,13 +91,13 @@ const Groups = () => {
     <>
       <div className="px-5 pb-5 pt-3 h-full rounded-2xl">
         <div className="h-[13%] flex justify-between items-center relative">
-          <h2 className="flex items-center gap-3 text-lg font-semibold">
+          <h2 className="text-TextBlack flex items-center gap-3 text-lg font-semibold">
             Groups
           </h2>
 
           <span
             onClick={() => setShowMenu(!showMenu)}
-            className="text-blueColor text-[20px] cursor-pointer relative"
+            className="text-TextBlack text-[20px] cursor-pointer relative"
           >
             <HiOutlineDotsVertical />
           </span>
@@ -124,7 +124,7 @@ const Groups = () => {
           {UserList?.map((item, index) => (
             <div
               key={index}
-              className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0 "
+              className="flex items-center gap-4 py-3 border-b border-b-ButtonGrayBorder last:border-b-0 "
             >
               <img
                 src={item.image}
@@ -132,10 +132,10 @@ const Groups = () => {
                 className="w-12 h-12 rounded-full object-cover "
               />
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900">{item.name}</h3>
+                <h3 className="font-semibold text-TextDarkGray">{item.name}</h3>
                 <p className="text-gray-500 text-sm">{item.message}</p>
               </div>
-              <span className="bg-[#3cae64] mr-2 text-white px-5 py-1 rounded-lg font-semibold cursor-pointer">
+              <span className="bg-buttonsBG mr-2 text-white px-5 py-1 rounded-lg font-semibold cursor-pointer">
                 Join
               </span>
             </div>

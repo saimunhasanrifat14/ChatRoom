@@ -5,6 +5,7 @@
   --text-white: #ffffff;
   --text-black: #000000;
   --text-gray: #505050;
+  --text-dark-gray: #101828;
 
   /* for background */
   --bg-white: #ffffff;
@@ -12,35 +13,64 @@
   --bg-gray: #f3f4f6;
   --bg-light-green: #b9f8cf;
 
+  /* used in rootlayout */
+  --bg-main-bg: #ececec;
+
+  /* for all buttons */
+  --bg-button-bg: #3cae64;
+
   /* for about curcle border color */
   --border-gray: #80808033;
+
+  /* for all users list bottom border */
+  --border-bottom: #d1d5db;
+
+  /* for sideber right border */
+  --sidebar-right-border: #d1d5dc;
 }
 .dark {
   /* for text */
   --text-white: #000000;
   --text-black: #ffffff;
   --text-gray: #d1d5db;
+  --text-dark-gray: #c9d0df;
 
   /* for background */
-  --bg-white: #1f2937;
+  --bg-white: #1f272f;
   --bg-black: #ffffff;
-  --bg-gray: #111827;
+  --bg-gray: #292f3d;
   --bg-light-green: #267c45;
+
+  /* used in rootlayout */
+  --bg-main-bg: #313944;
+
+  /* for all buttons */
+  --bg-button-bg: #309553;
 
   /* for about curcle border color */
   --border-gray: #c4c4c433;
+
+  /* for all users list bottom border */
+  --border-bottom: #636775;
+
+  /* for sideber right border */
+  --sidebar-right-border: #474d55;
 }
 @theme {
   --color-TextWhite: var(--text-white);
   --color-TextBlack: var(--text-black);
   --color-TextGray: var(--text-gray);
+  --color-TextDarkGray: var(--text-dark-gray);
 
   --color-BGWhite: var(--bg-white);
   --color-BGBlack: var(--bg-black);
   --color-BGGray: var(--bg-gray);
   --color-BGLightGreen: var(--bg-light-green);
-
+  --color-BGMainBg: var(--bg-main-bg);
+  --color-buttonsBG: var(--bg-button-bg);
+  --color-ButtonGrayBorder: var(--border-bottom);
   --color-GrayBorder: var(--border-gray);
+  --color-SidebarRightBorder: var(--sidebar-right-border);
 }
 /* for navber before shape */
 .navlogo::before {

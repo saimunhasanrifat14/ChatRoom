@@ -260,16 +260,16 @@ const UserList = () => {
       <div className="h-[100%] flex flex-col justify-between">
         <div className="px-5 pb-5 pt-3 h-full rounded-2xl">
           <div className="h-[6%] flex justify-between items-center">
-            <h2 className="flex items-center gap-3 text-lg font-semibold">
+            <h2 className="text-TextBlack flex  items-center gap-3 text-lg font-semibold">
               Users
             </h2>
-            <span className="text-blueColor text-[20px] cursor-pointer">
+            <span className="text-TextBlack text-[20px] cursor-pointer">
               <HiOutlineDotsVertical />
             </span>
           </div>
           <div className="h-[94%] overflow-auto [&::-webkit-scrollbar]:hidden">
             {userList.length == 0 ? (
-              <div className="flex flex-col items-center justify-center h-full text-gray-500">
+              <div className="flex flex-col items-center justify-center h-full text-TextGray">
                 <p className="text-lg font-semibold">No users available</p>
                 <p className="text-sm text-center max-w-xs mt-1">
                   No users found. Please check back later or try searching for
@@ -280,7 +280,7 @@ const UserList = () => {
               userList?.map((item, index) => (
                 <div
                   key={item.uid}
-                  className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0 "
+                  className="flex items-center gap-4 py-3 border-b border-b-ButtonGrayBorder last:border-b-0 "
                 >
                   <img
                     src={item.profile_picture}
@@ -288,7 +288,7 @@ const UserList = () => {
                     className="w-12 h-12 rounded-full object-cover "
                   />
                   <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900">
+                    <h3 className="font-semibold text-TextDarkGray">
                       {item.username}
                     </h3>
                     <p className="text-gray-500 text-sm">hello</p>
@@ -303,7 +303,7 @@ const UserList = () => {
                   ) : (
                     <button
                       onClick={() => handleFriendRequest(item)}
-                      className="bg-[#3cae64] mr-2 text-white w-18 py-1 rounded-lg font-semibold cursor-pointer"
+                      className="bg-buttonsBG mr-2 text-white w-18 py-1 rounded-lg font-semibold cursor-pointer"
                     >
                       Add
                     </button>

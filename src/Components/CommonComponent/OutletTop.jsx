@@ -3,9 +3,15 @@ import { IoIosNotifications } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 import OutletTopSkeleton from "../../Skeleton/OutletTopSkeleton";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { useTheme } from "../../Context/ThemeProvider";
+
+
 
 const OutletTop = ({ Title }) => {
   const navigate = useNavigate();
+    const { theme, toggleTheme } = useTheme();
+
 
   // Gets the logged-in user's data and loading state from UserContext.
   const { userList, loading } = useContext(UserContext);
@@ -19,7 +25,7 @@ const OutletTop = ({ Title }) => {
   }
   return (
     <>
-      <h2 className="text-[30px]  font-semibold flex items-center gap-2">
+      <h2 className="text-[30px] text-TextBlack  font-semibold flex items-center gap-2">
         {Title}
       </h2>
       <div className="flex items-center gap-3">
@@ -29,6 +35,12 @@ const OutletTop = ({ Title }) => {
         >
           <IoIosNotifications />
         </Link>
+        <button
+              className="p-3 rounded-full bg-white text-gray-600 text-xl cursor-pointer"
+              onClick={toggleTheme}
+            >
+              {theme === "light" ? <MdLightMode /> : <MdDarkMode />}
+            </button>
         <img
           onClick={() => navigate("/rootlayout/Dashboard")}
           className="w-10 h-10 object-cover rounded-full cursor-pointer"

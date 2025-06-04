@@ -145,10 +145,10 @@ const Friends = ({ showButton }) => {
     <>
       <div className="px-5 pb-5 pt-3 h-[100%] rounded-2xl">
         <div className="h-[13%] flex justify-between items-center">
-          <h2 className="flex items-center gap-3 text-lg font-semibold">
+          <h2 className="flex text-TextBlack items-center gap-3 text-lg font-semibold">
             Friends
           </h2>
-          <span className="text-blueColor text-[20px] cursor-pointer">
+          <span className="text-TextBlack text-[20px] cursor-pointer">
             <HiOutlineDotsVertical />
           </span>
         </div>
@@ -177,7 +177,7 @@ const Friends = ({ showButton }) => {
                 <div
                   onClick={() => handlefriendinfo(item)}
                   key={item.friendsKey}
-                  className="flex items-center gap-4 py-3 border-b border-b-gray-300 last:border-b-0 cursor-pointer"
+                  className="flex items-center gap-4 py-3 border-b border-b-ButtonGrayBorder last:border-b-0 cursor-pointer"
                 >
                   <img
                     src={friendPhoto}
@@ -185,7 +185,7 @@ const Friends = ({ showButton }) => {
                     className="w-12 h-12 rounded-full object-cover"
                   />
                   <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900">
+                    <h3 className="font-semibold text-TextDarkGray">
                       {friendName}
                     </h3>
                     <p className="text-gray-500 text-sm">{item.sendAt}</p>

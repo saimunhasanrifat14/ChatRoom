@@ -5,8 +5,8 @@ import { Outlet } from "react-router-dom";
 const RootLayout = ({ userList }) => {
   return (
     <>
-      <div className="flex flex-row w-full bg-[#ececec] h-screen">
-        <div className="w-[17%] h-full bg-white border-r-2 border-r-gray-300 ">
+      <div className="flex flex-row w-full bg-BGMainBg h-screen">
+        <div className="w-[17%] h-full bg-white border-r-2 border-r-SidebarRightBorder ">
           <Sideber />
         </div>
         <div className="w-[83%] h-full  rounded-lg p-4">

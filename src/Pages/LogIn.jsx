@@ -188,13 +188,13 @@ const LogIn = () => {
 
   return (
     <>
-      <div className="w-full h-screen flex">
+      <div className="w-full h-screen flex bg-BGWhite">
         <div className="w-[60%] h-full flex items-center justify-center">
-          <div className=" w-[380px] flex items-center justify-center bg-white px-4">
+          <div className=" w-[380px] flex items-center justify-center bg-BGWhite px-4">
             <div className="max-w-md w-full space-y-7">
               {/* Heading */}
               <div className="text-center">
-                <h2 className="text-2xl font-bold text-gray-900">
+                <h2 className="text-2xl font-bold text-TextDarkGray">
                   Sign in to your account
                 </h2>
                 {UserLoginInfoError.Error !== "" ? (
@@ -220,7 +220,7 @@ const LogIn = () => {
                   <div key={index} className="relative">
                     <label
                       htmlFor="name"
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-TextGray"
                     >
                       {item.label}
                     </label>
@@ -232,7 +232,7 @@ const LogIn = () => {
                         type={eye ? "text" : "password"}
                         id={item.id}
                         placeholder={item.placeholder}
-                        className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-sm"
+                        className="mt-1 w-full px-3 py-2 text-TextGray border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-sm placeholder:text-TextGray"
                       />
                     ) : (
                       // for other inputs
@@ -242,7 +242,7 @@ const LogIn = () => {
                         type={item.type}
                         id={item.id}
                         placeholder={item.placeholder}
-                        className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-sm"
+                        className="mt-1 w-full px-3 py-2 text-TextGray border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-sm placeholder:text-TextGray"
                       />
                     )}
                     {/* for password eye */}
@@ -268,7 +268,7 @@ const LogIn = () => {
 
                 {/* Options Row */}
                 <div className="flex items-center justify-between">
-                  <label className="flex items-center text-sm text-gray-600">
+                  <label className="flex items-center text-sm text-TextGray">
                     <input
                       type="checkbox"
                       className="h-4 w-4 text-green-600 border-gray-300 rounded cursor-pointer"
@@ -277,7 +277,7 @@ const LogIn = () => {
                   </label>
                   <Link
                     to="/forgot-password"
-                    className="text-sm text-green-600 hover:underline"
+                    className="text-sm text-green-600  hover:underline"
                   >
                     Forgot password?
                   </Link>
@@ -305,31 +305,31 @@ const LogIn = () => {
                 <div className="flex space-x-4 mt-4">
                   <button
                     onClick={handleLoginWithGoodle}
-                    className="flex items-center justify-center w-1/2 border border-gray-300 rounded-md py-2 hover:bg-gray-50 cursor-pointer"
+                    className="flex items-center justify-center w-1/2 border border-gray-300 rounded-md py-2  cursor-pointer"
                   >
                     <img
                       src="https://www.svgrepo.com/show/475656/google-color.svg"
                       alt="Google"
                       className="w-5 h-5 mr-2"
                     />
-                    <span className="text-sm">Google</span>
+                    <span className="text-sm text-TextGray">Google</span>
                   </button>
                   <button
                     // onClick={handleLoginWithFacebook}
-                    className="flex items-center justify-center w-1/2 border border-gray-300 rounded-md py-2 hover:bg-gray-50 cursor-pointer"
+                    className="flex items-center justify-center w-1/2 border border-gray-300 rounded-md py-2 cursor-pointer"
                   >
                     <img
                       src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
                       alt="GitHub"
                       className="w-5 h-5 mr-2"
                     />
-                    <span className="text-sm">Facebook</span>
+                    <span className="text-sm text-TextGray">Facebook</span>
                   </button>
                 </div>
               </div>
 
               {/* Bottom Link */}
-              <p className="text-center text-sm text-gray-500 mt-4">
+              <p className="text-center text-sm text-TextGray mt-4">
                 Don’t have an account?{" "}
                 <Link to="/signup" className="text-green-600 hover:underline">
                   Sign up

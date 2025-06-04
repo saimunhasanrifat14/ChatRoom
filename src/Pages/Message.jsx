@@ -14,14 +14,14 @@ const Message = ({ userList }) => {
         </div>
         <div className="h-[90%] flex gap-4 items-center w-full">
           <div className="h-full w-[33%] flex flex-col gap-4">
-            <div className="flex-1 min-h-0  bg-white rounded-lg">
+            <div className="flex-1 min-h-0  bg-BGWhite rounded-lg">
               <Groups />
             </div>
-            <div className="flex-1 min-h-0  bg-white rounded-lg">
+            <div className="flex-1 min-h-0  bg-BGWhite rounded-lg">
               <Friends showButton={false} />
             </div>
           </div>
-          <div className="h-full w-[67%] bg-white rounded-lg flex flex-col justify-between">
+          <div className="h-full w-[67%] bg-BGWhite rounded-lg flex flex-col justify-between">
             <Chat />
           </div>
         </div>

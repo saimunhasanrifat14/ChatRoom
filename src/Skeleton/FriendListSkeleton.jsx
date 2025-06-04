@@ -7,10 +7,10 @@ const FriendListSkeleton = () => {
       <div className="px-5 pb-5 pt-3  h-[43vh] rounded-2xl overflow-hidden">
         {/* Header */}
         <div className="h-[13%] flex justify-between items-center">
-          <h2 className="flex items-center gap-3 text-lg font-semibold">
+          <h2 className="text-TextBlack flex items-center gap-3 text-lg font-semibold">
             Friends
           </h2>
-          <span className="text-blueColor text-[20px] cursor-pointer">
+          <span className="text-TextBlack text-[20px] cursor-pointer">
             <HiOutlineDotsVertical />
           </span>
         </div>

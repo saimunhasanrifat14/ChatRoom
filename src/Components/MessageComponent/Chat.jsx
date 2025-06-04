@@ -174,7 +174,7 @@ const Chat = () => {
   return (
     <>
       <div className="w-full h-full px-8 flex flex-col  justify-between relative">
-        <div className="chatTop h-[12%] border-b-2 border-b-gray-300 flex justify-between items-center">
+        <div className="chatTop h-[12%] border-b-2 border-b-SidebarRightBorder flex justify-between items-center">
           <div className="flex items-center gap-6 ">
             <img
               src={
@@ -186,15 +186,15 @@ const Chat = () => {
               className="w-14 h-14 rounded-full object-cover"
             />
             <div className="">
-              <h3 className="font-semibold text-[22px] text-gray-900">
+              <h3 className="font-semibold text-[22px] text-TextBlack">
                 {user ? user.userName : "user"}
               </h3>
-              <p className="text-gray-500 text-sm">
+              <p className="text-TextGray text-sm">
                 {navigator.onLine ? "Online" : "Offline"}
               </p>
             </div>
           </div>
-          <span className="text-blueColor text-[24px] cursor-pointer">
+          <span className="text-TextBlack text-[24px] cursor-pointer">
             <HiOutlineDotsVertical />
           </span>
         </div>
@@ -218,16 +218,16 @@ const Chat = () => {
             let leftClass = "";
             if (!isSameSenderAsPrev && !isSameSenderAsNext) {
               leftClass =
-                "message max-w-[70%] text-wrap py-2 px-3 bg-gray-200 rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] rounded-tl-[20px] relative z-10";
+                "message max-w-[70%] text-wrap py-2 px-3 bg-BGGray text-TextBlack rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] rounded-tl-[20px] relative z-10";
             } else if (!isSameSenderAsPrev && isSameSenderAsNext) {
               leftClass =
-                "message max-w-[70%] text-wrap py-2 px-3 bg-gray-200 rounded-tr-[20px] rounded-br-[20px] rounded-bl-sm rounded-tl-[20px] relative z-10";
+                "message max-w-[70%] text-wrap py-2 px-3 bg-BGGray text-TextBlack rounded-tr-[20px] rounded-br-[20px] rounded-bl-sm rounded-tl-[20px] relative z-10";
             } else if (isSameSenderAsPrev && isSameSenderAsNext) {
               leftClass =
-                "message max-w-[70%] text-wrap py-2 px-3 bg-gray-200 rounded-tr-[20px] rounded-br-[20px] rounded-tl-sm rounded-bl-sm relative z-10";
+                "message max-w-[70%] text-wrap py-2 px-3 bg-BGGray text-TextBlack rounded-tr-[20px] rounded-br-[20px] rounded-tl-sm rounded-bl-sm relative z-10";
             } else if (isSameSenderAsPrev && !isSameSenderAsNext) {
               leftClass =
-                "message max-w-[70%] text-wrap py-2 px-3 mb-3 bg-gray-200 rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] rounded-tl-sm relative z-10";
+                "message max-w-[70%] text-wrap py-2 px-3 mb-3 bg-BGGray text-TextBlack rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] rounded-tl-sm relative z-10";
             }
 
             // Right Side (My Message)
@@ -252,7 +252,7 @@ const Chat = () => {
                 key={index}
                 className="flex items-center gap-2 justify-end relative group"
               >
-                <p className="text-sm opacity-0 group-hover:opacity-100">
+                <p className="text-TextBlack text-sm opacity-0 group-hover:opacity-100">
                   {time}
                 </p>
 
@@ -283,7 +283,7 @@ const Chat = () => {
                               src={url}
                               alt={`img-${idx}`}
                               onClick={() => setViewImage(url)}
-                              className="w-full h-full cursor-pointer border border-gray-300 shadow-sm object-cover rounded-md"
+                              className="w-full h-full cursor-pointer border border-BGGray shadow-sm object-cover rounded-md"
                             />
 
                             {/* +More overlay */}
@@ -342,7 +342,7 @@ const Chat = () => {
                             src={url}
                             alt={`img-${i}`}
                             onClick={() => setViewImage(url)}
-                            className="w-full h-full object-cover rounded-lg cursor-pointer border border-gray-300 shadow-sm"
+                            className="w-full h-full object-cover rounded-lg cursor-pointer border border-BGGray shadow-sm"
                           />
                           {!showFullImages[item.sendAt] &&
                             i === 3 &&
@@ -369,7 +369,7 @@ const Chat = () => {
                   <h2 className={leftClass}>{item.text}</h2>
                 )}
 
-                <p className="text-sm opacity-0 group-hover:opacity-100">
+                <p className="text-TextBlack text-sm opacity-0 group-hover:opacity-100">
                   {time}
                 </p>
               </div>
@@ -400,10 +400,10 @@ const Chat = () => {
         {/* input part */}
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="chatBottom w-full h-[12%] flex items-center justify-between gap-5 border-t-2 border-t-gray-300 relative"
+          className="chatBottom w-full h-[12%] flex items-center justify-between gap-5 border-t-2 border-t-SidebarRightBorder relative"
         >
           <input
-            className="bg-gray-100 py-3 px-4 w-[92%] rounded-lg outline-none"
+            className="bg-BGGray text-TextBlack py-3 px-4 w-[92%] rounded-lg outline-none"
             placeholder="Type Here"
             type="text"
             onChange={(e) => setMsg(e.target.value)}
@@ -412,11 +412,14 @@ const Chat = () => {
           <div className="flex items-center gap-3 absolute right-[85px] top-[32px] text-[18px] text-gray-600">
             <span
               onClick={() => setemojiOpen(!emojiOpen)}
-              className="text-xl cursor-pointer"
+              className="text-TextGray text-xl cursor-pointer"
             >
               <MdOutlineEmojiEmotions />
             </span>
-            <span onClick={hendleSendImage} className="text-xl cursor-pointer">
+            <span
+              onClick={hendleSendImage}
+              className="text-TextGray text-xl cursor-pointer"
+            >
               <IoCameraOutline />
             </span>
             <input
