@@ -11,6 +11,7 @@ const OutletTopSkeleton = () => {
       <div className="flex items-center gap-3 animate-pulse">
         <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
         <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+        <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
       </div>
       </div>
     </>

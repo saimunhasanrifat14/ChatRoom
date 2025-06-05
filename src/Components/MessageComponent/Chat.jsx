@@ -462,7 +462,7 @@ const Chat = () => {
 
         {/* selected images */}
         {selectedfiles.length > 0 && (
-          <div className="absolute w-full bottom-[12%] left-0 flex flex-wrap gap-2 py-4 px-8 bg-[#e5e5e5e6] z-100">
+          <div className="absolute w-full bottom-[12%] left-0 flex flex-wrap gap-2 py-4 px-8 bg-BGBlack/60  z-100">
             {selectedfiles.map((file, index) => (
               <img
                 key={index}

@@ -14,12 +14,12 @@ const NotifacationSkeleton = () => {
     </div>
 
     {/* Notification list skeleton */}
-    <div className="h-[92%] flex gap-6 items-center w-full bg-white rounded-lg">
+    <div className="h-[92%] flex gap-6 items-center w-full bg-BGWhite rounded-lg">
       <div className="flex flex-col gap-4 w-full h-full p-6 overflow-y-auto [&::-webkit-scrollbar]:hidden">
         {[...Array(6)].map((_, index) => (
           <div
             key={index}
-            className="flex items-center justify-between gap-4 p-4 bg-gray-100 rounded-lg animate-pulse"
+            className="flex items-center justify-between gap-4 p-4 bg-BGGray rounded-lg animate-pulse"
           >
             {/* Left side */}
             <div className="flex items-center gap-4">

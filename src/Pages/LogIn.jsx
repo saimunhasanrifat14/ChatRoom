@@ -19,6 +19,8 @@ import {
   ref,
   set,
 } from "firebase/database";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { useTheme } from "../Context/ThemeProvider";
 
 const LogIn = () => {
   const [eye, seteye] = useState(false);
@@ -26,6 +28,7 @@ const LogIn = () => {
   const navigate = useNavigate();
   const db = getDatabase();
   const [loading, setLoading] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   // for user data
   const [UserLoginInfo, setUserLoginInfo] = useState({
@@ -188,9 +191,26 @@ const LogIn = () => {
 
   return (
     <>
-      <div className="w-full h-screen flex bg-BGWhite">
-        <div className="w-[60%] h-full flex items-center justify-center">
-          <div className=" w-[380px] flex items-center justify-center bg-BGWhite px-4">
+      <div className="w-[100%] h-screen bg-BGWhite relative">
+        <div className="w-full px-10 flex items-center justify-between absolute top-4 left-0 z-50">
+          <div className="flex items-center">
+            <h3 className="navlogo text-TextBlack relative font-semibold text-[22px]">
+              ChatRoom
+            </h3>
+          </div>
+          <div className="flex items-center gap-3">
+            <div>
+              <button
+                className="p-3 rounded-full bg-BGGray text-TextBlack text-xl cursor-pointer"
+                onClick={toggleTheme}
+              >
+                {theme === "light" ? <MdLightMode /> : <MdDarkMode />}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="w-full h-full flex items-center justify-center ">
+          <div className=" w-[380px] flex items-center justify-center px-4">
             <div className="max-w-md w-full space-y-7">
               {/* Heading */}
               <div className="text-center">
@@ -337,9 +357,6 @@ const LogIn = () => {
               </p>
             </div>
           </div>
-        </div>
-        <div className="w-[40%] h-full">
-          <img className="w-full h-full" src={banner} alt="" />
         </div>
       </div>
     </>

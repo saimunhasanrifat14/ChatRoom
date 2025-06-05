@@ -13,6 +13,9 @@
   --bg-gray: #f3f4f6;
   --bg-light-green: #b9f8cf;
 
+  /* for circle border in home page */
+  --circle-border: #F3F4F6;
+
   /* used in rootlayout */
   --bg-main-bg: #ececec;
 
@@ -40,6 +43,9 @@
   --bg-black: #ffffff;
   --bg-gray: #292f3d;
   --bg-light-green: #267c45;
+  
+  /* for circle border in home page */
+  --circle-border: #262c35;
 
   /* used in rootlayout */
   --bg-main-bg: #313944;
@@ -66,6 +72,8 @@
   --color-BGBlack: var(--bg-black);
   --color-BGGray: var(--bg-gray);
   --color-BGLightGreen: var(--bg-light-green);
+
+  --color-CircleBorder: var(--circle-border);
   --color-BGMainBg: var(--bg-main-bg);
   --color-buttonsBG: var(--bg-button-bg);
   --color-ButtonGrayBorder: var(--border-bottom);
@@ -333,3 +341,109 @@
   display: none;
 }
 /* for message section scroll bar  */
+
+
+/* ============= Hero shape ============= */
+.login_shape {
+  position: absolute;
+  width: 46vw;
+  height: 36vw;
+  right: 0;
+  top: 60vh;
+  z-index: 10;
+}
+.shape1 {
+  width: 25vw;
+  height: 25vw;
+  border-radius: 60%;
+  background-color: #58e36d;
+  filter: blur(60px);
+  position: absolute;
+  top: 0;
+  left: 30%;
+  animation-name: anima1;
+  animation-duration: 4s;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+.shape2 {
+  width: 25vw;
+  height: 25vw;
+  border-radius: 50%;
+  background-color: #61ff66;
+  filter: blur(60px);
+  position: absolute;
+  top: 10%;
+  left: 40%;
+  animation-name: anima2;
+  animation-duration: 4s;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+/* .shape3 {
+  width: 30vw;
+  height: 30vw;
+  border-radius: 50%;
+  background-color: #13ca4d;
+  filter: blur(30px);
+  position: absolute;
+  animation-name: anima3;
+  animation-duration: 4s;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+.shape4 {
+  width: 30vw;
+  height: 30vw;
+  border-radius: 50%;
+  background-color: #91e47c;
+  filter: blur(30px);
+  position: absolute;
+  animation-name: anima4;
+  animation-duration: 4s;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+} */
+
+@keyframes anima1 {
+  from {
+    width: 15vw;
+    transform: translate(0%, 0%);
+  }
+  to {
+    width: 25vw;
+    transform: translate(10%, -20%);
+  }
+}
+@keyframes anima2 {
+  from {
+    width: 25vw;
+    transform: translate(-20%, 20%);
+  }
+  to {
+    width: 15vw;
+    transform: translate(0%, 0%);
+  }
+}
+/* @keyframes anima3 {
+  from {
+    transform: translate(25%, 5%);
+  }
+  to {
+    transform: translate(-20%, 10%);
+  }
+}
+@keyframes anima4 {
+  from {
+    transform: translate(60%, 10%);
+  }
+  to {
+    transform: translate(70%, 0%);
+  }
+} */
+
+/* ============= Hero shape ============= */

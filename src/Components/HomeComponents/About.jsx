@@ -18,7 +18,7 @@ const About = () => {
       <div className="w-full h-screen flex justify-between bg-BGWhite">
         <div className="w-[50%] flex items-center justify-center relative overflow-hidden">
           <div className="aboutLogo w-[750px] h-[750px] flex items-center justify-center rounded-full z-1 relative">
-            <h3 className="aboutLogoText text-TextBlack text-[28px] font-semibold w-[270px] h-[270px] rounded-full bg-BGWhite flex items-center justify-center border-solid border-BGGray border-[35px] shadow-[0_0px_50px_rgba(0,0,0,0.20)]">
+            <h3 className="aboutLogoText text-TextBlack text-[28px] font-semibold w-[270px] h-[270px] rounded-full bg-BGWhite flex items-center justify-center border-solid border-CircleBorder border-[35px] shadow-[0_0px_50px_rgba(0,0,0,0.20)]">
               ChatRoom
             </h3>
             <div className="aboutFirstIcon w-full h-full">

@@ -11,6 +11,8 @@ import {
 import { getDatabase, push, ref, set } from "firebase/database";
 import app from "../../Database/Firebase.config";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { useTheme } from "../Context/ThemeProvider";
 
 const SignUp = () => {
   const inputDetails = [
@@ -54,6 +56,7 @@ const SignUp = () => {
   const db = getDatabase();
   const [eye, seteye] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   /**
    * todo : password eye function implement
@@ -166,94 +169,110 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="w-full h-screen flex bg-BGWhite">
-        <div className="w-[60%] h-full flex items-center justify-center">
-          <div className="min-h-screen w-[380px] flex items-center justify-center bg-BGWhite">
-            <div className="w-full flex flex-col gap-8">
-              {/* Heading */}
-              <div className="text-center">
-                <h2 className="text-2xl font-bold text-TextDarkGray">
-                  Get started with easily registert
-                </h2>
-                <p className="text-gray-400 text-[16px] mt-1">
-                  Free register and you can enjoy it
-                </p>
-              </div>
-
-              {/* Sign Up Form */}
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {inputDetails.map((item, index) => (
-                  <div key={index} className="relative">
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-medium text-TextGray"
-                    >
-                      {item.label}
-                    </label>
-                    {item.type == "password" ? (
-                      // for password input
-                      <input
-                        onChange={handleInput}
-                        name={item.name}
-                        type={eye ? "text" : "password"}
-                        id={item.id}
-                        placeholder={item.placeholder}
-                        className="mt-1 w-full px-3 py-2 text-TextGray border border-gray-300 rounded-md shadow-sm focus:outline-none relative focus:ring-green-500 focus:border-green-500 text-sm placeholder:text-TextGray"
-                      />
-                    ) : (
-                      // for other inputs
-                      <input
-                        onChange={handleInput}
-                        name={item.name}
-                        type={item.type}
-                        id={item.id}
-                        placeholder={item.placeholder}
-                        className="mt-1 w-full px-3 py-2 text-TextGray border border-gray-300 rounded-md shadow-sm focus:outline-none relative focus:ring-green-500 focus:border-green-500 text-sm placeholder:text-TextGray"
-                      />
-                    )}
-                    {/* for password eye */}
-                    {item.name === "Password" && logininfo.Password !== "" ? (
-                      <span
-                        onClick={handleEye}
-                        className="absolute right-[12px] top-[34px] cursor-pointer text-[17px] text-gray-600"
-                      >
-                        {eye ? <FaEye /> : <FaEyeSlash />}
-                      </span>
-                    ) : (
-                      ""
-                    )}
-                    {/* for velidation */}
-                    {logininfoError[`${item.name}Error`] && (
-                      <span className="text-red-500 text-[12px]">
-                        {logininfoError[`${item.name}Error`]}
-                      </span>
-                    )}
-                  </div>
-                ))}
-
-                {/* Sign Up Button */}
-                <button
-                  type="submit"
-                  className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md cursor-pointer"
-                >
-                  {loading ? "Loading..." : "Sign Up"}
-                </button>
-              </form>
-              {/* navigate to login page */}
-              <p className="text-sm text-TextGray mt-1 text-center">
-                Already have an account?{" "}
-                <Link
-                  to="/login"
-                  className="font-medium text-green-600 hover:text-green-500"
-                >
-                  Login
-                </Link>
-              </p>
+      <div className="w-[100%] h-screen bg-BGWhite relative">
+        <div className="w-full px-10 flex items-center justify-between absolute top-4 left-0 z-50">
+          <div className="flex items-center">
+            <h3 className="navlogo text-TextBlack relative font-semibold text-[22px]">
+              ChatRoom
+            </h3>
+          </div>
+          <div className="flex items-center gap-3">
+            <div>
+              <button
+                className="p-3 rounded-full bg-BGGray text-TextBlack text-xl cursor-pointer"
+                onClick={toggleTheme}
+              >
+                {theme === "light" ? <MdLightMode /> : <MdDarkMode />}
+              </button>
             </div>
           </div>
         </div>
-        <div className="w-[40%} h-full flex items-center justify-center">
-          <img className="w-full h-full" src={banner} alt="" />
+        <div className="w-full h-screen flex bg-BGWhite">
+          <div className="w-[100%] h-full flex items-center justify-center">
+            <div className="min-h-screen w-[380px] flex items-center justify-center bg-BGWhite">
+              <div className="w-full flex flex-col gap-8">
+                {/* Heading */}
+                <div className="text-center">
+                  <h2 className="text-2xl font-bold text-TextDarkGray">
+                    Get started with easily registert
+                  </h2>
+                  <p className="text-gray-400 text-[16px] mt-1">
+                    Free register and you can enjoy it
+                  </p>
+                </div>
+
+                {/* Sign Up Form */}
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {inputDetails.map((item, index) => (
+                    <div key={index} className="relative">
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-medium text-TextGray"
+                      >
+                        {item.label}
+                      </label>
+                      {item.type == "password" ? (
+                        // for password input
+                        <input
+                          onChange={handleInput}
+                          name={item.name}
+                          type={eye ? "text" : "password"}
+                          id={item.id}
+                          placeholder={item.placeholder}
+                          className="mt-1 w-full px-3 py-2 text-TextGray border border-gray-300 rounded-md shadow-sm focus:outline-none relative focus:ring-green-500 focus:border-green-500 text-sm placeholder:text-TextGray"
+                        />
+                      ) : (
+                        // for other inputs
+                        <input
+                          onChange={handleInput}
+                          name={item.name}
+                          type={item.type}
+                          id={item.id}
+                          placeholder={item.placeholder}
+                          className="mt-1 w-full px-3 py-2 text-TextGray border border-gray-300 rounded-md shadow-sm focus:outline-none relative focus:ring-green-500 focus:border-green-500 text-sm placeholder:text-TextGray"
+                        />
+                      )}
+                      {/* for password eye */}
+                      {item.name === "Password" && logininfo.Password !== "" ? (
+                        <span
+                          onClick={handleEye}
+                          className="absolute right-[12px] top-[34px] cursor-pointer text-[17px] text-gray-600"
+                        >
+                          {eye ? <FaEye /> : <FaEyeSlash />}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      {/* for velidation */}
+                      {logininfoError[`${item.name}Error`] && (
+                        <span className="text-red-500 text-[12px]">
+                          {logininfoError[`${item.name}Error`]}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+
+                  {/* Sign Up Button */}
+                  <button
+                    type="submit"
+                    className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md cursor-pointer"
+                  >
+                    {loading ? "Loading..." : "Sign Up"}
+                  </button>
+                </form>
+                {/* navigate to login page */}
+                <p className="text-sm text-TextGray mt-1 text-center">
+                  Already have an account?{" "}
+                  <Link
+                    to="/login"
+                    className="font-medium text-green-600 hover:text-green-500"
+                  >
+                    Login
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
