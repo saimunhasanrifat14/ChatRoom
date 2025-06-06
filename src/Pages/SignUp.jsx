@@ -189,11 +189,11 @@ const SignUp = () => {
         </div>
         <div className="w-full h-screen flex bg-BGWhite">
           <div className="w-[100%] h-full flex items-center justify-center">
-            <div className="min-h-screen w-[380px] flex items-center justify-center bg-BGWhite">
+            <div className="min-h-screen w-[350px] sm:w-[380px] flex items-center justify-center bg-BGWhite">
               <div className="w-full flex flex-col gap-8">
                 {/* Heading */}
                 <div className="text-center">
-                  <h2 className="text-2xl font-bold text-TextDarkGray">
+                  <h2 className="text-xl sm:text-2xl font-bold text-TextDarkGray">
                     Get started with easily registert
                   </h2>
                   <p className="text-gray-400 text-[16px] mt-1">
