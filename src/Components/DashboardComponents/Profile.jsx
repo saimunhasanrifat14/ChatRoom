@@ -49,7 +49,7 @@ const Profile = () => {
 
   return (
     <>
-      <div className="w-full h-full p-10 flex gap-7">
+      <div className="w-full h-full p-5 sm:p-10 flex gap-7">
         <div className="w-[25%]">
           <img
             className="w-full object-cover h-auto aspect-square rounded-full"
@@ -60,15 +60,15 @@ const Profile = () => {
             alt="Your profile"
           />
         </div>
-        <div className="w-[75%] flex flex-col justify-between">
-          <div className="flex flex-col gap-4">
-            <h1 className="text-[50px] text-TextBlack leading-[55px] font-semibold">
+        <div className="w-[75%] flex flex-col gap-4 sm:gap- justify-between">
+          <div className="flex flex-col gap-3 sm:gap-4">
+            <h1 className="text-[25px] sm:text-[50px] text-TextBlack leading-[28px] sm:leading-[55px] font-semibold">
               {userList?.username || "Username"}
             </h1>
-            <p className="text-TextGray">{userList?.bio}</p>
+            <p className="text-TextGray text-[14px] sm:text-[16px]">{userList?.bio}</p>
           </div>
           <div className="flex items-center gap-8">
-            <p className="flex items-center gap-2 text-TextGray">
+            <p className="flex items-center gap-2 text-[14px] sm:text-[16px] text-TextGray">
               <span>
                 <FaUserFriends />
               </span>
@@ -77,7 +77,7 @@ const Profile = () => {
                 {friendsList ? friendsList.length : "0"}
               </span>{" "}
             </p>
-            <p className="flex items-center gap-2 text-TextGray">
+            <p className="flex items-center gap-2 text-[14px] sm:text-[16px] text-TextGray">
               {" "}
               <span className="text-[20px]">
                 {" "}

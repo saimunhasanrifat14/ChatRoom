@@ -22,36 +22,7 @@ const Groups = () => {
       message: "Hi.....",
       image: "https://www.w3schools.com/howto/img_avatar.png",
     },
-    {
-      name: "Raghav Rathe",
-      message: "Hello.....",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-    {
-      name: "Swathi",
-      message: "Sure!.",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-    {
-      name: "Kiran",
-      message: "Hi.....",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-    {
-      name: "Raghav Rathe",
-      message: "Hello.....",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-    {
-      name: "Swathi",
-      message: "Sure!.",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-    {
-      name: "Kiran",
-      message: "Hi.....",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
+
   ];
 
   const [showMenu, setShowMenu] = useState(false);

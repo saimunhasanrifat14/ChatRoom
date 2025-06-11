@@ -25,31 +25,33 @@ const OutletTop = ({ Title }) => {
   }
   return (
     <>
-      <h2 className="text-[30px] text-TextBlack  font-semibold flex items-center gap-2">
+      <div className="flex items-center justify-between w-full h-full px-5 py-3 sm:p-3">
+        <h2 className="text-[20px] sm:text-[30px] text-TextBlack  font-semibold flex items-center gap-2">
         {Title}
       </h2>
       <div className="flex items-center gap-3">
         <Link
           to={"/rootlayout/Notification"}
-          className="p-2 rounded-full text-gray-600 bg-white text-[25px] cursor-pointer"
+          className="p-2 rounded-full text-gray-600 bg-white text-[22px] sm:text-[25px] cursor-pointer"
         >
           <IoIosNotifications />
         </Link>
         <button
-              className="p-3 rounded-full bg-white text-gray-600 text-xl cursor-pointer"
+              className="p-3 rounded-full bg-white text-gray-600 text-sm sm:text-xl cursor-pointer"
               onClick={toggleTheme}
             >
               {theme === "light" ? <MdLightMode /> : <MdDarkMode />}
             </button>
         <img
           onClick={() => navigate("/rootlayout/Dashboard")}
-          className="w-10 h-10 object-cover rounded-full cursor-pointer"
+          className="w-10 h-10 sm:block hidden object-cover rounded-full cursor-pointer"
           src={
             userList?.profile_picture ||
             "https://www.w3schools.com/howto/img_avatar.png"
           }
           alt="Your Profile Picture"
         />
+      </div>
       </div>
     </>
   );
