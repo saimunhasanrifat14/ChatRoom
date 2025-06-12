@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 const RootLayout = ({ userList }) => {
   return (
     <>
-      <div className="flex flex-row w-full bg-BGMainBg min-h-screen sm:h-screen">
+      <div className="flex flex-row w-full bg-BGMainBg h-screen sm:h-screen">
         <div className="w-[17%] h-full hidden sm:block bg-white border-r-2 border-r-SidebarRightBorder ">
           <Sideber />
         </div>

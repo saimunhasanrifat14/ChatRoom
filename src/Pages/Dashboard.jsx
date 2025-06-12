@@ -9,10 +9,10 @@ const Dashboard = ({ userList }) => {
   return (
     <>
       <div className="flex flex-col gap-0 sm:gap-2 w-full h-full">
-        <div className="h-[10%]  w-full">
+        <div className="h-[9%]  w-full">
           <OutletTop userList={userList} Title={"My Profile"} />
         </div>
-        <div className="h-[90%] flex flex-col sm:flex-row gap-0 sm:gap-4 items-center w-full">
+        <div className="h-[91%] flex flex-col sm:flex-row gap-0 sm:gap-4 items-center w-full">
           <div className="w-[100%] sm:w-[67%]  h-full flex flex-col gap-0 sm:gap-4">
             <div className="h-[50%] bg-BGWhite rounded-none sm:rounded-xl border-b-2 sm:border-b-0 border-SidebarRightBorder">
               <Profile userList={userList} />

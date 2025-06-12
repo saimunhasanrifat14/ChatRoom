@@ -158,12 +158,12 @@ const Notification = ({ userList }) => {
 
   return (
     <>
-      <div className="flex flex-col gap-2 w-full h-full">
+      <div className="flex flex-col gap-0 sm:gap-2 w-full h-full">
         <div className="h-[9%] flex items-center justify-between w-full">
           <OutletTop userList={userList} Title="Notifications" />
         </div>
-        <div className="h-[91%] flex gap-6 items-center w-full bg-BGWhite rounded-lg">
-          <div className="flex flex-col gap-4 w-full h-full p-6 overflow-y-auto [&::-webkit-scrollbar]:hidden">
+        <div className="h-[91%] flex gap-6 items-center w-full bg-BGWhite rounded-none sm:rounded-lg">
+          <div className="flex flex-col gap-0 mt-4 sm:mt-0 sm:gap-4 w-full h-full p-0 sm:p-6 overflow-y-auto [&::-webkit-scrollbar]:hidden">
             {NotificationFetchdata?.length == 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-gray-500">
                 <p className="text-lg font-semibold">No notifications yet</p>
@@ -176,7 +176,7 @@ const Notification = ({ userList }) => {
               NotificationFetchdata?.map((item) => (
                 <div
                   key={item.notificationKey}
-                  className="flex items-center justify-between gap-4 p-4 bg-BGGray rounded-lg "
+                  className="flex items-center justify-between gap-0 sm:gap-4 p-4 bg-transparent sm:bg-BGGray rounded-lg "
                 >
                   <div className="flex items-center gap-4">
                     <img
@@ -185,7 +185,7 @@ const Notification = ({ userList }) => {
                       alt={`Sender Profile Picture`}
                     />
                     <div className="flex flex-col">
-                      <span className="font-normal text-TextDarkGray">
+                      <span className="font-normal leading-[20px] text-TextDarkGray">
                         <span className="font-bold ">
                           {item.senderUserName}
                         </span>{" "}
