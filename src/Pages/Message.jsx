@@ -21,7 +21,7 @@ const Message = ({ userList }) => {
               <Friends showButton={false} />
             </div>
           </div>
-          <div className="h-full sm:w-[67%] w-full bg-BGWhite sm:rounded-lg rounded-none flex flex-col justify-between">
+          <div className="h-[89%] sm:w-[67%] w-full bg-BGWhite sm:rounded-lg rounded-none flex flex-col justify-between">
             <Chat />
           </div>
         </div>

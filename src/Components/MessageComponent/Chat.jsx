@@ -173,7 +173,7 @@ const Chat = () => {
 
   return (
     <>
-      <div className="w-full h-full px-8 flex flex-col  justify-between relative">
+      <div className="w-full h-full px-5 sm:px-8 flex flex-col  justify-between relative">
         <div className="chatTop h-[12%] border-b-2 border-b-SidebarRightBorder flex justify-between items-center">
           <div className="flex items-center gap-6 ">
             <img
