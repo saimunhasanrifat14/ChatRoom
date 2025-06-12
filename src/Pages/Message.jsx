@@ -12,16 +12,16 @@ const Message = ({ userList }) => {
         <div className="h-[9%] flex items-center justify-between w-full">
           <OutletTop userList={userList} Title={"Message"} />
         </div>
-        <div className="h-[91%] flex gap-4 items-center w-full">
-          <div className="h-full w-[33%] flex flex-col gap-4">
-            <div className="flex-1 min-h-0  bg-BGWhite rounded-lg">
+        <div className="h-[91%] flex flex-col sm:flex-row sm:gap-4 gap-0 items-center w-full">
+          <div className="hidden sm:flex  h-full sm:w-[33%] w-full  flex-col sm:gap-4 gap-0">
+            <div className="flex-1 min-h-0  bg-BGWhite sm:rounded-lg rounded-none">
               <Groups />
             </div>
-            <div className="flex-1 min-h-0  bg-BGWhite rounded-lg">
+            <div className="flex-1 min-h-0  bg-BGWhite sm:rounded-lg rounded-none">
               <Friends showButton={false} />
             </div>
           </div>
-          <div className="h-full w-[67%] bg-BGWhite rounded-lg flex flex-col justify-between">
+          <div className="h-full sm:w-[67%] w-full bg-BGWhite sm:rounded-lg rounded-none flex flex-col justify-between">
             <Chat />
           </div>
         </div>
