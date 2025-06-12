@@ -1,6 +1,6 @@
 import EmojiPicker from "emoji-picker-react";
 import React, { useRef, useState } from "react";
-import { FaPaperPlane } from "react-icons/fa";
+import { FaChevronLeft, FaPaperPlane } from "react-icons/fa";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { IoCameraOutline } from "react-icons/io5";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import { uploedCloudinary } from "../../Utilities/Cloudinary.utils";
 import { getGridClass } from "../../Lib/sendImage";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const Chat = () => {
   const [msg, setMsg] = useState("");
@@ -176,15 +177,18 @@ const Chat = () => {
       <div className="w-full h-full px-5 sm:px-8 flex flex-col  justify-between relative">
         <div className="chatTop h-[12%] border-b-2 border-b-SidebarRightBorder flex justify-between items-center">
           <div className="flex items-center gap-6 ">
-            <img
-              src={
-                user
-                  ? user.profilePicture
-                  : "https://www.w3schools.com/howto/img_avatar.png"
-              }
-              alt="profile picture"
-              className="w-14 h-14 rounded-full object-cover"
-            />
+            <div className="flex items-center gap-2">
+              <Link to={"/rootlayout/Message/Friends"} className="sm:hidden block text-TextBlack"><span className="text-xl"><FaChevronLeft /></span></Link>
+              <img
+                src={
+                  user
+                    ? user.profilePicture
+                    : "https://www.w3schools.com/howto/img_avatar.png"
+                }
+                alt="profile picture"
+                className="w-14 h-14 rounded-full object-cover"
+              />
+            </div>
             <div className="">
               <h3 className="font-semibold text-[22px] text-TextBlack">
                 {user ? user.userName : "user"}

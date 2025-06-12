@@ -14,13 +14,15 @@ import moment from "moment";
 import { FriendAction } from "../../features/slices/friendSlice";
 import { useDispatch } from "react-redux";
 import FriendListSkeleton from "../../Skeleton/FriendListSkeleton";
+import { useNavigate } from "react-router-dom";
 
-const Friends = ({ showButton, showname }) => {
+const Friends = ({ showButton }) => {
   const db = getDatabase();
   const auth = getAuth();
   const [friendsList, setfriendsList] = useState([]);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   /**
    * todo : Data fetch from friends database
@@ -132,6 +134,7 @@ const Friends = ({ showButton, showname }) => {
       };
     }
     dispatch(FriendAction(userobject));
+    navigate("/rootlayout/Message/Chat");
   };
 
   if (loading) {
@@ -144,16 +147,6 @@ const Friends = ({ showButton, showname }) => {
   return (
     <>
       <div className="px-5 pb-5 pt-3 h-[100%] rounded-2xl">
-        {showname && (
-          <div className="h-[13%] flex justify-between items-center">
-            <h2 className="flex text-TextBlack items-center gap-3 text-lg font-semibold">
-              Friends
-            </h2>
-            <span className="text-TextBlack text-[20px] cursor-pointer">
-              <HiOutlineDotsVertical />
-            </span>
-          </div>
-        )}
         <div className="h-[87%] overflow-auto [&::-webkit-scrollbar]:hidden">
           {friendsList?.length == 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-gray-500">
