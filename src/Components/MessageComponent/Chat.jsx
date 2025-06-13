@@ -21,6 +21,7 @@ import { uploedCloudinary } from "../../Utilities/Cloudinary.utils";
 import { getGridClass } from "../../Lib/sendImage";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { GoChevronLeft } from "react-icons/go";
 
 const Chat = () => {
   const [msg, setMsg] = useState("");
@@ -175,10 +176,10 @@ const Chat = () => {
   return (
     <>
       <div className="w-full h-full px-5 sm:px-8 flex flex-col  justify-between relative">
-        <div className="chatTop h-[12%] border-b-2 border-b-SidebarRightBorder flex justify-between items-center">
-          <div className="flex items-center gap-6 ">
-            <div className="flex items-center gap-2">
-              <Link to={"/rootlayout/Message/Friends"} className="sm:hidden block text-TextBlack"><span className="text-xl"><FaChevronLeft /></span></Link>
+        <div className="chatTop sm:h-[12%] h-[9%] border-b-2 border-b-SidebarRightBorder flex justify-between items-center">
+          <div className="flex items-center sm:gap-6 gap-3 ">
+            <div className="flex items-center gap-1">
+              <Link to={"/rootlayout/Message/Friends"} className="sm:hidden block text-TextBlack"><span className="text-2xl"><GoChevronLeft /></span></Link>
               <img
                 src={
                   user
@@ -186,25 +187,25 @@ const Chat = () => {
                     : "https://www.w3schools.com/howto/img_avatar.png"
                 }
                 alt="profile picture"
-                className="w-14 h-14 rounded-full object-cover"
+                className="sm:w-14 w-10 sm:h-14 h-10 rounded-full object-cover"
               />
             </div>
             <div className="">
-              <h3 className="font-semibold text-[22px] text-TextBlack">
+              <h3 className="font-semibold sm:text-[22px] text-[16px] text-TextBlack">
                 {user ? user.userName : "user"}
               </h3>
-              <p className="text-TextGray text-sm">
+              <p className="text-TextGray sm:text-sm text-[12px]">
                 {navigator.onLine ? "Online" : "Offline"}
               </p>
             </div>
           </div>
-          <span className="text-TextBlack text-[24px] cursor-pointer">
+          <span className="text-TextBlack sm:text-[24px] text-[18px] cursor-pointer">
             <HiOutlineDotsVertical />
           </span>
         </div>
 
         {/* Chat part */}
-        <div className="chatMain flex flex-col gap-1 h-[76%] pr-2 py-4 overflow-y-scroll custom-scrollbar">
+        <div className="chatMain flex flex-col gap-1 sm:h-[76%] h-[82%] pr-2 py-4 overflow-y-scroll custom-scrollbar">
           {messages.map((item, index) => {
             const time = new Date(item.sendAt).toLocaleTimeString([], {
               hour: "2-digit",
@@ -222,7 +223,7 @@ const Chat = () => {
             let leftClass = "";
             if (!isSameSenderAsPrev && !isSameSenderAsNext) {
               leftClass =
-                "message max-w-[70%] text-wrap py-2 px-3 bg-BGGray text-TextBlack rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] rounded-tl-[20px] relative z-10";
+                "message max-w-[70%] text-wrap py-2 px-3 mb-3 bg-BGGray text-TextBlack rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] rounded-tl-[20px] relative z-10";
             } else if (!isSameSenderAsPrev && isSameSenderAsNext) {
               leftClass =
                 "message max-w-[70%] text-wrap py-2 px-3 bg-BGGray text-TextBlack rounded-tr-[20px] rounded-br-[20px] rounded-bl-sm rounded-tl-[20px] relative z-10";
@@ -238,7 +239,7 @@ const Chat = () => {
             let rightClass = "";
             if (!isSameSenderAsPrev && !isSameSenderAsNext) {
               rightClass =
-                "message max-w-[70%] text-wrap py-2 px-3 bg-green-500 text-white rounded-tl-[20px] rounded-bl-[20px] rounded-br-[20px] rounded-tr-[20px] relative z-10";
+                "message max-w-[70%] text-wrap py-2 px-3 mb-3 bg-green-500 text-white rounded-tl-[20px] rounded-bl-[20px] rounded-br-[20px] rounded-tr-[20px] relative z-10";
             } else if (!isSameSenderAsPrev && isSameSenderAsNext) {
               rightClass =
                 "message max-w-[70%] text-wrap py-2 px-3 bg-green-500 text-white rounded-tl-[20px] rounded-bl-[20px] rounded-br-sm rounded-tr-[20px] relative z-10";
@@ -262,7 +263,7 @@ const Chat = () => {
 
                 {Array.isArray(item.text) ? (
                   <div className="max-w-[70%]">
-                    <div className="flex flex-wrap gap-2 justify-end">
+                    <div className="flex flex-wrap sm:gap-2 gap-1 justify-end">
                       {(showFullImages[item.sendAt]
                         ? item.text
                         : item.text.slice(0, 4)
@@ -277,7 +278,7 @@ const Chat = () => {
                         return (
                           <div
                             key={idx}
-                            className="relative w-30 h-30 cursor-pointer"
+                            className="relative sm:w-30 w-25 sm:h-30 h-25 cursor-pointer"
                             onClick={() => {
                               if (isMore || isLast)
                                 toggleImageDisplay(item.sendAt);
@@ -318,7 +319,7 @@ const Chat = () => {
                 className="flex items-center gap-2 justify-start relative group"
               >
                 {Array.isArray(item.text) ? (
-                  <div className="flex flex-wrap gap-2 max-w-[70%]">
+                  <div className="flex flex-wrap sm:gap-2 gap-1 max-w-[70%]">
                     {(showFullImages[item.sendAt]
                       ? item.text
                       : item.text.slice(0, 4)
@@ -331,7 +332,7 @@ const Chat = () => {
                       return (
                         <div
                           key={i}
-                          className="relative w-30 h-30"
+                          className="relative sm:w-30 w-25 sm:h-30 h-25"
                           onClick={() => {
                             if (
                               !showFullImages[item.sendAt] &&
@@ -404,25 +405,25 @@ const Chat = () => {
         {/* input part */}
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="chatBottom w-full h-[12%] flex items-center justify-between gap-5 border-t-2 border-t-SidebarRightBorder relative"
+          className="chatBottom w-full sm:h-[12%] h-[9%] flex items-center justify-between sm:gap-5 gap-3 border-t-2 border-t-SidebarRightBorder relative"
         >
           <input
-            className="bg-BGGray text-TextBlack py-3 px-4 w-[92%] rounded-lg outline-none"
+            className="bg-BGGray text-TextBlack sm:py-3 py-2 sm:px-4 px-3 w-[92%] sm:rounded-lg rounded-3xl  outline-none sm:placeholder:text-[16px] placeholder:text-[14px] sm:text-[16px] text-[14px] "
             placeholder="Type Here"
             type="text"
             onChange={(e) => setMsg(e.target.value)}
             value={msg}
           />
-          <div className="flex items-center gap-3 absolute right-[85px] top-[32px] text-[18px] text-gray-600">
+          <div className="flex items-center gap-3 absolute sm:right-[85px] right-[65px] sm:top-[31px] top-[24px] text-[18px] text-gray-600">
             <span
               onClick={() => setemojiOpen(!emojiOpen)}
-              className="text-TextGray text-xl cursor-pointer"
+              className="text-TextGray sm:text-xl text-lg cursor-pointer"
             >
               <MdOutlineEmojiEmotions />
             </span>
             <span
               onClick={hendleSendImage}
-              className="text-TextGray text-xl cursor-pointer"
+              className="text-TextGray sm:text-xl text-lg cursor-pointer"
             >
               <IoCameraOutline />
             </span>
@@ -443,7 +444,7 @@ const Chat = () => {
                 ? (e) => e.preventDefault() // prevent click if no msg and no file
                 : handleSendMsg
             }
-            className={`p-4 bg-[#3cae64] text-white rounded-full ${
+            className={`sm:p-4 p-3 sm:text-lg text-sm bg-[#3cae64] text-white rounded-full ${
               !msg && selectedfiles.length === 0
                 ? "opacity-50 "
                 : "cursor-pointer"

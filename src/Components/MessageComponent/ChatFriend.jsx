@@ -172,7 +172,7 @@ const Friends = ({ showButton }) => {
                 <div
                   onClick={() => handlefriendinfo(item)}
                   key={item.friendsKey}
-                  className="flex items-center gap-4 py-3 border-b border-b-ButtonGrayBorder last:border-b-0 cursor-pointer"
+                  className="flex items-center gap-4 py-3 cursor-pointer"
                 >
                   <img
                     src={friendPhoto}

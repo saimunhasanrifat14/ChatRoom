@@ -48,13 +48,19 @@ const Message = ({ userList }) => {
         <div className="flex sm:hidden flex-col bg-BGWhite py-4 h-full">
           <div className="flex gap-3 ml-5 text-TextDarkGray">
             {menuitem.map((item) => (
-              <Link key={item.id} to={item.path}>
+              <Link
+                className={`py-1 px-3 rounded-2xl text-sm ${
+                  location.pathname == item.path ? "bg-BGMainBg" : "bg-BGGray"
+                }`}
+                key={item.id}
+                to={item.path}
+              >
                 {item.name}
               </Link>
             ))}
           </div>
           <div className="h-full">
-            <Outlet showname={true}/>
+            <Outlet showname={true} />
           </div>
         </div>
       )}

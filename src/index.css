@@ -327,6 +327,11 @@
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
 }
+@media (max-width: 640px) {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+  }
+}
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: rgba(100, 100, 100, 0.4);

@@ -64,7 +64,7 @@ const Groups = () => {
           {UserList?.map((item, index) => (
             <div
               key={index}
-              className="flex items-center gap-4 py-3 border-b border-b-ButtonGrayBorder last:border-b-0 "
+              className="flex items-center gap-4 py-3"
             >
               <img
                 src={item.image}
