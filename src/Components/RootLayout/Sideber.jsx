@@ -1,5 +1,5 @@
 import { getAuth, signOut } from "firebase/auth";
-import React from "react";
+import React, { useState } from "react";
 import { AiFillMessage } from "react-icons/ai";
 import { BiSolidDashboard } from "react-icons/bi";
 import { HiOutlineLogout } from "react-icons/hi";
@@ -11,6 +11,7 @@ const Sideber = () => {
   const auth = getAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   /**
    * todo : menuItems array implement
@@ -30,12 +31,15 @@ const Sideber = () => {
    * @description : this function is used to sign out the user from the app and redirect to login page
    */
   const handleLogout = () => {
+    setShowLogoutModal(true);
+  };
+  const handleConfirmLogout = () => {
     signOut(auth)
       .then(() => {
         navigate("/login");
       })
       .catch((error) => {
-        console.error("Error signing out: ", error);
+        console.error("Logout failed:", error);
       });
   };
 
@@ -75,6 +79,32 @@ const Sideber = () => {
           <span>Log Out</span>
         </div>
       </div>
+      {showLogoutModal && (
+        <div className="fixed bg-[#00000093] inset-0 flex items-center justify-center z-80">
+          <div className="bg-BGMainBg w-[280px] h-[150px] rounded-2xl shadow-lg text-center flex flex-col justify-between">
+            <div className="flex flex-col items-center  justify-center h-full ">
+              <h3 className="font-bold text-lg text-TextBlack">Confirm</h3>
+              <p className="text-sm text-TextDarkGray mt-2">
+                Are you sure you want to log out?
+              </p>
+            </div>
+            <div className="flex justify-between mt-5 border-t border-ButtonGrayBorder text-sm font-semibold">
+              <button
+                onClick={() => setShowLogoutModal(false)}
+                className="text-TextBlack bg-BGGray w-1/2 py-2 cursor-pointer rounded-bl-2xl hover:bg-ButtonGrayBorder"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmLogout}
+                className="text-TextBlack bg-BGGray w-1/2 py-2 border-l border-ButtonGrayBorder cursor-pointer rounded-br-2xl hover:bg-ButtonGrayBorder "
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
