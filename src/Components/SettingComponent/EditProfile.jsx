@@ -89,9 +89,10 @@ const EditProfile = () => {
    * @returns {void}
    */
   const handleInputChange = (event) => {
-    const { files } = event.target;
-    setprofile(files[0]);
-    setprofileError("");
+    const file = event.target.files[0];
+  console.log("Selected file on mobile:", file);
+  setprofile(file);
+  setprofileError("");
   };
 
   return (
@@ -103,7 +104,7 @@ const EditProfile = () => {
           </h2>
           {/* Upload Box */}
           <label
-            htmlFor="file-upload"
+            // htmlFor="file-upload"
             className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-BGGray border-buttonsBG hover:border-[#359a57] transition duration-200 mb-6"
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">

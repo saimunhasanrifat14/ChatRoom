@@ -75,9 +75,6 @@ const Groups = () => {
                 <h3 className="font-semibold text-TextDarkGray">{item.name}</h3>
                 <p className="text-gray-500 text-sm">{item.message}</p>
               </div>
-              <span className="bg-buttonsBG mr-2 text-white px-5 py-1 rounded-lg font-semibold cursor-pointer">
-                Join
-              </span>
             </div>
           ))}
         </div>

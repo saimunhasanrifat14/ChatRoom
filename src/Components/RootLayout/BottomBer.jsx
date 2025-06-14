@@ -39,7 +39,7 @@ const Sidebar = () => {
             key={item.id}
             className={({ isActive }) =>
               isActive
-                ? "text-TextDarkGray text-[24px] py-5 px-3 border-b-4 border-b-BGLightGreen"
+                ? "text-[#38b363] text-[24px] py-5 px-3 border-b-4 border-b-[#38b363] rounded-sm"
                 : "text-TextGray text-[24px] py-5 px-3"
             }
           >

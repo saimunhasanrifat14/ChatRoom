@@ -85,16 +85,16 @@ const Groups = () => {
 
           {/* Dropdown Menu */}
           {showMenu && (
-            <div className="absolute right-0 top-[100%] mt-2 w-40 bg-white shadow-md border border-gray-200 rounded-md z-10">
+            <div className="absolute right-0 top-[100%] mt-2 w-40 bg-BGWhite shadow-md border border-SidebarRightBorder rounded-md z-10">
               <div
                 onClick={handleCreateGroup}
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                className="px-4 py-2 text-TextBlack hover:bg-BGGray cursor-pointer text-sm"
               >
                 Create a group
               </div>
               <div
                 onClick={handleSeeYourGroup}
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                className="px-4 py-2 text-TextBlack hover:bg-BGGray cursor-pointer text-sm"
               >
                 See your groups
               </div>
@@ -130,7 +130,7 @@ const Groups = () => {
           onRequestClose={closeModal}
           style={customStyles}
         >
-          <div className="w-full flex items-end justify-end ">
+          <div className="w-full flex items-end justify-end">
             <button
               className="text-[30px] text-red-400 cursor-pointer"
               onClick={closeModal}

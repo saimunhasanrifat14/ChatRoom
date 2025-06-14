@@ -176,7 +176,7 @@ const Chat = () => {
   return (
     <>
       <div className="w-full h-full px-5 sm:px-8 flex flex-col  justify-between relative">
-        <div className="chatTop sm:h-[12%] h-[9%] border-b-2 border-b-SidebarRightBorder flex justify-between items-center">
+        <div className="chatTop sm:h-[12%] h-[9%] sm:border-b-2 border-b-1 border-b-SidebarRightBorder flex justify-between items-center">
           <div className="flex items-center sm:gap-6 gap-3 ">
             <div className="flex items-center gap-1">
               <Link
@@ -412,7 +412,7 @@ const Chat = () => {
         {/* input part */}
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="chatBottom w-full sm:h-[12%] h-[9%] flex items-center justify-between sm:gap-5 gap-3 border-t-2 border-t-SidebarRightBorder relative"
+          className="chatBottom w-full sm:h-[12%] h-[9%] flex items-center justify-between sm:gap-5 gap-3 sm:border-t-2 border-t-1 border-t-SidebarRightBorder relative"
         >
           <input
             className="bg-BGGray text-TextBlack sm:py-3 py-2 sm:px-4 px-3 w-[92%] sm:rounded-lg rounded-3xl  outline-none sm:placeholder:text-[16px] placeholder:text-[14px] sm:text-[16px] text-[14px] "

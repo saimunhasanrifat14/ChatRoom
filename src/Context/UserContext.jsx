@@ -3,7 +3,7 @@ import { createContext, useState, useEffect } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
-// Context তৈরি
+// Create Context 
 export const UserContext = createContext();
 
 // Provider component
@@ -37,6 +37,7 @@ export const UserProvider = ({ children }) => {
 
     fetchData();
   }, []);
+  
 
   return (
     <UserContext.Provider value={{ userList, loading }}>

@@ -52,7 +52,7 @@ const SettingsList = ({ onSelect }) => {
       {loading ? (
         <SettingListSkeleton />
       ) : (
-        <div className="sm:h-[22%] h-[120px] w-full flex items-center gap-6 mb-6 sm:border-b-2 border-b-1 border-gray-400 sm:pb-6 pb-0">
+        <div className="sm:h-[22%] h-[120px] w-full flex items-center gap-6 mb-6 sm:border-b-2 border-b-1 border-SidebarRightBorder sm:pb-6 pb-0">
           <img
             className="sm:w-30 w-22 sm:h-30 h-22 object-cover rounded-full"
             src={

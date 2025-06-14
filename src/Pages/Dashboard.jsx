@@ -11,18 +11,18 @@ const Dashboard = ({ userList }) => {
     <>
       <div className="flex flex-col gap-0 sm:gap-2 w-full h-full">
         <div className="h-[9%]  w-full bg-BGMainBg sm:relative sticky top-0 left-0 z-50">
-          <OutletTop userList={userList} Title={"My Profile"} />
+          <OutletTop userList={userList} Title={"Profile"} />
         </div>
         <div className="sm:h-[91%] flex flex-col sm:flex-row gap-0 sm:gap-4 items-center w-full">
           <div className="w-[100%] sm:w-[67%]  h-full flex flex-col gap-0 sm:gap-4">
-            <div className="sm:h-[50%] sm:max-h-full max-h-[280px] bg-BGWhite rounded-none sm:rounded-xl border-b-2 sm:border-b-0 border-SidebarRightBorder">
+            <div className="sm:h-[50%] sm:max-h-full max-h-[280px] bg-BGWhite rounded-none sm:rounded-xl border-b-1 sm:border-b-0 border-SidebarRightBorder">
               <Profile userList={userList} />
             </div>
             <div className="sm:h-[50%] w-full flex flex-col-reverse sm:flex-row items-center gap-0 sm:gap-4 ">
-              <div className="sm:h-full sm:max-h-full max-h-[280px]  w-[100%] sm:w-[50%] bg-BGWhite rounded-none sm:rounded-xl border-b-2 sm:border-b-0 border-SidebarRightBorder">
+              <div className="sm:h-full sm:max-h-full max-h-[280px]  w-[100%] sm:w-[50%] bg-BGWhite rounded-none sm:rounded-xl border-b-1 sm:border-b-0 border-SidebarRightBorder">
                 <Groups />
               </div>
-              <div className="sm:h-full sm:max-h-full max-h-[280px]   w-[100%] sm:w-[50%] bg-BGWhite rounded-none sm:rounded-xl border-b-2 sm:border-b-0 border-SidebarRightBorder">
+              <div className="sm:h-full sm:max-h-full max-h-[280px]   w-[100%] sm:w-[50%] bg-BGWhite rounded-none sm:rounded-xl border-b-1 sm:border-b-0 border-SidebarRightBorder">
                 <Friends showButton={true} />
               </div>
             </div>
