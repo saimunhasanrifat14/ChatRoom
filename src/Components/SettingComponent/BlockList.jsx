@@ -73,12 +73,12 @@ const BlockList = () => {
 
   return (
     <div className="h-full flex flex-col justify-between">
-      <div className="px-5 pb-5 pt-3 h-full rounded-2xl bg-BGWhite">
-        <div className="h-[8%] flex justify-between items-center pb-2">
-          <h2 className="flex items-center gap-3 text-lg font-semibold text-TextBlack">
+      <div className="px-5 pb-5 sm:pt-3 pt-8 h-full rounded-2xl bg-BGWhite">
+        <div className="h-[8%] flex justify-between items-center sm:pb-2">
+          <h2 className="flex items-center gap-3 sm:text-lg text-[16px] font-semibold text-TextBlack">
             Blocked Users
           </h2>
-          <span className="text-TextBlack text-[20px] cursor-pointer">
+          <span className="text-TextBlack sm:text-[20px] text-[16px] cursor-pointer">
             <HiOutlineDotsVertical />
           </span>
         </div>
@@ -94,7 +94,7 @@ const BlockList = () => {
             blockList.map((user, index) => (
               <div
                 key={index}
-                className="flex items-center gap-4 py-3 border-b border-b-ButtonGrayBorder last:border-b-0"
+                className="flex items-center gap-4 py-3 sm:border-b sm:border-b-ButtonGrayBorder sm:last:border-b-0"
               >
                 <img
                   src={user.reciverProfilePicture}

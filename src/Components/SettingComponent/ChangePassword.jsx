@@ -5,7 +5,7 @@ const ChangePassword = () => {
     <>
       <div className="w-full h-full flex items-center justify-center">
         <div className="bg-BGWhite p-6 max-w-2xl w-full">
-          <h2 className="text-xl font-semibold text-TextDarkGray mb-6 border-b-2 border-gray-400 pb-3">
+          <h2 className="text-xl font-semibold text-TextDarkGray mb-6 sm:border-b-2 border-b-1 border-gray-400 pb-3">
             Change Your Password
           </h2>
 

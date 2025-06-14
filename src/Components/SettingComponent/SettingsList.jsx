@@ -8,7 +8,9 @@ import { NavLink } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 import SettingListSkeleton from "../../Skeleton/SettingListSkeleton";
 
-const SettingsList = () => {
+const SettingsList = ({ onSelect }) => {
+  console.log(onSelect);
+  
   // List of user settings with icons and navigation paths.
   const Settings = [
     {
@@ -50,7 +52,7 @@ const SettingsList = () => {
       {loading ? (
         <SettingListSkeleton />
       ) : (
-        <div className="h-[22%] w-full flex items-center gap-6 mb-6 border-b-2 border-gray-400 sm:pb-6 pb-0">
+        <div className="sm:h-[22%] h-[120px] w-full flex items-center gap-6 mb-6 sm:border-b-2 border-b-1 border-gray-400 sm:pb-6 pb-0">
           <img
             className="sm:w-30 w-22 sm:h-30 h-22 object-cover rounded-full"
             src={
@@ -64,11 +66,14 @@ const SettingsList = () => {
           </h2>
         </div>
       )}
-      <div className="h-[78%] w-full flex flex-col">
+      <div className="sm:h-[78%] h-[80%] w-full flex flex-col">
         {Settings.map((item) => (
           <NavLink
             to={item.path}
             key={item.id}
+            onClick={() => {
+              if (onSelect) onSelect();
+            }}
             className={({ isActive }) =>
               isActive
                 ? "py-4 w-full flex items-center gap-4 px-3 font-bold border-b-2 border-SidebarRightBorder text-[#38B363] bg-BGGray cursor-pointer rounded-lg"
