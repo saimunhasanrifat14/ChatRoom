@@ -50,16 +50,16 @@ const SettingsList = () => {
       {loading ? (
         <SettingListSkeleton />
       ) : (
-        <div className="h-[22%] w-full flex items-center gap-6 mb-6 border-b-2 border-gray-400 pb-6">
+        <div className="h-[22%] w-full flex items-center gap-6 mb-6 border-b-2 border-gray-400 sm:pb-6 pb-0">
           <img
-            className="w-30 h-30 object-cover rounded-full"
+            className="sm:w-30 w-22 sm:h-30 h-22 object-cover rounded-full"
             src={
               userList?.profile_picture ||
               "https://www.w3schools.com/howto/img_avatar.png"
             }
             alt=""
           />
-          <h2 className="text-TextBlack text-[40px] font-semibold">
+          <h2 className="text-TextBlack sm:text-[40px] text-[25px] font-semibold">
             {userList?.username || "Your Name"}
           </h2>
         </div>

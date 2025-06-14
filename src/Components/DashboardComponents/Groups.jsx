@@ -22,6 +22,16 @@ const Groups = () => {
       message: "Hi.....",
       image: "https://www.w3schools.com/howto/img_avatar.png",
     },
+    {
+      name: "Swathi",
+      message: "Sure!.",
+      image: "https://www.w3schools.com/howto/img_avatar.png",
+    },
+    {
+      name: "Kiran",
+      message: "Hi.....",
+      image: "https://www.w3schools.com/howto/img_avatar.png",
+    },
 
   ];
 
@@ -61,7 +71,7 @@ const Groups = () => {
   return (
     <>
       <div className="px-5 pb-5 pt-3 h-full rounded-2xl">
-        <div className="h-[13%] flex justify-between items-center relative">
+        <div className="sm:h-[13%] h-[35px] flex justify-between items-center relative">
           <h2 className="text-TextBlack flex items-center gap-3 text-lg font-semibold">
             Groups
           </h2>
@@ -95,7 +105,7 @@ const Groups = () => {
           {UserList?.map((item, index) => (
             <div
               key={index}
-              className="flex items-center gap-4 py-3 border-b border-b-ButtonGrayBorder last:border-b-0 "
+              className="flex items-center gap-4 py-3 sm:border-b sm:border-b-ButtonGrayBorder sm:last:border-b-0"
             >
               <img
                 src={item.image}

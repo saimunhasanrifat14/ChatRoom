@@ -143,9 +143,8 @@ const Friends = ({ showButton, showname }) => {
   }
   return (
     <>
-      <div className="px-5 pb-5 pt-3 h-[100%] rounded-2xl">
-        {showname && (
-          <div className="h-[13%] flex justify-between items-center">
+      <div className="px-5 pb-5 pt-3 h-[100%]  rounded-2xl">
+          <div className="sm:h-[13%] h-[35px] flex justify-between items-center">
             <h2 className="flex text-TextBlack items-center gap-3 text-lg font-semibold">
               Friends
             </h2>
@@ -153,7 +152,6 @@ const Friends = ({ showButton, showname }) => {
               <HiOutlineDotsVertical />
             </span>
           </div>
-        )}
         <div className="h-[87%] overflow-auto [&::-webkit-scrollbar]:hidden">
           {friendsList?.length == 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-gray-500">
@@ -179,7 +177,7 @@ const Friends = ({ showButton, showname }) => {
                 <div
                   onClick={() => handlefriendinfo(item)}
                   key={item.friendsKey}
-                  className="flex items-center gap-4 py-3 border-b border-b-ButtonGrayBorder last:border-b-0 cursor-pointer"
+                  className="flex items-center gap-4 py-3 sm:border-b sm:border-b-ButtonGrayBorder sm:last:border-b-0 cursor-pointer"
                 >
                   <img
                     src={friendPhoto}

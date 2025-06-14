@@ -18,7 +18,7 @@ const Message = ({ userList }) => {
   return (
     <div className="flex flex-col sm:gap-2 gap-0 w-full h-full">
       {!isChatRoute && (
-        <div className="h-[9%] flex items-center justify-between w-full">
+        <div className="h-[9%] flex items-center justify-between w-full bg-BGMainBg sm:relative sticky top-0 left-0 z-50">
           <OutletTop userList={userList} Title={"Message"} />
         </div>
       )}

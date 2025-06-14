@@ -179,7 +179,14 @@ const Chat = () => {
         <div className="chatTop sm:h-[12%] h-[9%] border-b-2 border-b-SidebarRightBorder flex justify-between items-center">
           <div className="flex items-center sm:gap-6 gap-3 ">
             <div className="flex items-center gap-1">
-              <Link to={"/rootlayout/Message/Friends"} className="sm:hidden block text-TextBlack"><span className="text-2xl"><GoChevronLeft /></span></Link>
+              <Link
+                to={"/rootlayout/Message/Friends"}
+                className="sm:hidden block text-TextBlack"
+              >
+                <span className="text-2xl">
+                  <GoChevronLeft />
+                </span>
+              </Link>
               <img
                 src={
                   user
@@ -414,7 +421,7 @@ const Chat = () => {
             onChange={(e) => setMsg(e.target.value)}
             value={msg}
           />
-          <div className="flex items-center gap-3 absolute sm:right-[85px] right-[65px] sm:top-[31px] top-[24px] text-[18px] text-gray-600">
+          <div className="flex items-center gap-3 absolute sm:right-[85px] right-[65px] sm:top-[38%] top-[38%] text-[18px] text-gray-600">
             <span
               onClick={() => setemojiOpen(!emojiOpen)}
               className="text-TextGray sm:text-xl text-lg cursor-pointer"

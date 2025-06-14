@@ -159,7 +159,7 @@ const Notification = ({ userList }) => {
   return (
     <>
       <div className="flex flex-col gap-0 sm:gap-2 w-full h-full">
-        <div className="h-[9%] flex items-center justify-between w-full">
+        <div className="h-[9%] flex items-center justify-between w-full bg-BGMainBg sm:relative sticky top-0 left-0 z-50">
           <OutletTop userList={userList} Title="Notifications" />
         </div>
         <div className="h-[91%] flex gap-6 items-center w-full bg-BGWhite rounded-none sm:rounded-lg">
