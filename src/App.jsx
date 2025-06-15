@@ -36,7 +36,7 @@ const App = () => {
         <Route path="/EmailVerification" element={<EmailVerification />} />
 
         {/* private routes */}
-        <Route element={<PrivateRoute />}>
+        {/* <Route element={<PrivateRoute />}> */}
           <Route path="/rootlayout" element={<RootLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="Dashboard" element={<Dashboard />} />
@@ -56,7 +56,7 @@ const App = () => {
               <Route path="DeleteAccount" element={<DeleteAccount />} />
             </Route>
           </Route>
-        </Route>
+        {/* </Route> */}
       </Routes>
     </Router>
   );
