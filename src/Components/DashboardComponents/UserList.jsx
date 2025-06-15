@@ -142,11 +142,10 @@ const UserList = () => {
         let data = [];
         snapshot.forEach((item) => {
           if (
-            (auth.currentUser.uid === item.val().reciverUserId ||
-              LogedUser.uid === item.val().senderId) &&
+            auth.currentUser.uid === item.val().senderUserId &&
             item.val().status === "Friend Request"
           ) {
-            data.push(auth.currentUser.uid.concat(item.val().reciverUserId));
+            data.push(item.val().reciverUserId);
           }
         });
         setnotifications(data);
@@ -158,7 +157,7 @@ const UserList = () => {
   /**
    * todo : Data fetch from friends database
    * @param (null)
-   * @description : This function fetches the data from the friends database and sets it to the notifications state.
+   * @description : This function fetches the data from the friends database and sets it to the friends state.
    */
   useEffect(() => {
     const fetchData = () => {
@@ -255,6 +254,13 @@ const UserList = () => {
     );
   }
 
+  console.log("notifications", notifications);
+  // console.log("loged user", LogedUser);
+  //   console.log("Auth UID:", auth.currentUser?.uid);
+  // console.log("LogedUser UID:", LogedUser?.uid);
+  console.log("UserList:", userList);
+  
+
   return (
     <>
       <div className="h-[100%] flex flex-col justify-between">
@@ -269,7 +275,7 @@ const UserList = () => {
           </div>
           <div className="h-[94%] overflow-auto [&::-webkit-scrollbar]:hidden">
             {userList.length == 0 ? (
-              <div className="flex flex-col items-center justify-center h-full text-TextGray">
+              <div className="h-[200px] sm:h-full flex flex-col items-center justify-center text-gray-500">
                 <p className="text-lg font-semibold">No users available</p>
                 <p className="text-sm text-center max-w-xs mt-1">
                   No users found. Please check back later or try searching for
@@ -294,9 +300,7 @@ const UserList = () => {
                     <p className="text-gray-500 text-sm">hello</p>
                   </div>
 
-                  {notifications.includes(
-                    auth.currentUser.uid.concat(item.uid)
-                  ) ? (
+                  {notifications.includes(item.uid) ? (
                     <button className="bg-[#3cae64] w-18 flex items-center justify-center mr-2 text-white py-2 rounded-lg font-semibold">
                       <FaUserClock />
                     </button>

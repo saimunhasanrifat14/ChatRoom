@@ -58,7 +58,7 @@ const Profile = () => {
   if (userList) {
     return (
       <>
-        <div className="w-full sm:h-full h-[250px] p-5 sm:p-10 flex sm:gap-7 gap-4">
+        <div className="w-full sm:h-full min-h-[260px] p-5 sm:p-10 flex sm:gap-7 gap-4">
           <div className="w-[25%]">
             <img
               className="w-full object-cover h-auto aspect-square rounded-full"

@@ -144,17 +144,17 @@ const Friends = ({ showButton, showname }) => {
   return (
     <>
       <div className="px-5 pb-5 pt-3 h-[100%]  rounded-2xl">
-          <div className="sm:h-[13%] h-[35px] flex justify-between items-center">
-            <h2 className="flex text-TextBlack items-center gap-3 text-lg font-semibold">
-              Friends
-            </h2>
-            <span className="text-TextBlack text-[20px] cursor-pointer">
-              <HiOutlineDotsVertical />
-            </span>
-          </div>
+        <div className="sm:h-[13%] h-[35px] flex justify-between items-center">
+          <h2 className="flex text-TextBlack items-center gap-3 text-lg font-semibold">
+            Friends
+          </h2>
+          <span className="text-TextBlack text-[20px] cursor-pointer">
+            <HiOutlineDotsVertical />
+          </span>
+        </div>
         <div className="h-[87%] overflow-auto [&::-webkit-scrollbar]:hidden">
           {friendsList?.length == 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-gray-500">
+            <div className="h-[200px] sm:h-full flex flex-col items-center justify-center  text-gray-500">
               <p className="text-lg font-semibold">No friends yet</p>
               <p className="text-sm text-center max-w-xs mt-1">
                 You don't have any friends here. Try connecting with people or

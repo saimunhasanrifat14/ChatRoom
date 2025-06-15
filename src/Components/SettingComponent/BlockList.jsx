@@ -84,7 +84,7 @@ const BlockList = () => {
         </div>
         <div className="h-[92%] overflow-auto [&::-webkit-scrollbar]:hidden">
           {blockList.length == 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-gray-500">
+            <div className="flex flex-col items-center justify-center sm:h-full h-[85%] text-gray-500">
               <p className="text-lg font-semibold">No blocked users</p>
               <p className="text-sm text-center max-w-xs mt-1">
                 You haven’t blocked anyone yet. Blocked users will appear here.

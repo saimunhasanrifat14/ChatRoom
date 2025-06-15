@@ -165,7 +165,7 @@ const Notification = ({ userList }) => {
         <div className="h-[91%] flex gap-6 items-center w-full bg-BGWhite rounded-none sm:rounded-lg">
           <div className="flex flex-col gap-0 mt-4 sm:mt-0 sm:gap-4 w-full h-full p-0 sm:p-6 overflow-y-auto [&::-webkit-scrollbar]:hidden">
             {NotificationFetchdata?.length == 0 ? (
-              <div className="flex flex-col items-center justify-center h-full text-gray-500">
+              <div className="flex flex-col items-center justify-center sm:h-full h-[90%] text-gray-500">
                 <p className="text-lg font-semibold">No notifications yet</p>
                 <p className="text-sm text-center max-w-xs mt-1">
                   You don’t have any notifications right now. Stay active and

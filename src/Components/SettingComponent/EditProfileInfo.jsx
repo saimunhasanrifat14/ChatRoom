@@ -27,6 +27,13 @@ const EditProfileInfo = () => {
    */
   const handleinput = (event) => {
     const { value, name } = event.target;
+
+    // If it's the Bio field, limit to 40 words
+    if (name === "Bio") {
+      const words = value.trim().split(/\s+/);
+      if (words.length > 40) return; // Prevent updating if over 40 words
+    }
+
     // set the input value on userNewData state
     setuserNewData({
       ...userNewData,
@@ -145,6 +152,23 @@ const EditProfileInfo = () => {
                 }
                 placeholder="Write something about yourself"
               ></textarea>
+              <p
+                className={`text-sm text-end mt-1 ${
+                  40 -
+                    userNewData.Bio.trim()
+                      .split(/\s+/)
+                      .filter((word) => word !== "").length ===
+                  0
+                    ? "text-red-500"
+                    : "text-gray-500"
+                }`}
+              >
+                {40 -
+                  userNewData.Bio.trim()
+                    .split(/\s+/)
+                    .filter((word) => word !== "").length}{" "}
+                words remaining
+              </p>
             </div>
 
             {/* Save Button */}
