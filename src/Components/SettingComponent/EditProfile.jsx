@@ -15,8 +15,37 @@ const EditProfile = () => {
   const fileInputRef = useRef(null);
   const [notifications, setnotifications] = useState([]);
 
+  const [senderFL, setsenderFL] = useState([]);
+  const [reciverFL, setreciverFL] = useState([]);
+
   // Gets the logged-in user's data and loading state from UserContext.
   const { userList, loading } = useContext(UserContext);
+
+  /**
+   * todo : Data fetch from friends database
+   * @param (null)
+   * @description : This function fetches the data from the friends database and sets it to the friends state.
+   */
+  useEffect(() => {
+    const fetchData = () => {
+      const UserRef = ref(db, "friends/");
+      onValue(UserRef, (snapshot) => {
+        let senderdata = [];
+        let reciverdata = [];
+        snapshot.forEach((item) => {
+          if (auth.currentUser.uid === item.val().senderUserId) {
+            senderdata.push({ ...item.val(), friendKey: item.key });
+          }
+          if (auth.currentUser.uid === item.val().reciverUserId) {
+            reciverdata.push({ ...item.val(), friendKey: item.key });
+          }
+        });
+        setsenderFL(senderdata);
+        setreciverFL(reciverdata);
+      });
+    };
+    fetchData();
+  }, []);
 
   /**
    * todo : Data fetch from Notification database
@@ -29,7 +58,7 @@ const EditProfile = () => {
       onValue(UserRef, (snapshot) => {
         let data = [];
         snapshot.forEach((item) => {
-          if (auth.currentUser.uid === item.val().reciverUserId) {
+          if (auth.currentUser.uid === item.val().senderUserId) {
             data.push({ ...item.val(), notificationKey: item.key });
           }
         });
@@ -38,7 +67,6 @@ const EditProfile = () => {
     };
     fetchData();
   }, []);
-  // console.log("from noticaton", notifications);
 
   /**
    * @function handleUpdateProfile
@@ -59,13 +87,32 @@ const EditProfile = () => {
       }
       // Update the user's profile picture in the database
       const updateData = { profile_picture: profileUrl };
-      const notificationupdateData = { profile_picture: profileUrl };
+
+      // update the notification with the new profile picture
+      const notificationupdateData = { senderProfilePicture: profileUrl };
+
+      // Update the profile picture in friends and
+      const senderFLupdate = { senderProfilePicture: profileUrl };
+      const reciverFLudate = { reciverProfilePicture: profileUrl };
 
       await update(ref(db, `users/${userList.userkey}`), updateData);
-      await update(
-        ref(db, `notification/${userList.userkey}`),
-        notificationupdateData
-      );
+
+      // Update the notification with the new profile picture
+      for (const notification of notifications) {
+        await update(
+          ref(db, `notification/${notification.notificationKey}`),
+          notificationupdateData
+        );
+      }
+      // Update all sender records
+      for (const sender of senderFL) {
+        await update(ref(db, `friends/${sender.friendKey}`), senderFLupdate);
+      }
+      // Update all receiver records
+      for (const receiver of reciverFL) {
+        await update(ref(db, `friends/${receiver.friendKey}`), reciverFLudate);
+      }
+
       setsaveLoading(true);
       setTimeout(() => {
         setsaveLoading(false);
@@ -90,9 +137,8 @@ const EditProfile = () => {
    */
   const handleInputChange = (event) => {
     const file = event.target.files[0];
-  console.log("Selected file on mobile:", file);
-  setprofile(file);
-  setprofileError("");
+    setprofile(file);
+    setprofileError("");
   };
 
   return (

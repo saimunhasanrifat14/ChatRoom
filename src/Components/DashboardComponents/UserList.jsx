@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useContext, useEffect, useState } from "react";
 import { FaPlus, FaUserClock } from "react-icons/fa";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { IoSearch } from "react-icons/io5";
@@ -6,81 +6,22 @@ import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import moment from "moment";
 import UserlistSkeleton from "../../Skeleton/UserListSkeleton";
+import { UserContext } from "../../Context/UserContext";
 
 const UserList = () => {
-  // const UserList = [
-  //   {
-  //     name: "Raghav",
-  //     message: "Dinner?",
-  //     image: "https://www.w3schools.com/howto/img_avatar.png",
-  //   },
-  //   {
-  //     name: "Swathi",
-  //     message: "Sure!.",
-  //     image: "https://www.w3schools.com/howto/img_avatar.png",
-  //   },
-  //   {
-  //     name: "Kiran",
-  //     message: "Hi.....",
-  //     image: "https://www.w3schools.com/howto/img_avatar.png",
-  //   },
-  //   {
-  //     name: "Raghav Rathe",
-  //     message: "Hello.....",
-  //     image: "https://www.w3schools.com/howto/img_avatar.png",
-  //   },
-  //   {
-  //     name: "Swathi",
-  //     message: "Sure!.",
-  //     image: "https://www.w3schools.com/howto/img_avatar.png",
-  //   },
-  //   {
-  //     name: "Kiran",
-  //     message: "Hi.....",
-  //     image: "https://www.w3schools.com/howto/img_avatar.png",
-  //   },
-  //   {
-  //     name: "Raghav Rathe",
-  //     message: "Hello.....",
-  //     image: "https://www.w3schools.com/howto/img_avatar.png",
-  //   },
-  //   {
-  //     name: "Swathi",
-  //     message: "Sure!.",
-  //     image: "https://www.w3schools.com/howto/img_avatar.png",
-  //   },
-  //   {
-  //     name: "Kiran",
-  //     message: "Hi.....",
-  //     image: "https://www.w3schools.com/howto/img_avatar.png",
-  //   },
-  //   {
-  //     name: "Raghav Rathe",
-  //     message: "Hello.....",
-  //     image: "https://www.w3schools.com/howto/img_avatar.png",
-  //   },
-  //   {
-  //     name: "Swathi",
-  //     message: "Sure!.",
-  //     image: "https://www.w3schools.com/howto/img_avatar.png",
-  //   },
-  //   {
-  //     name: "Kiran",
-  //     message: "Hi.....",
-  //     image: "https://www.w3schools.com/howto/img_avatar.png",
-  //   },
-  // ];
-
   const db = getDatabase();
   const auth = getAuth();
-  const [userList, setUserList] = useState([]);
+  const [alluserList, setUserList] = useState([]);
   const [notifications, setnotifications] = useState([]);
   const [allFriends, setallFriends] = useState([]);
   const [friends, setfriends] = useState([]);
   const [pendingRequest, setpendingRequest] = useState(false);
   const [LogedUser, setLogedUser] = useState({});
   const [blockList, setblockList] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isloading, setLoading] = useState(false);
+
+  // Gets the logged-in user's data and loading state from UserContext.
+  const { userList, loading } = useContext(UserContext);
 
   /**
    * todo : Data fetch from users database
@@ -211,7 +152,6 @@ const UserList = () => {
     };
     fetchData();
   }, []);
-  console.log("data from block data", blockList);
 
   /**
    * todo : Handle friend request functionality
@@ -220,10 +160,10 @@ const UserList = () => {
    */
   const handleFriendRequest = (reciver) => {
     set(push(ref(db, "notification/")), {
-      senderUserName: auth.currentUser.displayName,
-      senderEmail: auth.currentUser.email,
-      senderProfilePicture: auth.currentUser.photoURL,
-      senderUserId: auth.currentUser.uid,
+      senderUserName: userList.username,
+      senderEmail: userList.email,
+      senderProfilePicture: userList.profile_picture,
+      senderUserId: userList.uid,
 
       reciverUserName: reciver.username,
       reciverEmail: reciver.email,
@@ -246,20 +186,13 @@ const UserList = () => {
       });
   };
 
-  if (loading) {
+  if (isloading) {
     return (
       <div className="overflow-hidden">
         <UserlistSkeleton />
       </div>
     );
   }
-
-  console.log("notifications", notifications);
-  // console.log("loged user", LogedUser);
-  //   console.log("Auth UID:", auth.currentUser?.uid);
-  // console.log("LogedUser UID:", LogedUser?.uid);
-  console.log("UserList:", userList);
-  
 
   return (
     <>
@@ -274,7 +207,7 @@ const UserList = () => {
             </span>
           </div>
           <div className="h-[94%] overflow-auto [&::-webkit-scrollbar]:hidden">
-            {userList.length == 0 ? (
+            {alluserList.length == 0 ? (
               <div className="h-[200px] sm:h-full flex flex-col items-center justify-center text-gray-500">
                 <p className="text-lg font-semibold">No users available</p>
                 <p className="text-sm text-center max-w-xs mt-1">
@@ -283,7 +216,7 @@ const UserList = () => {
                 </p>
               </div>
             ) : (
-              userList?.map((item, index) => (
+              alluserList?.map((item, index) => (
                 <div
                   key={item.uid}
                   className="flex items-center gap-4 py-3 sm:border-b sm:border-b-ButtonGrayBorder sm:last:border-b-0"

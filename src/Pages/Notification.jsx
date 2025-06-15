@@ -13,63 +13,6 @@ import moment from "moment";
 import NotifacationSkeleton from "../Skeleton/NotifacationSkeleton";
 
 const Notification = ({ userList }) => {
-  const Notificationdata = [
-    {
-      id: 1,
-      senderName: "John Doe",
-      senderProfile: "https://www.w3schools.com/howto/img_avatar.png",
-      message: "Shakil Ahmed accepted your friend request.",
-      time: "2 hours ago",
-    },
-    {
-      id: 2,
-      senderName: "Tanbir Ahmed",
-      senderProfile: "https://www.w3schools.com/howto/img_avatar.png",
-      message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      time: "3 hours ago",
-    },
-    {
-      id: 3,
-      senderName: "Alex Smith",
-      senderProfile: "https://www.w3schools.com/howto/img_avatar.png",
-      message: "Shakil Ahmed sent you a friend request.",
-      acceptButton: "Accept",
-      rejectbutton: "Reject",
-      time: "4 hours ago",
-    },
-    {
-      id: 4,
-      senderName: "Shakil Ahmed",
-      senderProfile: "https://www.w3schools.com/howto/img_avatar.png",
-      message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      time: "5 hours ago",
-    },
-    {
-      id: 5,
-      senderName: "Hasan Mahmud",
-      senderProfile: "https://www.w3schools.com/howto/img_avatar.png",
-      message: "Alex smith sent you a friend request.",
-      acceptButton: "Accept",
-      rejectbutton: "Reject",
-      time: "6 min ago",
-    },
-    {
-      id: 6,
-      senderName: "Hasan Mahmud",
-      senderProfile: "https://www.w3schools.com/howto/img_avatar.png",
-      message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      acceptButton: "Accept",
-      rejectbutton: "Reject",
-      time: "7 hours ago",
-    },
-    {
-      id: 7,
-      senderName: "Hasan Mahmud",
-      senderProfile: "https://www.w3schools.com/howto/img_avatar.png",
-      message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      time: "14 min ago",
-    },
-  ];
   const db = getDatabase();
   const auth = getAuth();
   const [NotificationFetchdata, setNotificationFetchdata] = useState([]);
@@ -122,6 +65,7 @@ const Notification = ({ userList }) => {
     // Notify the original sender that their friend request has been accepted
     set(push(ref(db, "notification/")), {
       reciverUserId: item.senderUserId,
+      senderUserId: item.reciverUserId,
       senderProfilePicture: item.reciverProfilePicture,
       senderUserName: item.reciverUserName,
       message: `has accepted your friend request`,
@@ -180,7 +124,7 @@ const Notification = ({ userList }) => {
                 >
                   <div className="flex items-center gap-4">
                     <img
-                      className="w-14 h-14 rounded-full"
+                      className="w-14 h-14 object-cover aspect-square rounded-full"
                       src={item.senderProfilePicture}
                       alt={`Sender Profile Picture`}
                     />
