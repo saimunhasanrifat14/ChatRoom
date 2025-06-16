@@ -1,12 +1,84 @@
-# React + Vite
+# 💬 Chatroom
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Chatroom** is a full-featured real-time chatting web application built using React. It includes authentication, friend requests, private messaging, group chats, media sharing, dark/light mode, and full mobile responsiveness.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌐 Live Demo
 
-## Expanding the ESLint configuration
+🔗 [Visit Chatroom App]([https://your-deployment-link.com](https://chat-room-alpha-seven.vercel.app/))
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🚀 Features
+
+### 👤 Authentication
+- Sign up and log in with secure authentication via Firebase.
+
+### 🤝 Friend System
+- Send and receive friend requests.
+- Accept or reject requests.
+- Become friends and start chatting.
+
+### 💬 Messaging
+- Chat with friends in real-time.
+- Share **text**, **images**, and **emojis**.
+- Receive **notifications** when someone sends a friend request or accepts one.
+
+### 👥 Group Chat
+- Create new groups.
+- Join and chat with multiple friends in group conversations.
+
+### ⚙️ Settings
+- Change profile information.
+- Update profile picture (uploaded to **Cloudinary**).
+- Block/unblock friends.
+- Change password.
+- Delete account.
+- Logout.
+
+### 🌗 UI Features
+- Fully **responsive** for mobile and desktop.
+- **Dark mode** and **light mode** support.
+
+---
+
+## 🛠️ Tech Stack
+
+| Tech            | Description                         |
+|-----------------|-------------------------------------|
+| React           | Frontend JavaScript library         |
+| Tailwind CSS    | Styling framework                   |
+| Firebase        | Authentication & real-time database |
+| Cloudinary      | Image hosting and management        |
+| Redux           | Global state management             |
+| Moment.js       | Time formatting                     |
+| React Router    | Client-side routing                 |
+| React Icons     | Icon library                        |
+| React Hook Form | Form management                     |
+| Emoji Picker    | Emoji selection UI                  |
+
+---
+
+## 📱 Responsive Design
+
+The app is fully optimized for mobile devices with a clean and modern UI.
+
+---
+
+## 🌙 Dark & Light Mode
+
+Toggle between dark and light themes based on your preference.
+
+---
+
+## 🔗 Contact
+
+📌 [Visit my LinkedIn](www.linkedin.com/in/saimunhasan)
+
+---
+
+## 📄 License
+
+This project is open-source and free to use.
+
