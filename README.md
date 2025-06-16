@@ -6,7 +6,7 @@
 
 ## 🌐 Live Demo
 
-🔗 [Visit Chatroom App]([https://your-deployment-link.com](https://chat-room-alpha-seven.vercel.app/))
+🔗 [Visit Chatroom App](https://chat-room-alpha-seven.vercel.app/)
 
 ---
 
@@ -74,7 +74,7 @@ Toggle between dark and light themes based on your preference.
 
 ## 🔗 Contact
 
-📌 [Visit my LinkedIn](www.linkedin.com/in/saimunhasan)
+🔗 [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/saimunhasan)
 
 ---
 
