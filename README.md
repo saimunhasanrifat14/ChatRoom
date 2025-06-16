@@ -1,16 +1,14 @@
 # 💬 Chatroom
 
----
-
 **Chatroom** is a full-featured real-time chatting web application built using React. It includes authentication, friend requests, private messaging, group chats, media sharing, dark/light mode, and full mobile responsiveness.
 
---
+---
 
 ## 🌐 Live Demo
 
 🔗 [Visit Chatroom App](https://chat-room-alpha-seven.vercel.app/)
 
---
+---
 
 ## Features
 
@@ -43,7 +41,7 @@
 - Fully **responsive** for mobile and desktop.
 - **Dark mode** and **light mode** support.
 
---
+---
 
 ## 🛠️ Tech Stack
 
@@ -60,19 +58,19 @@
 | React Hook Form | Form management                     |
 | Emoji Picker    | Emoji selection UI                  |
 
---
+---
 
 ## 📱 Responsive Design
 
 The app is fully optimized for mobile devices with a clean and modern UI.
 
---
+---
 
 ## 🌙 Dark & Light Mode
 
 Toggle between dark and light themes based on your preference.
 
---
+---
 
 ## 🔗 Contact
 
